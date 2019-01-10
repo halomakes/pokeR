@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PokeR.Hubs;
 
 namespace PokeR
 {
@@ -51,7 +52,7 @@ namespace PokeR
 
             app.UseSignalR(config =>
             {
-
+                config.MapHub<RoomHub>("/notify/room");
             });
 
             app.UseMvc(routes =>
