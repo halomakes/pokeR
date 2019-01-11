@@ -21,13 +21,17 @@ namespace PokeR.Controllers
 
         // GET: api/Decks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Deck>>> GetDecks() => await _context.Decks.ToListAsync();
+        public async Task<ActionResult<IEnumerable<Deck>>> GetDecks() => await _context.Decks
+            .Include(d => d.Cards)
+            .ToListAsync();
 
         // GET: api/Decks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Deck>> GetDeck(int id)
         {
-            var deck = await _context.Decks.FindAsync(id);
+            var deck = await _context.Decks
+                .Include(d => d.Cards)
+                .FirstOrDefaultAsync(d => d.Id == id);
 
             if (deck == null)
             {

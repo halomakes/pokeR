@@ -30,7 +30,7 @@ namespace PokeR.Hubs
             };
             db.Users.Add(user);
             await db.SaveChangesAsync();
-            await Clients.Group(request.RoomId).SendAsync("UserJoined", user, await GetRoomUsers(request.RoomId));
+            await Clients.Group(request.RoomId).SendAsync("UserJoined", new ListChange<User>(user, await GetRoomUsers(request.RoomId)));
         }
 
         public async Task LeaveRoom()
@@ -47,7 +47,7 @@ namespace PokeR.Hubs
                 if (user.IsHost || !(await userQuery.AnyAsync()))
                     await CloseRoom(roomId);
                 else
-                    await Clients.Group(roomId).SendAsync("UserLeft", user, await GetRoomUsers(roomId));
+                    await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
             }
         }
 
