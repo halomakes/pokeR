@@ -44,7 +44,7 @@ namespace PokeR.Hubs
                 db.Users.Remove(user);
                 await db.SaveChangesAsync();
 
-                if (user.IsHost || !(await userQuery.AnyAsync()))
+                if (user.IsHost || !(await db.Users.Where(u => u.RoomId == roomId).AnyAsync()))
                     await CloseRoom(roomId);
                 else
                     await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));

@@ -18,10 +18,12 @@ export class PokerService {
 
   private decks: Deck[];
   private room: Room;
+  private users: User[];
 
   private isHubReady = false;
 
-  public userChanges: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public userJoins: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
 
   constructor(private http: HttpClient) {
     this.initializeHubWatches().subscribe();
@@ -59,12 +61,20 @@ export class PokerService {
     });
   }
 
-  private initializeHubWatches = (): Observable<void> => this.getHub().pipe(map(() => {
-    console.log('starting to watch...');
-    console.log(this.hub);
-    this.watchNewMembers();
-  }))
+  private initializeHubWatches = (): Observable<void> => forkJoin(
+    this.watchUsersJoin(),
+    this.watchusersLeave()
+  ).pipe(map(() => { }))
 
-  private watchNewMembers = () =>
-    this.getHub().pipe(map(h => h.on('UserJoined', (d: ListChange<User>) => this.userChanges.emit)))
+  private watchUsersJoin = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('UserJoined', (d: ListChange<User>) => {
+      this.users = d.collection;
+      this.userJoins.emit(d);
+    })))
+
+  private watchusersLeave = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('UserLeft', (d: ListChange<User>) => {
+      this.users = d.collection;
+      this.userLeaves.emit(d);
+    })))
 }
