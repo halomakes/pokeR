@@ -50,3 +50,63 @@ System.AggregateException: One or more errors occurred. (One or more errors occu
 2019-01-10T19:24:42.4000315-05:00 0HLJNBCMPJTM1:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/favicon.ico   (ca22a1cb)
 2019-01-10T19:24:42.4389456-05:00 0HLJNBCMPJTM1:00000002 [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"E:\Users\agpro\Documents\GitHub\PokeR\PokeR\wwwroot\favicon.ico"' (27b0a520)
 2019-01-10T19:24:42.4419742-05:00 0HLJNBCMPJTM1:00000002 [INF] Request finished in 42.9458ms 200 image/x-icon (791a596a)
+2019-01-10T19:27:05.5270963-05:00  [INF] Starting @angular/cli on port 50281... (d4d43a1f)
+2019-01-10T19:27:06.1821380-05:00  [INF] Entity Framework Core "2.2.1-servicing-10028" initialized '"RoomContext"' using provider '"Microsoft.EntityFrameworkCore.InMemory"' with options: "StoreName=pokeR " (9958f5bb)
+2019-01-10T19:27:06.3467359-05:00  [INF] Saved 21 entities to in-memory store. (a24023e4)
+2019-01-10T19:27:06.6783020-05:00 0HLJNBE25RQE9:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:64201/  0 (ca22a1cb)
+2019-01-10T19:27:06.6783476-05:00 0HLJNBE25RQE8:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44320/   (ca22a1cb)
+2019-01-10T19:27:06.7124438-05:00 0HLJNBE25RQE9:00000001 [INF] Request finished in 35.2626ms 200  (791a596a)
+2019-01-10T19:27:30.4841416-05:00  [INF] > client-app@0.0.0 start E:\Users\agpro\Documents\GitHub\PokeR\PokeR\ClientApp
+> ng serve "--port" "50281"
+
+** Angular Live Development Server is listening on localhost:50281, open your browser on http://localhost:50281/ **
+ (0d83512c)
+2019-01-10T19:27:38.6171111-05:00  [INF] i ∩╜ówdm∩╜ú: wait until bundle finished: /
+ (5b9bec14)
+2019-01-10T19:27:39.4210288-05:00 0HLJNBE25RQE9:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/   (ca22a1cb)
+2019-01-10T19:27:40.5045794-05:00  [INF] i ∩╜ówdm∩╜ú: wait until bundle finished: /
+ (5b9bec14)
+2019-01-10T19:27:41.8479349-05:00  [INF] Date: 2019-01-11T00:27:41.815Z
+Hash: 336524bd30be19f5fc60
+Time: 10857ms
+chunk {main} main.js, main.js.map (main) 12.8 kB [initial] [rendered]
+chunk {polyfills} polyfills.js, polyfills.js.map (polyfills) 223 kB [initial] [rendered]
+chunk {runtime} runtime.js, runtime.js.map (runtime) 6.08 kB [entry] [rendered]
+chunk {styles} styles.js, styles.js.map (styles) 16.6 kB [initial] [rendered]
+chunk {vendor} vendor.js, vendor.js.map (vendor) 3.54 MB [initial] [rendered]
+i ∩╜ówdm∩╜ú: Compiled successfully.
+ (eef213a7)
+2019-01-10T19:27:41.8674322-05:00 0HLJNBE25RQE9:00000002 [INF] Request finished in 2446.4372ms 200 text/html; charset=UTF-8 (791a596a)
+2019-01-10T19:27:41.9244231-05:00 0HLJNBE25RQE8:00000001 [INF] Request finished in 35194.219ms 200 text/html; charset=UTF-8 (791a596a)
+2019-01-10T19:27:41.9578985-05:00 0HLJNBE25RQEA:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44320/main.js   (ca22a1cb)
+2019-01-10T19:27:41.9609528-05:00 0HLJNBE25RQE9:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44320/polyfills.js   (ca22a1cb)
+2019-01-10T19:27:41.9635356-05:00 0HLJNBE25RQE8:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/vendor.js   (ca22a1cb)
+2019-01-10T19:27:41.9646955-05:00 0HLJNBE25RQEB:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44320/runtime.js   (ca22a1cb)
+2019-01-10T19:27:41.9671252-05:00 0HLJNBE25RQEC:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44320/styles.js   (ca22a1cb)
+2019-01-10T19:27:42.0128965-05:00 0HLJNBE25RQEA:00000001 [INF] Request finished in 52.362ms 200 application/javascript; charset=UTF-8 (791a596a)
+2019-01-10T19:27:42.0628171-05:00 0HLJNBE25RQE9:00000003 [INF] Request finished in 93.6808ms 200 application/javascript; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.1713890-05:00 0HLJNBE25RQEB:00000001 [INF] Request finished in 1216.5508ms 200 application/javascript; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.1756852-05:00 0HLJNBE25RQEC:00000001 [INF] Request finished in 1204.7042ms 200 application/javascript; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.2022504-05:00 0HLJNBE25RQE8:00000002 [INF] Request finished in 1244.7705ms 200 application/javascript; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.2524312-05:00 0HLJNBE25RQEA:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/runtime.js.map   (ca22a1cb)
+2019-01-10T19:27:43.2667719-05:00 0HLJNBE25RQE9:00000004 [INF] Request starting HTTP/1.1 GET http://localhost:44320/polyfills.js.map   (ca22a1cb)
+2019-01-10T19:27:43.2811759-05:00 0HLJNBE25RQEA:00000002 [INF] Request finished in 18.9435ms 200 application/json; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.2812828-05:00 0HLJNBE25RQEB:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/styles.js.map   (ca22a1cb)
+2019-01-10T19:27:43.2946676-05:00 0HLJNBE25RQEB:00000002 [INF] Request finished in 15.5892ms 200 application/json; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.3104052-05:00 0HLJNBE25RQE9:00000004 [INF] Request finished in 33.1644ms 200 application/json; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.7157403-05:00 0HLJNBE25RQEC:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/vendor.js.map   (ca22a1cb)
+2019-01-10T19:27:43.7469249-05:00 0HLJNBE25RQE8:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44320/main.js.map   (ca22a1cb)
+2019-01-10T19:27:43.7691962-05:00 0HLJNBE25RQE8:00000003 [INF] Request finished in 40.2036ms 200 application/json; charset=UTF-8 (791a596a)
+2019-01-10T19:27:43.7975236-05:00 0HLJNBE25RQEC:00000002 [INF] Request finished in 82.4211ms 200 application/json; charset=UTF-8 (791a596a)
+2019-01-10T19:27:44.6633127-05:00 0HLJNBE25RQEA:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44320/sockjs-node/info?t=1547166464655   (ca22a1cb)
+2019-01-10T19:27:44.6868611-05:00 0HLJNBE25RQEA:00000003 [INF] Request finished in 16.9458ms 200 application/json; charset=UTF-8 (791a596a)
+2019-01-10T19:27:44.6898138-05:00 0HLJNBE25RQEB:00000003 [INF] Request starting HTTP/1.1 GET http://localhost:44320/favicon.ico   (ca22a1cb)
+2019-01-10T19:27:44.7026173-05:00 0HLJNBE25RQE9:00000005 [INF] Request starting HTTP/1.1 GET http://localhost:44320/sockjs-node/807/qkzcvdkm/websocket   (ca22a1cb)
+2019-01-10T19:27:44.7060449-05:00 0HLJNBE25RQEB:00000003 [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"E:\Users\agpro\Documents\GitHub\PokeR\PokeR\wwwroot\favicon.ico"' (27b0a520)
+2019-01-10T19:27:44.7304417-05:00 0HLJNBE25RQEB:00000003 [INF] Request finished in 19.1196ms 200 image/x-icon (791a596a)
+2019-01-10T19:27:45.7931171-05:00 0HLJNBE25RQE8:00000004 [INF] Request starting HTTP/1.1 POST http://localhost:44320/sockjs-node/807/fgotzrt5/xhr_streaming?t=1547166465777  0 (ca22a1cb)
+2019-01-10T19:27:45.8721884-05:00 0HLJNBE25RQE9:00000005 [INF] Request finished in 1171.5116ms 101  (791a596a)
+2019-01-10T19:28:00.5032672-05:00  [INF] Starting @angular/cli on port 50360... (ae1749b8)
+2019-01-10T19:28:01.0800644-05:00  [INF] Entity Framework Core "2.2.1-servicing-10028" initialized '"RoomContext"' using provider '"Microsoft.EntityFrameworkCore.InMemory"' with options: "StoreName=pokeR " (9958f5bb)
+2019-01-10T19:28:01.2845321-05:00  [INF] Saved 21 entities to in-memory store. (a24023e4)
+2019-01-10T19:28:01.5437002-05:00 0HLJNBEIH2SDJ:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44320/sockjs-node/info?t=1547166479689   (ca22a1cb)
