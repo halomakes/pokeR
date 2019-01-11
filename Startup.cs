@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using PokeR.Data;
 using PokeR.Hubs;
+using PokeR.Services;
 
 namespace PokeR
 {
@@ -29,11 +32,17 @@ namespace PokeR
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddDbContext<RoomContext>(options =>
+            {
+                options.UseInMemoryDatabase("pokeR");
+            });
+            services.AddTransient<DbSeeder>();
+
             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DbSeeder seeder, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -49,6 +58,8 @@ namespace PokeR
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            loggerFactory.AddFile("Logs/pokeR-{Date}.txt");
 
             app.UseSignalR(config =>
             {
@@ -74,6 +85,8 @@ namespace PokeR
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            seeder.Seed().GetAwaiter().GetResult();
         }
     }
 }

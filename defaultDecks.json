@@ -1,0 +1,88 @@
+﻿[
+  {
+    "Name": "T-Shirt Sizes",
+    "Cards": [
+      {
+        "Name": "☕",
+        "Order": 0
+      },
+      {
+        "Name": "XS",
+        "Order": 1
+      },
+      {
+        "Name": "S",
+        "Order": 2
+      },
+      {
+        "Name": "M",
+        "Order": 3
+      },
+      {
+        "Name": "L",
+        "Order": 4
+      },
+      {
+        "Name": "XL",
+        "Order": 5
+      },
+      {
+        "Name": "XXL",
+        "Order": 6
+      },
+      {
+        "Name": "∞",
+        "Order": 7
+      }
+    ]
+  },
+  {
+    "Name": "Fibonacci Sequence",
+    "Cards": [
+      {
+        "Name": "☕",
+        "Order": 0
+      },
+      {
+        "Name": "½",
+        "Order": 1
+      },
+      {
+        "Name": "1",
+        "Order": 2
+      },
+      {
+        "Name": "2",
+        "Order": 3
+      },
+      {
+        "Name": "3",
+        "Order": 4
+      },
+      {
+        "Name": "5",
+        "Order": 5
+      },
+      {
+        "Name": "8",
+        "Order": 6
+      },
+      {
+        "Name": "13",
+        "Order": 7
+      },
+      {
+        "Name": "20",
+        "Order": 8
+      },
+      {
+        "Name": "40",
+        "Order": 9
+      },
+      {
+        "Name": "∞",
+        "Order": 10
+      }
+    ]
+  }
+]

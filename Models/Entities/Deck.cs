@@ -13,5 +13,6 @@ namespace PokeR.Models.Entities
         public string Description { get; set; }
 
         public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<Card> Cards { get; set; }
     }
 }

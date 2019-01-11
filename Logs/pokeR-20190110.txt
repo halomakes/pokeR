@@ -1,0 +1,52 @@
+2019-01-10T19:24:00.0533535-05:00  [INF] Starting @angular/cli on port 50224... (4c8bd0df)
+2019-01-10T19:24:21.5644794-05:00  [ERR] npm ERR! path E:\Users\agpro\Documents\GitHub\PokeR\PokeR\ClientApp\package.json
+ (d4848da6)
+2019-01-10T19:24:36.6227901-05:00  [INF] Entity Framework Core "2.2.1-servicing-10028" initialized '"RoomContext"' using provider '"Microsoft.EntityFrameworkCore.InMemory"' with options: "StoreName=pokeR " (9958f5bb)
+2019-01-10T19:24:37.4535933-05:00  [INF] Saved 21 entities to in-memory store. (a24023e4)
+2019-01-10T19:24:41.1109331-05:00 0HLJNBCMPJTM2:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44320/   (ca22a1cb)
+2019-01-10T19:24:41.1086967-05:00 0HLJNBCMPJTM1:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:64201/  0 (ca22a1cb)
+2019-01-10T19:24:41.1628047-05:00 0HLJNBCMPJTM1:00000001 [INF] Request finished in 51.8418ms 200  (791a596a)
+2019-01-10T19:24:41.2889271-05:00 0HLJNBCMPJTM2:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.AggregateException: One or more errors occurred. (One or more errors occurred. (The NPM script 'start' exited without indicating that the Angular CLI was listening for requests. The error output was: )) ---> System.AggregateException: One or more errors occurred. (The NPM script 'start' exited without indicating that the Angular CLI was listening for requests. The error output was: ) ---> System.InvalidOperationException: The NPM script 'start' exited without indicating that the Angular CLI was listening for requests. The error output was:  ---> System.IO.EndOfStreamException: Attempted to read past the end of the stream.
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.StartAngularCliServerAsync(String sourcePath, String npmScriptName, ILogger logger)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.StartAngularCliServerAsync(String sourcePath, String npmScriptName, ILogger logger)
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.<>c.<Attach>b__2_0(Task`1 task)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Microsoft.AspNetCore.SpaServices.Extensions.Util.TaskTimeoutExtensions.WithTimeout[T](Task`1 task, TimeSpan timeoutDelay, String message)
+   at Microsoft.AspNetCore.SpaServices.Extensions.Proxy.SpaProxy.PerformProxyRequest(HttpContext context, HttpClient httpClient, Task`1 baseUriTask, CancellationToken applicationStoppingToken, Boolean proxy404s)
+   at Microsoft.AspNetCore.Builder.SpaProxyingExtensions.<>c__DisplayClass2_0.<<UseProxyToSpaDevelopmentServer>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+---> (Inner Exception #0) System.AggregateException: One or more errors occurred. (The NPM script 'start' exited without indicating that the Angular CLI was listening for requests. The error output was: ) ---> System.InvalidOperationException: The NPM script 'start' exited without indicating that the Angular CLI was listening for requests. The error output was:  ---> System.IO.EndOfStreamException: Attempted to read past the end of the stream.
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.StartAngularCliServerAsync(String sourcePath, String npmScriptName, ILogger logger)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.StartAngularCliServerAsync(String sourcePath, String npmScriptName, ILogger logger)
+   --- End of inner exception stack trace ---
+   at System.Threading.Tasks.Task`1.GetResultCore(Boolean waitCompletionNotification)
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.<>c.<Attach>b__2_0(Task`1 task)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+---> (Inner Exception #0) System.InvalidOperationException: The NPM script 'start' exited without indicating that the Angular CLI was listening for requests. The error output was:  ---> System.IO.EndOfStreamException: Attempted to read past the end of the stream.
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.StartAngularCliServerAsync(String sourcePath, String npmScriptName, ILogger logger)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.SpaServices.AngularCli.AngularCliMiddleware.StartAngularCliServerAsync(String sourcePath, String npmScriptName, ILogger logger)<---
+<---
+
+2019-01-10T19:24:41.3425223-05:00 0HLJNBCMPJTM2:00000001 [INF] Request finished in 217.2163ms 500 text/html; charset=utf-8 (791a596a)
+2019-01-10T19:24:42.4000315-05:00 0HLJNBCMPJTM1:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44320/favicon.ico   (ca22a1cb)
+2019-01-10T19:24:42.4389456-05:00 0HLJNBCMPJTM1:00000002 [INF] Sending file. Request path: '"/favicon.ico"'. Physical path: '"E:\Users\agpro\Documents\GitHub\PokeR\PokeR\wwwroot\favicon.ico"' (27b0a520)
+2019-01-10T19:24:42.4419742-05:00 0HLJNBCMPJTM1:00000002 [INF] Request finished in 42.9458ms 200 image/x-icon (791a596a)
