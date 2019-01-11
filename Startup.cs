@@ -59,7 +59,7 @@ namespace PokeR
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            loggerFactory.AddFile("Logs/pokeR-{Date}.txt");
+            loggerFactory.AddFile("Logs/pokeR-{Date}.log");
 
             app.UseSignalR(config =>
             {
