@@ -1,5 +1,7 @@
-<div>
-  <div *ngFor="let c of cards">
+<div [class.translucent]="!isEnabled" class="fixed-bottom w-100 click-none d-flex flex-row justify-content-center flex-wrap align-items-end">
+  <div (click)="onCardSelected(c.id)" [class.border]="selectedCardId == c.id" [class.border-primary]="selectedCardId == c.id"
+    [class.selected]="selectedCardId == c.id" [class.click-none]="!isEnabled" class="click-normal card cardTray m-2 pointer-hand"
+    *ngFor="let c of cards">
     {{c.name}}
   </div>
 </div>

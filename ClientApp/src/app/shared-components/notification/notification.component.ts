@@ -12,7 +12,8 @@ export class NotificationComponent implements OnInit {
   @Input()
   public selfRef: ComponentRef<NotificationComponent>;
 
-  @HostBinding('class.w-100') someField = true;
+  @HostBinding('class.w-100') width = true;
+  @HostBinding('class.click-normal') click = true;
 
   hide: boolean;
   animOut = false;

@@ -3,3 +3,19 @@
 .full-height {
     min-height: 100vh;
 }
+
+.click-none {
+    pointer-events: none;
+}
+
+.click-normal {
+    pointer-events: initial;
+}
+
+.pointer-hand {
+    cursor: pointer;
+}
+
+.translucent {
+    opacity: .7;
+}
