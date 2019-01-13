@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PokeR.Models.Entities;
 using PokeR.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -74,6 +75,7 @@ namespace PokeR.Controllers
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
+            room.TimeCreated = DateTime.Now;
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
 

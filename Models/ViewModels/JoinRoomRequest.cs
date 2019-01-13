@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace PokeR.Models.ViewModels
 {
-    public class JoinGroupRequest
+    public class JoinRoomRequest
     {
         public string RoomId { get; set; }
         public string Name { get; set; }
-        public int CardId { get; set; }
+        public int EmblemId { get; set; }
     }
 }

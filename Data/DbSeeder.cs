@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PokeR.Models.Entities;
 using PokeR.Services;
@@ -22,21 +21,47 @@ namespace PokeR.Data
 
         public async Task Seed()
         {
+            await SeedDecks();
+            await SeedEmblems();
+        }
+
+
+        public async Task SeedEmblems()
+        {
             try
             {
-                var path = $"{environment.ContentRootPath}/defaultDecks.json";
-                var json = await System.IO.File.ReadAllTextAsync(path);
+                var emblems = await GetFile<List<Emblem>>("defaultEmblems.json");
+                db.Emblems.AddRange(emblems);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Could not seed emblems to database");
+                Console.Write(ex.ToString());
+            }
+        }
 
-                var decks = JsonConvert.DeserializeObject<List<Deck>>(json);
-
+        public async Task SeedDecks()
+        {
+            try
+            {
+                var decks = await GetFile<List<Deck>>("defaultDecks.json");
                 db.Decks.AddRange(decks);
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                Console.Write("Could not seed database");
+                Console.Write("Could not seed decks to database");
                 Console.Write(ex.ToString());
             }
+        }
+
+        private async Task<T> GetFile<T>(string fileName)
+        {
+            var path = $"{environment.ContentRootPath}/{fileName}";
+            var json = await System.IO.File.ReadAllTextAsync(path);
+
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

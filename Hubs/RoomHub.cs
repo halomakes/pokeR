@@ -19,7 +19,7 @@ namespace PokeR.Hubs
             this.db = db;
         }
 
-        public async Task JoinRoom(JoinGroupRequest request)
+        public async Task JoinRoom(JoinRoomRequest request)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, request.RoomId);
             var user = new User
@@ -62,13 +62,6 @@ namespace PokeR.Hubs
             }
             db.Users.RemoveRange(db.Users.Where(u => u.RoomId == roomId));
             db.Rooms.RemoveRange(db.Rooms.Where(r => r.Id == roomId));
-            await db.SaveChangesAsync();
-        }
-
-        public async Task CreateRoom(Room room)
-        {
-            room.TimeCreated = DateTime.Now;
-            db.Rooms.Add(room);
             await db.SaveChangesAsync();
         }
 

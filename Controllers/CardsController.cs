@@ -21,7 +21,7 @@ namespace PokeR.Controllers
 
         // GET: api/Cards
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Card>>> GetCard([FromQuery] int? deck) => await _context.Card
+        public async Task<ActionResult<IEnumerable<Card>>> GetCard([FromQuery] int? deck) => await _context.Cards
                 .Where(c => !deck.HasValue || c.DeckId == deck.Value)
                 .ToListAsync();
 
@@ -29,7 +29,7 @@ namespace PokeR.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Card>> GetCard(int id)
         {
-            var card = await _context.Card.FindAsync(id);
+            var card = await _context.Cards.FindAsync(id);
 
             if (card == null)
             {
@@ -73,7 +73,7 @@ namespace PokeR.Controllers
         [HttpPost]
         public async Task<ActionResult<Card>> PostCard(Card card)
         {
-            _context.Card.Add(card);
+            _context.Cards.Add(card);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCard", new { id = card.Id }, card);
@@ -83,13 +83,13 @@ namespace PokeR.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Card>> DeleteCard(int id)
         {
-            var card = await _context.Card.FindAsync(id);
+            var card = await _context.Cards.FindAsync(id);
             if (card == null)
             {
                 return NotFound();
             }
 
-            _context.Card.Remove(card);
+            _context.Cards.Remove(card);
             await _context.SaveChangesAsync();
 
             return card;
@@ -97,7 +97,7 @@ namespace PokeR.Controllers
 
         private bool CardExists(int id)
         {
-            return _context.Card.Any(e => e.Id == id);
+            return _context.Cards.Any(e => e.Id == id);
         }
     }
 }

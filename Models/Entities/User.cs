@@ -15,7 +15,10 @@ namespace PokeR.Models.Entities
         public string DisplayName { get; set; }
         [Required]
         public bool IsHost { get; set; }
+        [Required]
+        public int EmblemId { get; set; }
 
         public virtual Room Room { get; set; }
+        public virtual Emblem Emblem { get; set; }
     }
 }

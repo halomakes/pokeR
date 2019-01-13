@@ -5,9 +5,10 @@ import { NotificationFeedComponent } from './notification-feed/notification-feed
 import { NotificationComponent } from './notification/notification.component';
 import { FormsModule } from '@angular/forms';
 import { RoomInfoComponent } from './room-info/room-info.component';
+import { JoinRoomComponent } from './join-room/join-room.component';
 
 @NgModule({
-  declarations: [CreateRoomComponent, NotificationFeedComponent, NotificationComponent, RoomInfoComponent],
+  declarations: [CreateRoomComponent, NotificationFeedComponent, NotificationComponent, RoomInfoComponent, JoinRoomComponent],
   imports: [
     CommonModule,
     FormsModule

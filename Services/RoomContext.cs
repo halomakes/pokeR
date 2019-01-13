@@ -13,6 +13,7 @@ namespace PokeR.Services
         public DbSet<Deck> Decks { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<PokeR.Models.Entities.Card> Card { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<Emblem> Emblems { get; set; }
     }
 }
