@@ -1,13 +1,18 @@
 <div *ngIf="!isInvalid">
-  <div *ngIf="!isInGame">
-    <app-room-info [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
+  <div class="full-height d-flex flex-column justify-content-center" *ngIf="!isInGame">
+    <div class="container card p-3 my-5">
+    <app-room-info class="mb-3" [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
     <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
+  </div>
   </div>
   <div *ngIf="isInGame">
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>
   </div>
   <app-notification-feed></app-notification-feed>
 </div>
-<div *ngIf="isInvalid">
-  Room not found.
+<div class="full-height d-flex flex-column justify-content-center align-items-center" *ngIf="isInvalid">
+  <h4 class="display-4 mb-5">Room not found 😢</h4>
+  <button role="button" routerLink="/" class="btn btn-primary btn-lg">
+    Go Home
+  </button>
 </div>
