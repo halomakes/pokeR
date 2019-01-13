@@ -1,4 +1,9 @@
-<div *ngIf="!isInGame">
-  <app-room-info [roomId]="roomId"></app-room-info>
+<div *ngIf="!isInvalid">
+  <div *ngIf="!isInGame">
+    <app-room-info [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
+  </div>
+  <app-notification-feed></app-notification-feed>
 </div>
-<app-notification-feed></app-notification-feed>
+<div *ngIf="isInvalid">
+  Room not found.
+</div>

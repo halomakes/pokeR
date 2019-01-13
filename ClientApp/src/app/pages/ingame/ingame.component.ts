@@ -10,6 +10,8 @@ export class IngameComponent implements OnInit {
   isInGame = false;
   roomId: string;
 
+  isInvalid = false;
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -18,4 +20,5 @@ export class IngameComponent implements OnInit {
     });
   }
 
+  onRoomError = (): boolean => this.isInvalid = true;
 }

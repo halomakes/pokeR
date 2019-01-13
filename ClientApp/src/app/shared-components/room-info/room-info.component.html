@@ -1,5 +1,13 @@
-<div>You are joining</div>
-<div *ngIf="room?.name">{{room?.name}}</div>
-<div *ngIf="room?.tagLine">{{room?.tagLine}}</div>
-<div *ngIf="room?.deck?.name">{{room?.deck?.name}}</div>
-<div *ngIf="room?.users">{{room?.users?.length}} user(s)</div>
+<div *ngIf="exists">
+  <div>You are joining</div>
+  <div *ngIf="room?.name">{{room?.name}}</div>
+  <div *ngIf="room?.tagLine">{{room?.tagLine}}</div>
+  <div *ngIf="room?.deck?.name">{{room?.deck?.name}}</div>
+  <div *ngIf="room?.users">{{room?.users?.length}} user(s)</div>
+</div>
+<div *ngIf="exists === false">
+  We couldn't find this room
+</div>
+<div *ngIf="exists === null">
+  Loading
+</div>

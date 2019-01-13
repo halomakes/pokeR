@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Room } from 'src/app/models/entities/room';
 import { PokerService } from 'src/app/services/poker.service';
 import { Observable } from 'rxjs';
@@ -14,15 +14,26 @@ export class RoomInfoComponent implements OnChanges {
   roomId: string;
   room: Room;
 
+  @Output()
+  roomError: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  exists: boolean;
+
   constructor(private service: PokerService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if (changes.roomId.currentValue) {
       this.roomId = changes.roomId.currentValue;
-      this.loadRoom().subscribe();
+      this.loadRoom().subscribe(() => { }, (error) => {
+        this.roomError.emit(true);
+        this.exists = false;
+      });
     }
   }
 
-  loadRoom = (): Observable<Room> => this.service.getRoom(this.roomId).pipe(map(r => this.room = r));
+  loadRoom = (): Observable<void> => this.service.getRoom(this.roomId).pipe(map(r => {
+    this.room = r;
+    this.exists = true;
+  }))
 }
