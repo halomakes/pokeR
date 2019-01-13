@@ -26,7 +26,8 @@ namespace PokeR.Hubs
             {
                 ConnectionId = Context.ConnectionId,
                 DisplayName = request.Name,
-                RoomId = request.RoomId
+                RoomId = request.RoomId,
+                Id = new Guid()
             };
             db.Users.Add(user);
             await db.SaveChangesAsync();

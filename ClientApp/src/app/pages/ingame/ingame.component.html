@@ -1,4 +1,4 @@
-<p>
-  ingame works!
-</p>
+<div *ngIf="!isInGame">
+  <app-room-info [roomId]="roomId"></app-room-info>
+</div>
 <app-notification-feed></app-notification-feed>

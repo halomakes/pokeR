@@ -13,10 +13,5 @@ export class AppComponent implements OnInit {
   constructor(private svc: PokerService) { }
 
   ngOnInit(): void {
-    this.svc.joinRoom(<JoinRoomRequest>{
-      roomId: '1234',
-      name: 'potato',
-      cardId: 1
-    }).subscribe();
   }
 }

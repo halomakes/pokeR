@@ -27,7 +27,10 @@ namespace PokeR.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(string id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms
+                .Include(r => r.Deck)
+                .Include(r => r.Users)
+                .FirstOrDefaultAsync(r => r.Id == id);
 
             if (room == null)
             {
