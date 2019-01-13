@@ -30,6 +30,7 @@ namespace PokeR.Controllers
         {
             var room = await _context.Rooms
                 .Include(r => r.Deck)
+                .ThenInclude(d => d.Cards)
                 .Include(r => r.Users)
                 .FirstOrDefaultAsync(r => r.Id == id);
 

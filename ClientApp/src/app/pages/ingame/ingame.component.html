@@ -3,6 +3,9 @@
     <app-room-info [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
     <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
   </div>
+  <div *ngIf="isInGame">
+    <app-card-list [cards]="room?.deck?.cards"></app-card-list>
+  </div>
   <app-notification-feed></app-notification-feed>
 </div>
 <div *ngIf="isInvalid">

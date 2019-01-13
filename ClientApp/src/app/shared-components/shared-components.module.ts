@@ -6,17 +6,25 @@ import { NotificationComponent } from './notification/notification.component';
 import { FormsModule } from '@angular/forms';
 import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
+import { CardListComponent } from './card-list/card-list.component';
 
 @NgModule({
-  declarations: [CreateRoomComponent, NotificationFeedComponent, NotificationComponent, RoomInfoComponent, JoinRoomComponent],
-  imports: [
+  declarations: [
+    CreateRoomComponent,
+    NotificationFeedComponent,
+    NotificationComponent,
+    RoomInfoComponent,
+    JoinRoomComponent,
+    CardListComponent
+  ], imports: [
     CommonModule,
     FormsModule
   ], exports: [
     NotificationFeedComponent,
     CreateRoomComponent,
     RoomInfoComponent,
-    JoinRoomComponent
+    JoinRoomComponent,
+    CardListComponent
   ]
 })
 export class SharedComponentsModule { }

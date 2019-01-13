@@ -10,6 +10,7 @@ import { JoinRoomRequest } from '../models/join-room-request';
 import { User } from '../models/entities/user';
 import { ListChange } from '../models/list-change';
 import { Emblem } from '../models/entities/emblem';
+import { Card } from '../models/entities/card';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,14 @@ export class PokerService {
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))))
 
+  public getCards = (deckId: number): Observable<Card[]> =>
+    this.getDecks().pipe(map(ds => {
+      console.log(ds, deckId);
+      const deck = ds.find(d => d.id === deckId);
+      return deck.cards.sort(this.orderCards);
+    }))
+
+  private orderCards = (a: Card, b: Card): number => a.order - b.order;
 
   // subscribe to hub
   private getHub = (): Observable<HubConnection> =>
