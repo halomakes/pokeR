@@ -9,6 +9,7 @@ import { HubConnection, HubConnectionBuilder, JsonHubProtocol } from '@aspnet/si
 import { JoinRoomRequest } from '../models/join-room-request';
 import { User } from '../models/entities/user';
 import { ListChange } from '../models/list-change';
+import { Emblem } from '../models/entities/emblem';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class PokerService {
   private decks: Deck[] = new Array<Deck>();
   private room: Room;
   private users: User[];
+  private emblems: Emblem[] = new Array<Emblem>();
 
   private isHubReady = false;
 
@@ -37,6 +39,10 @@ export class PokerService {
   public getDecks = (): Observable<Deck[]> =>
     this.decks.length ? of(this.decks) :
       this.http.get<Deck[]>('api/decks').pipe(map(d => this.decks = d))
+
+  public getEmblems = (): Observable<Emblem[]> =>
+    this.emblems.length ? of(this.emblems) :
+      this.http.get<Emblem[]>('api/emblems').pipe(map(e => this.emblems = e))
 
   public getRoom = (roomId: string): Observable<Room> =>
     this.room ? of(this.room) :

@@ -1,6 +1,7 @@
 <div *ngIf="!isInvalid">
   <div *ngIf="!isInGame">
     <app-room-info [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
+    <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
   </div>
   <app-notification-feed></app-notification-feed>
 </div>

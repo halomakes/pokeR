@@ -15,7 +15,8 @@ import { JoinRoomComponent } from './join-room/join-room.component';
   ], exports: [
     NotificationFeedComponent,
     CreateRoomComponent,
-    RoomInfoComponent
+    RoomInfoComponent,
+    JoinRoomComponent
   ]
 })
 export class SharedComponentsModule { }

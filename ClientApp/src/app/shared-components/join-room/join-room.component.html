@@ -1,3 +1,16 @@
 <p>
   join-room works!
 </p>
+<form (submit)="join()">
+  <label for="name">Your Name</label>
+  <input type="text" name="name" [(ngModel)]="model.name">
+
+  <label for="emblem">Emblem</label>
+  <select name="emblem" [(ngModel)]="model.emblemId">
+    <option *ngFor="let e of emblems" [value]="e.id">{{e.id}}</option>
+  </select>
+
+  <button type="submit">Join</button>
+
+  <img *ngIf="model?.emblemId" [src]="getSelectedEmblemUrl()">
+</form>

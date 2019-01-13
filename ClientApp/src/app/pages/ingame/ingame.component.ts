@@ -21,4 +21,6 @@ export class IngameComponent implements OnInit {
   }
 
   onRoomError = (): boolean => this.isInvalid = true;
+
+  onJoined = (): boolean => this.isInGame = true;
 }
