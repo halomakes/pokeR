@@ -8,7 +8,6 @@
   <div *ngIf="isInGame">
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>
   </div>
-  <app-notification-feed></app-notification-feed>
 </div>
 <div class="full-height d-flex flex-column justify-content-center align-items-center" *ngIf="isInvalid">
   <h4 class="display-4 mb-5">Room not found 😢</h4>

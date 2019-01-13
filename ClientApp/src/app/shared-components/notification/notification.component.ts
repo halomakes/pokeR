@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentRef } from '@angular/core';
+import { Component, OnInit, Input, ComponentRef, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-notification',
@@ -12,7 +12,10 @@ export class NotificationComponent implements OnInit {
   @Input()
   public selfRef: ComponentRef<NotificationComponent>;
 
+  @HostBinding('class.w-100') someField = true;
+
   hide: boolean;
+  animOut = false;
 
   constructor() { }
 
@@ -22,11 +25,15 @@ export class NotificationComponent implements OnInit {
     }, 10000);
   }
 
-  dismiss = (): void => {
-    try {
-      this.selfRef.destroy();
-    } catch {
-      this.hide = true;
+  dismiss = (): boolean => this.animOut = true;
+
+  transitionEnd = (e: AnimationEvent) => {
+    if (e.animationName === 'fadeOutUp') {
+      try {
+        this.selfRef.destroy();
+      } catch {
+        this.hide = true;
+      }
     }
   }
 }

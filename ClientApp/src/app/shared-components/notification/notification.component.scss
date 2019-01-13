@@ -1,0 +1,32 @@
+@keyframes slideIn {
+    from {
+        transform: translateX(105%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOutUp {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+        max-height: 200px;
+        overflow: hidden;
+    }
+    100% {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+    }
+}
+
+.animIn {
+    animation: slideIn .5s ease;
+}
+
+.animOut {
+    animation: fadeOutUp .7s ease forwards;
+}

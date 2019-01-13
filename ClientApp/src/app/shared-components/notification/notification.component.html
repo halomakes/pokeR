@@ -1,6 +1,5 @@
-<div>
-  {{message}}
-</div>
-<div>
-  [<span (click)="dismiss()">X</span>]
+<div [class.animIn]="!animOut" [class.animOut]="animOut" (animationend)="transitionEnd($event)">
+  <div class="alert alert-primary w-100" role="alert" (click)="dismiss()">
+    {{message}}
+  </div>
 </div>

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
 import { NotificationComponent } from './shared-components/notification/notification.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedComponentsModule } from './shared-components/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     PagesModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    SharedComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
