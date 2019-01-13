@@ -1,3 +1,25 @@
-<p>
-  create-room works!
-</p>
+<form (submit)="createRoom()">
+  <label for="id">Room Id</label>
+  <input name="id" type="number" [(ngModel)]="model.id">
+
+  <label for="name">Name</label>
+  <input type="text" name="name" [(ngModel)]="model.name">
+
+  <label for="tagline">Tagline</label>
+  <input type="text" name="tagline" [(ngModel)]="model.tagLine">
+
+  <label for="deck">Deck</label>
+  <select name="deck" [(ngModel)]="model.deckId">
+    <option *ngFor="let d of decks" [value]="d.id">{{d.name}}</option>
+  </select>
+
+  <div *ngIf="getSelectedDeck()">
+    <span>About this deck</span>
+    <div *ngIf="getSelectedDeck()?.description">{{getSelectedDeck()?.description}}</div>
+    <div>
+      <span *ngFor="let c of getSelectedDeck()?.cards">{{c.name}}</span>
+    </div>
+  </div>
+
+  <button type="submit">Create</button>
+</form>

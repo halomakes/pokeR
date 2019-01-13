@@ -16,7 +16,7 @@ import { ListChange } from '../models/list-change';
 export class PokerService {
   hub: HubConnection;
 
-  private decks: Deck[];
+  private decks: Deck[] = new Array<Deck>();
   private room: Room;
   private users: User[];
 
