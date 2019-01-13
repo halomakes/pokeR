@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ComponentRef } from '@angular/core';
 
 @Component({
   selector: 'app-notification',
@@ -9,10 +9,24 @@ export class NotificationComponent implements OnInit {
   @Input()
   public message: string;
 
+  @Input()
+  public selfRef: ComponentRef<NotificationComponent>;
+
+  hide: boolean;
+
   constructor() { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.dismiss();
+    }, 10000);
   }
 
-  dismiss = (): void => {};
+  dismiss = (): void => {
+    try {
+      this.selfRef.destroy();
+    } catch {
+      this.hide = true;
+    }
+  }
 }

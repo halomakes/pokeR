@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ComponentFactory, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { map } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
+import { NotificationComponent } from '../notification/notification.component';
 
 @Component({
   selector: 'app-notification-feed',
@@ -9,8 +10,9 @@ import { Observable, forkJoin } from 'rxjs';
   styleUrls: ['./notification-feed.component.scss']
 })
 export class NotificationFeedComponent implements OnInit {
+  @ViewChild('notificationHolder', { read: ViewContainerRef }) notificationHolder: ViewContainerRef;
 
-  constructor(private service: PokerService) { }
+  constructor(private service: PokerService, private resolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
     this.handleEvents().subscribe();
@@ -18,6 +20,15 @@ export class NotificationFeedComponent implements OnInit {
 
   notify = (message: string) => {
     console.log('Notify:', message);
+    this.createNotificationComponent(message);
+  }
+
+  createNotificationComponent = (message: string) => {
+    const factory: ComponentFactory<NotificationComponent> = this.resolver.resolveComponentFactory(NotificationComponent);
+    const container = this.notificationHolder;
+    const component = container.createComponent(factory);
+    component.instance.message = message;
+    component.instance.selfRef = component;
   }
 
   handleEvents = (): Observable<void> => forkJoin(

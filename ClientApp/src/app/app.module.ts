@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
+import { NotificationComponent } from './shared-components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,9 @@ import { PagesModule } from './pages/pages.module';
     PagesModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    NotificationComponent
+  ]
 })
 export class AppModule { }
