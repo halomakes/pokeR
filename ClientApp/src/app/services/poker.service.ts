@@ -21,6 +21,7 @@ export class PokerService {
   private decks: Deck[] = new Array<Deck>();
   private room: Room;
   private users: User[];
+  private userCards: User[];
   private emblems: Emblem[] = new Array<Emblem>();
 
   private isHubReady = false;
@@ -102,7 +103,13 @@ export class PokerService {
 
   private initializeHubWatches = (): Observable<void> => forkJoin(
     this.watchUsersJoin(),
-    this.watchusersLeave()
+    this.watchusersLeave(),
+    this.watchRoomClose(),
+    this.watchCardPlays(),
+    this.watchRoundStarts(),
+    this.watchRoundEnds(),
+    this.watchTaglineUpdates(),
+    this.watchTimerStarts()
   ).pipe(map(() => { }))
 
   private watchUsersJoin = (): Observable<void> =>
@@ -116,4 +123,28 @@ export class PokerService {
       this.users = d.collection;
       this.userLeaves.emit(d);
     })))
+
+  private watchRoomClose = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('RoomClosed', () => this.roomClosing.emit())))
+
+  private watchCardPlays = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('CardPlayed', (c: ListChange<User>) => {
+      this.userCards = c.collection;
+      this.cardPlays.emit(c);
+    })))
+
+  private watchRoundStarts = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('RoundStarted', () => this.roundStarts.emit())))
+
+  private watchRoundEnds = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('RoundEnded', () => this.roundEnds.emit())))
+
+  private watchTaglineUpdates = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('TaglineUpdated', (t: string) => {
+      this.room.tagLine = t;
+      this.taglineUpdated.emit(t);
+    })))
+
+  private watchTimerStarts = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('TimerStarted', (d: number) => this.timerStarts.emit(d))))
 }
