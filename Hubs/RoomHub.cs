@@ -58,7 +58,7 @@ namespace PokeR.Hubs
             user.CurrentCardId = cardId;
             await db.SaveChangesAsync();
 
-            await Clients.Group(user.RoomId).SendAsync("CardPlayed", new ListChange<User>(user, await GetGameState(user.RoomId)));
+            await Clients.Group(user.RoomId).SendAsync("CardPlayed", new ListChange<User>(user, await GetRoomUsers(user.RoomId)));
 
             if (!(await RoundIsPendingVote(user)))
                 await EndRound(user.RoomId);
@@ -118,7 +118,9 @@ namespace PokeR.Hubs
 
         private async Task<bool> RoundIsPendingVote(User user) => await db.Users.AnyAsync(u => u.RoomId == user.RoomId && u.CurrentCardId == null);
 
-        private async Task<List<User>> GetRoomUsers(string roomId) => await db.Users.Where(u => u.RoomId == roomId).ToListAsync();
+        private async Task<List<User>> GetRoomUsers(string roomId) => await db.Users
+            .Include(u => u.CurrentCard)
+            .Where(u => u.RoomId == roomId).ToListAsync();
 
         private async Task<string> GetRoomId() => await db.Users
             .Where(u => u.ConnectionId == Context.ConnectionId)
@@ -127,10 +129,5 @@ namespace PokeR.Hubs
 
         private async Task<User> GetUser() => await db.Users
             .FirstOrDefaultAsync(u => u.ConnectionId == Context.ConnectionId);
-
-        private async Task<List<User>> GetGameState(string roomId) => await db.Users
-            .Include(u => u.CurrentCard)
-            .Where(u => u.RoomId == roomId)
-            .ToListAsync();
     }
 }

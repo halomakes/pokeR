@@ -21,7 +21,6 @@ export class PokerService {
   private decks: Deck[] = new Array<Deck>();
   private room: Room;
   private users: User[];
-  private userCards: User[];
   private emblems: Emblem[] = new Array<Emblem>();
 
   private isHubReady = false;
@@ -129,7 +128,7 @@ export class PokerService {
 
   private watchCardPlays = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('CardPlayed', (c: ListChange<User>) => {
-      this.userCards = c.collection;
+      this.users = c.collection;
       this.cardPlays.emit(c);
     })))
 
