@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeR.Models.Entities
 {
@@ -18,7 +19,11 @@ namespace PokeR.Models.Entities
         [Required]
         public int EmblemId { get; set; }
 
+        public int? CurrentCardId { get; set; }
+
         public virtual Room Room { get; set; }
         public virtual Emblem Emblem { get; set; }
+        [ForeignKey("CurrentCardId")]
+        public virtual Card CurrentCard { get; set; }
     }
 }

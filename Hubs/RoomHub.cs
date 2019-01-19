@@ -65,12 +65,73 @@ namespace PokeR.Hubs
             await db.SaveChangesAsync();
         }
 
+        public async Task PlayCard(int cardId)
+        {
+            var user = await GetUser();
+            user.CurrentCardId = cardId;
+            await db.SaveChangesAsync();
+
+            await Clients.Group(user.RoomId).SendAsync("CardPlayed", new ListChange<User>(user, await GetGameState(user.RoomId)));
+
+            if (!(await RoundIsPendingVote(user)))
+                await EndRound(user.RoomId);
+        }
+
+
+        public async Task StartRound()
+        {
+            var roomId = await GetRoomId();
+            var users = await GetRoomUsers(roomId);
+            users.ForEach(u => u.CurrentCardId = null);
+            await db.SaveChangesAsync();
+
+            await Clients.Group(roomId).SendAsync("RoundStarted");
+        }
+
+        public async Task UpdateTagline(string newTagline) => await Clients.Group(await GetRoomId()).SendAsync("TaglineUpdated", newTagline);
+
+        public async Task StoreTagline(string newTagline)
+        {
+            var room = await db.Users.Where(u => u.ConnectionId == Context.ConnectionId).Select(u => u.Room).FirstOrDefaultAsync();
+            if (room != null)
+            {
+                room.TagLine = newTagline;
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task StartTimer(int milliseconds)
+        {
+            var roomId = await GetRoomId();
+            await Clients.Group(roomId).SendAsync("TimerStarted", milliseconds);
+            await Task.Delay(milliseconds);
+
+            await EndRound(roomId);
+        }
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             await LeaveRoom();
             await base.OnDisconnectedAsync(exception);
         }
 
+        private async Task EndRound(string roomId) => await Clients.Group(roomId).SendAsync("RoundEnded");
+
+        private async Task<bool> RoundIsPendingVote(User user) => await db.Users.AnyAsync(u => u.RoomId == user.RoomId && u.CurrentCardId == null);
+
         private async Task<List<User>> GetRoomUsers(string roomId) => await db.Users.Where(u => u.RoomId == roomId).ToListAsync();
+
+        private async Task<string> GetRoomId() => await db.Users
+            .Where(u => u.ConnectionId == Context.ConnectionId)
+            .Select(u => u.RoomId)
+            .FirstOrDefaultAsync();
+
+        private async Task<User> GetUser() => await db.Users
+            .FirstOrDefaultAsync(u => u.ConnectionId == Context.ConnectionId);
+
+        private async Task<List<User>> GetGameState(string roomId) => await db.Users
+            .Include(u => u.CurrentCard)
+            .Where(u => u.RoomId == roomId)
+            .ToListAsync();
     }
 }
