@@ -12,6 +12,7 @@ import { Card } from 'src/app/models/entities/card';
 })
 export class PlayfieldComponent implements OnInit {
   lastState: Array<User> = new Array<User>();
+  isRevealed = false;
 
   constructor(private service: PokerService) { }
 
@@ -32,13 +33,24 @@ export class PlayfieldComponent implements OnInit {
     }))
 
   watchRoundEnd = (): Observable<void> =>
-    this.service.roundEnds.pipe(map(p => {
+    this.service.roundEnds.pipe(map(() => {
       this.revealCards();
     }))
 
+  watchRoundStart = (): Observable<void> =>
+    this.service.roundStarts.pipe(map(() => {
+      this.lastState = new Array<User>();
+      this.isRevealed = false;
+    }))
+
+  getActiveCards = (): Array<User> => this.lastState.filter((u: User) => u.currentCard !== null);
+
   animateCardPlay = (c: Card, emblemId: number, userName: string) => console.log(`showing card FACE DOWN!: `, c);
 
-  revealCards = (): void => console.log('YOU ACTIVATED MY TRAP CARD!');
+  revealCards = (): void => {
+    this.isRevealed = true;
+    console.log('YOU ACTIVATED MY TRAP CARD!');
+  }
 
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 }

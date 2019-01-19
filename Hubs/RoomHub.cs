@@ -27,6 +27,7 @@ namespace PokeR.Hubs
                 ConnectionId = Context.ConnectionId,
                 DisplayName = request.Name,
                 RoomId = request.RoomId,
+                EmblemId = request.EmblemId,
                 Id = Guid.NewGuid()
             };
             db.Users.Add(user);
