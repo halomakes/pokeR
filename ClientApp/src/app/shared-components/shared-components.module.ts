@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
+import { PlayfieldComponent } from './playfield/playfield.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CardListComponent } from './card-list/card-list.component';
     NotificationComponent,
     RoomInfoComponent,
     JoinRoomComponent,
-    CardListComponent
+    CardListComponent,
+    PlayfieldComponent
   ], imports: [
     CommonModule,
     FormsModule

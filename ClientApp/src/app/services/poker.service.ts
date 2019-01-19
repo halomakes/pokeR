@@ -38,6 +38,8 @@ export class PokerService {
     this.initializeHubWatches().subscribe();
   }
 
+  public getEmblemUrl = (id: number): string => `api/emblems/${id}/image`;
+
   public reset = (): void => this.room = null;
 
   public createRoom = (request: CreateRoomRequest): Observable<void> =>
