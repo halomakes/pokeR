@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PokeR.Models.Entities
@@ -14,5 +15,6 @@ namespace PokeR.Models.Entities
         public int DeckId { get; set; }
 
         public Deck Deck { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }
