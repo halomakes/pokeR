@@ -38,6 +38,7 @@
   },
   {
     "Name": "Fibonacci Sequence",
+    "Description": "Rounded values based on the Fibonacci Sequence",
     "Cards": [
       {
         "Name": "☕",

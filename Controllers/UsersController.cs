@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PokeR.Models.Entities;
 using PokeR.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -73,6 +74,8 @@ namespace PokeR.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if (user.Id == null || user.Id == Guid.Empty)
+                user.Id = Guid.NewGuid();
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 

@@ -1,25 +1,45 @@
 <form (submit)="createRoom()">
-  <label for="id">Room Id</label>
-  <input name="id" type="number" [(ngModel)]="model.id">
 
-  <label for="name">Name</label>
-  <input type="text" name="name" [(ngModel)]="model.name">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label for="id" class="input-group-text">Room Id</label>
+    </div>
+    <input class="form-control" name="id" type="number" [(ngModel)]="model.id">
+  </div>
 
-  <label for="tagline">Tagline</label>
-  <input type="text" name="tagline" [(ngModel)]="model.tagLine">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label for="name" class="input-group-text">Name</label>
+    </div>
+    <input class="form-control" type="text" name="name" [(ngModel)]="model.name">
+  </div>
 
-  <label for="deck">Deck</label>
-  <select name="deck" [(ngModel)]="model.deckId">
-    <option *ngFor="let d of decks" [value]="d.id">{{d.name}}</option>
-  </select>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="tagline">Tagline</label>
+    </div>
+    <input class="form-control" type="text" name="tagline" [(ngModel)]="model.tagLine">
+  </div>
 
-  <div *ngIf="getSelectedDeck()">
-    <span>About this deck</span>
-    <div *ngIf="getSelectedDeck()?.description">{{getSelectedDeck()?.description}}</div>
-    <div>
-      <span *ngFor="let c of getSelectedDeck()?.cards">{{c.name}}</span>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text" for="deck">Deck</label>
+    </div>
+    <select class="form-control" name="deck" [(ngModel)]="model.deckId">
+      <option *ngFor="let d of decks" [value]="d.id">{{d.name}}</option>
+    </select>
+  </div>
+
+  <div *ngIf="getSelectedDeck()" class="mb-3">
+    <div class="mb-2 small" *ngIf="getSelectedDeck()?.description">
+      {{getSelectedDeck()?.description}}
+    </div>
+    <div class="d-flex flex-row flex-wrap">
+      <span class="miniCard card m-1" *ngFor="let c of getSelectedDeck()?.cards">{{c.name}}</span>
     </div>
   </div>
 
-  <button type="submit">Create</button>
+  <div class="d-flex flex-row justify-content-end">
+    <button type="submit" class="btn btn-primary">Create Room</button>
+  </div>
 </form>

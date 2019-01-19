@@ -1,0 +1,17 @@
+.cardTray {
+    font-size: 1.4rem;
+    min-width: 2em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    text-align: center;
+    transition: font-size .2s ease;
+}
+
+.cardTray.selected {
+    font-size: 2rem;
+}
+
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+}

@@ -36,7 +36,9 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   loadEmblems = (): Observable<Emblem[]> =>
     this.service.getEmblems().pipe(map(e => this.emblems = e))
 
-  getSelectedEmblemUrl = (): string => `api/emblems/${this.model.emblemId}/image`;
+  getSelectedEmblemUrl = (): string => this.getEmblemUrl(this.model.emblemId);
+
+  getEmblemUrl = (id: number): string => `api/emblems/${id}/image`;
 
   join = () => this.service.joinRoom(this.model).subscribe(() => this.joined.emit(true));
 }
