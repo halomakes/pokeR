@@ -1,21 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
 .full-height {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 
 .click-none {
-    pointer-events: none;
+  pointer-events: none !important;
 }
 
 .click-normal {
-    pointer-events: initial;
+  pointer-events: initial;
 }
 
 .pointer-hand {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .translucent {
-    opacity: .7;
+  opacity: .3;
 }
