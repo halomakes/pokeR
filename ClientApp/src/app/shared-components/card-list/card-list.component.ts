@@ -22,7 +22,7 @@ export class CardListComponent implements OnChanges {
   }
 
   onCardSelected = (cardId: number): void => {
-    this.service.playCard(cardId);
+    this.service.playCard(cardId).subscribe();
     this.selectedCardId = cardId;
   }
 }

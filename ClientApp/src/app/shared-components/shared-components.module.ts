@@ -26,7 +26,8 @@ import { PlayfieldComponent } from './playfield/playfield.component';
     CreateRoomComponent,
     RoomInfoComponent,
     JoinRoomComponent,
-    CardListComponent
+    CardListComponent,
+    PlayfieldComponent
   ]
 })
 export class SharedComponentsModule { }

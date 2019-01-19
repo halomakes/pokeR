@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { User } from 'src/app/models/entities/user';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Card } from 'src/app/models/entities/card';
 
@@ -16,7 +16,14 @@ export class PlayfieldComponent implements OnInit {
   constructor(private service: PokerService) { }
 
   ngOnInit() {
+    this.watchState().subscribe();
   }
+
+  watchState = (): Observable<void> =>
+    forkJoin(
+      this.watchPlays(),
+      this.watchRoundEnd()
+    ).pipe(map(() => { }))
 
   watchPlays = (): Observable<void> =>
     this.service.cardPlays.pipe(map(p => {

@@ -6,6 +6,7 @@
   </div>
   </div>
   <div *ngIf="isInGame">
+    <app-playfield></app-playfield>
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>
   </div>
 </div>
