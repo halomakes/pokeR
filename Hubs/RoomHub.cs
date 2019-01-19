@@ -52,19 +52,6 @@ namespace PokeR.Hubs
             }
         }
 
-        public async Task CloseRoom(string roomId)
-        {
-            var activeUserIds = await db.Users.Where(u => u.RoomId == roomId).Select(u => u.ConnectionId).ToListAsync();
-            await Clients.Group(roomId).SendAsync("RoomClosed");
-            foreach (var id in activeUserIds)
-            {
-                await Groups.RemoveFromGroupAsync(id, roomId);
-            }
-            db.Users.RemoveRange(db.Users.Where(u => u.RoomId == roomId));
-            db.Rooms.RemoveRange(db.Rooms.Where(r => r.Id == roomId));
-            await db.SaveChangesAsync();
-        }
-
         public async Task PlayCard(int cardId)
         {
             var user = await GetUser();
@@ -76,7 +63,6 @@ namespace PokeR.Hubs
             if (!(await RoundIsPendingVote(user)))
                 await EndRound(user.RoomId);
         }
-
 
         public async Task StartRound()
         {
@@ -113,6 +99,19 @@ namespace PokeR.Hubs
         {
             await LeaveRoom();
             await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task CloseRoom(string roomId)
+        {
+            var activeUserIds = await db.Users.Where(u => u.RoomId == roomId).Select(u => u.ConnectionId).ToListAsync();
+            await Clients.Group(roomId).SendAsync("RoomClosed");
+            foreach (var id in activeUserIds)
+            {
+                await Groups.RemoveFromGroupAsync(id, roomId);
+            }
+            db.Users.RemoveRange(db.Users.Where(u => u.RoomId == roomId));
+            db.Rooms.RemoveRange(db.Rooms.Where(r => r.Id == roomId));
+            await db.SaveChangesAsync();
         }
 
         private async Task EndRound(string roomId) => await Clients.Group(roomId).SendAsync("RoundEnded");

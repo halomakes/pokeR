@@ -27,6 +27,12 @@ export class PokerService {
 
   public userJoins: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public roomClosing: EventEmitter<void> = new EventEmitter<void>();
+  public cardPlays: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public roundStarts: EventEmitter<void> = new EventEmitter<void>();
+  public roundEnds: EventEmitter<void> = new EventEmitter<void>();
+  public taglineUpdated: EventEmitter<string> = new EventEmitter<string>();
+  public timerStarts: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private http: HttpClient) {
     this.initializeHubWatches().subscribe();
@@ -51,6 +57,24 @@ export class PokerService {
 
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))))
+
+  public leaveRoom = (): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('leaveRoom'))))
+
+  public playCard = (cardId: number): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('playCard', cardId))))
+
+  public startRound = (): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('startRound'))))
+
+  public updateTagline = (newTagline: string): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('updateTagline', newTagline))))
+
+  public storeTagline = (newTagline: string): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('storeTagline', newTagline))))
+
+  public startTimer = (milliseconds: number): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('startTimer', milliseconds))))
 
   public getCards = (deckId: number): Observable<Card[]> =>
     this.getDecks().pipe(map(ds => {
