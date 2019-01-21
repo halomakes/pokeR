@@ -3,6 +3,7 @@ import { PokerService } from 'src/app/services/poker.service';
 import { map } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 import { NotificationComponent } from '../notification/notification.component';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-notification-feed',
@@ -12,7 +13,8 @@ import { NotificationComponent } from '../notification/notification.component';
 export class NotificationFeedComponent implements OnInit {
   @ViewChild('notificationHolder', { read: ViewContainerRef }) notificationHolder: ViewContainerRef;
 
-  constructor(private service: PokerService, private resolver: ComponentFactoryResolver) { }
+  constructor(private service: PokerService, private resolver: ComponentFactoryResolver,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.handleEvents().subscribe();
@@ -33,7 +35,8 @@ export class NotificationFeedComponent implements OnInit {
 
   handleEvents = (): Observable<void> => forkJoin(
     this.handleJoins(),
-    this.handleParts()
+    this.handleParts(),
+    this.handleMessages()
   ).pipe(map(() => { }))
 
   handleJoins = (): Observable<void> => this.service.userJoins.pipe(map(j =>
@@ -43,4 +46,6 @@ export class NotificationFeedComponent implements OnInit {
   handleParts = (): Observable<void> => this.service.userLeaves.pipe(map(j =>
     this.notify(`${j.delta.displayName} left the room`)
   ))
+
+  handleMessages = (): Observable<void> => this.notificationService.messages.pipe(map(this.notify));
 }

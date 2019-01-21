@@ -48,7 +48,12 @@ namespace PokeR.Hubs
                 db.Users.Remove(user);
                 await db.SaveChangesAsync();
 
-                if (user.IsHost || !(await db.Users.Where(u => u.RoomId == roomId).AnyAsync()))
+                if (user.IsHost)
+                {
+                    await Notify(Clients.Group(roomId), $"The room has been closed because the host ({user.DisplayName}) left.");
+                    await CloseRoom(roomId);
+                }
+                else if (!await db.Users.Where(u => u.RoomId == roomId).AnyAsync())
                     await CloseRoom(roomId);
                 else
                     await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
@@ -75,6 +80,7 @@ namespace PokeR.Hubs
             await db.SaveChangesAsync();
 
             await Clients.Group(roomId).SendAsync("RoundStarted");
+            await Notify(Clients.Group(roomId), $"Voting has started on a new round.");
         }
 
         public async Task UpdateTagline(string newTagline) => await Clients.Group(await GetRoomId()).SendAsync("TaglineUpdated", newTagline);
@@ -93,6 +99,8 @@ namespace PokeR.Hubs
         {
             var roomId = await GetRoomId();
             await Clients.Group(roomId).SendAsync("TimerStarted", milliseconds);
+            var user = await GetUser();
+            await Notify(Clients.Group(roomId), $"{user.DisplayName} started a {milliseconds / 1000}-second countdown.");
         }
 
         public async Task EndRound() => await EndRoundForRoom(await GetRoomId());
@@ -123,6 +131,8 @@ namespace PokeR.Hubs
         }
 
         private async Task EndRoundForRoom(string roomId) => await Clients.Group(roomId).SendAsync("RoundEnded");
+
+        private async Task Notify(IClientProxy target, string message) => await target.SendAsync("Message", message);
 
         private async Task<bool> RoundIsPendingVote(User user) => await db.Users.AnyAsync(u => u.RoomId == user.RoomId && u.CurrentCardId == null);
 

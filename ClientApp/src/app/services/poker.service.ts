@@ -11,6 +11,8 @@ import { User } from '../models/entities/user';
 import { ListChange } from '../models/list-change';
 import { Emblem } from '../models/entities/emblem';
 import { Card } from '../models/entities/card';
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +38,7 @@ export class PokerService {
 
   public player: User;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private notifications: NotificationService, private router: Router) {
     this.initializeHubWatches().subscribe();
   }
 
@@ -125,7 +127,8 @@ export class PokerService {
     this.watchRoundEnds(),
     this.watchTaglineUpdates(),
     this.watchTimerStarts(),
-    this.watchSelfInfo()
+    this.watchSelfInfo(),
+    this.watchMessages()
   ).pipe(map(() => { }))
 
   private watchUsersJoin = (): Observable<void> =>
@@ -141,7 +144,10 @@ export class PokerService {
     })))
 
   private watchRoomClose = (): Observable<void> =>
-    this.getHub().pipe(map(h => h.on('RoomClosed', () => this.roomClosing.emit())))
+    this.getHub().pipe(map(h => h.on('RoomClosed', () => {
+      this.roomClosing.emit();
+      this.router.navigate(['/']);
+    })))
 
   private watchCardPlays = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('CardPlayed', (c: ListChange<User>) => {
@@ -166,4 +172,7 @@ export class PokerService {
 
   private watchSelfInfo = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('Self', (u: User) => this.player = u)))
+
+  private watchMessages = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('Message', this.notifications.notify)))
 }
