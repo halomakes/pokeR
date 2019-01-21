@@ -1,16 +1,18 @@
 [{
-        "ImageUrl": "https://www.destinypedia.com/images/f/f2/Aspect_of_Blood.jpg"
+        "ImageUrl": "/emblems/generic.jpg"
     },
     {
-        "ImageUrl": "https://www.destinypedia.com/images/b/b7/Aspect_of_Dust.jpg"
+        "ImageUrl": "/emblems/generic2.png"
     },
     {
-        "ImageUrl": "https://www.destinypedia.com/images/8/80/Aspect_of_Shadow.jpg"
+        "ImageUrl": "/emblems/um.png"
     },
     {
-        "ImageUrl": "https://www.destinypedia.com/images/8/81/Commander_Crest.jpg"
+        "ImageUrl": "/emblems/exiledToTheDarknessRegion.jpg"
     },
     {
-        "ImageUrl": "https://www.destinypedia.com/images/d/d7/Rune_of_the_Disciple.jpg"
+        "ImageUrl": "/emblems/crabsAdjustHumidity.png"
+    }, {
+        "ImageUrl": "/emblems/chicago.png"
     }
 ]

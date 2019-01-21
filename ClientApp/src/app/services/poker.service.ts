@@ -11,6 +11,8 @@ import { User } from '../models/entities/user';
 import { ListChange } from '../models/list-change';
 import { Emblem } from '../models/entities/emblem';
 import { Card } from '../models/entities/card';
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +29,21 @@ export class PokerService {
 
   public userJoins: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public roomClosing: EventEmitter<void> = new EventEmitter<void>();
+  public cardPlays: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public roundStarts: EventEmitter<void> = new EventEmitter<void>();
+  public roundEnds: EventEmitter<void> = new EventEmitter<void>();
+  public taglineUpdated: EventEmitter<string> = new EventEmitter<string>();
+  public timerStarts: EventEmitter<number> = new EventEmitter<number>();
+  public playerChanges: EventEmitter<User> = new EventEmitter<User>();
 
-  constructor(private http: HttpClient) {
+  public player: User;
+
+  constructor(private http: HttpClient, private notifications: NotificationService, private router: Router) {
     this.initializeHubWatches().subscribe();
   }
+
+  public getEmblemUrl = (id: number): string => `api/emblems/${id}/image`;
 
   public reset = (): void => this.room = null;
 
@@ -46,15 +59,48 @@ export class PokerService {
       this.http.get<Emblem[]>('api/emblems').pipe(map(e => this.emblems = e))
 
   public getRoom = (roomId: string): Observable<Room> =>
-    this.room ? of(this.room) :
-      this.http.get<Room>(`api/rooms/${roomId}`).pipe(map(r => this.room = r))
+    this.http.get<Room>(`api/rooms/${roomId}`).pipe(map(r => this.room = r))
+
+  public getPlayers = (): Observable<Array<User>> =>
+    this.room
+      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.users))
+      : of(new Array<User>())
+
+  public getTagline = (): Observable<string> =>
+    this.room
+      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.tagLine))
+      : of('')
 
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))))
 
+  public leaveRoom = (): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('leaveRoom'))))
+
+  public playCard = (cardId: number): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('playCard', cardId))))
+
+  public startRound = (): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('startRound'))))
+
+  public updateTagline = (newTagline: string): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('updateTagline', newTagline))))
+
+  public storeTagline = (newTagline: string): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('storeTagline', newTagline))))
+
+  public startTimer = (milliseconds: number): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('startTimer', milliseconds))))
+
+  public endRound = (): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('endRound'))))
+
+  public checkAvailability = (id: string): Observable<boolean> =>
+    this.http.get(`api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
+      .pipe(map(r => r.body === 'true'))
+
   public getCards = (deckId: number): Observable<Card[]> =>
     this.getDecks().pipe(map(ds => {
-      console.log(ds, deckId);
       const deck = ds.find(d => d.id === deckId);
       return deck.cards.sort(this.orderCards);
     }))
@@ -78,7 +124,15 @@ export class PokerService {
 
   private initializeHubWatches = (): Observable<void> => forkJoin(
     this.watchUsersJoin(),
-    this.watchusersLeave()
+    this.watchusersLeave(),
+    this.watchRoomClose(),
+    this.watchCardPlays(),
+    this.watchRoundStarts(),
+    this.watchRoundEnds(),
+    this.watchTaglineUpdates(),
+    this.watchTimerStarts(),
+    this.watchSelfInfo(),
+    this.watchMessages()
   ).pipe(map(() => { }))
 
   private watchUsersJoin = (): Observable<void> =>
@@ -92,4 +146,40 @@ export class PokerService {
       this.users = d.collection;
       this.userLeaves.emit(d);
     })))
+
+  private watchRoomClose = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('RoomClosed', () => {
+      this.roomClosing.emit();
+      this.router.navigate(['/']);
+    })))
+
+  private watchCardPlays = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('CardPlayed', (c: ListChange<User>) => {
+      this.users = c.collection;
+      this.cardPlays.emit(c);
+    })))
+
+  private watchRoundStarts = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('RoundStarted', () => this.roundStarts.emit())))
+
+  private watchRoundEnds = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('RoundEnded', () => this.roundEnds.emit())))
+
+  private watchTaglineUpdates = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('TaglineUpdated', (t: string) => {
+      this.room.tagLine = t;
+      this.taglineUpdated.emit(t);
+    })))
+
+  private watchTimerStarts = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('TimerStarted', (d: number) => this.timerStarts.emit(d))))
+
+  private watchSelfInfo = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('Self', (u: User) => {
+      this.player = u;
+      this.playerChanges.emit(u);
+    })))
+
+  private watchMessages = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('Message', this.notifications.notify)))
 }

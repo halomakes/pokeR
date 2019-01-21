@@ -22,7 +22,6 @@ export class RoomInfoComponent implements OnChanges {
   constructor(private service: PokerService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.roomId.currentValue) {
       this.roomId = changes.roomId.currentValue;
       this.loadRoom().subscribe(() => { }, (error) => {

@@ -27,7 +27,6 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.roomId.currentValue) {
       this.model.roomId = changes.roomId.currentValue;
     }
@@ -38,7 +37,7 @@ export class JoinRoomComponent implements OnChanges, OnInit {
 
   getSelectedEmblemUrl = (): string => this.getEmblemUrl(this.model.emblemId);
 
-  getEmblemUrl = (id: number): string => `api/emblems/${id}/image`;
+  getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 
   join = () => this.service.joinRoom(this.model).subscribe(() => this.joined.emit(true));
 }

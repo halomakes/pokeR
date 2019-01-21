@@ -7,6 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
+import { PlayfieldComponent } from './playfield/playfield.component';
+import { RoundStatusComponent } from './round-status/round-status.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,16 +19,22 @@ import { CardListComponent } from './card-list/card-list.component';
     NotificationComponent,
     RoomInfoComponent,
     JoinRoomComponent,
-    CardListComponent
+    CardListComponent,
+    PlayfieldComponent,
+    RoundStatusComponent
   ], imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    AppRoutingModule
   ], exports: [
     NotificationFeedComponent,
     CreateRoomComponent,
     RoomInfoComponent,
     JoinRoomComponent,
-    CardListComponent
+    CardListComponent,
+    PlayfieldComponent,
+    RoundStatusComponent
   ]
 })
 export class SharedComponentsModule { }

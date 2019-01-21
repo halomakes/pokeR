@@ -4,14 +4,23 @@
     <div class="input-group-prepend">
       <label for="id" class="input-group-text">Room Id</label>
     </div>
-    <input class="form-control" name="id" type="number" [(ngModel)]="model.id">
+    <input class="form-control" [class.is-valid]="isAvailable" [class.is-invalid]="isAvailable==false" name="id" type="number"
+      [(ngModel)]="model.id" (input)="onInput($event.target.value)" required>
+    <div *ngIf="isAvailable==true" class="valid-feedback">
+      <i class="mdi mdi-check"></i>
+      This room is available. </div>
+    <div *ngIf="isAvailable==false" class="invalid-feedback">
+      <i class="mdi mdi-close"></i>
+      This room is taken.
+      <a [routerLink]="['/room', model.id]">Join it</a>
+    </div>
   </div>
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <label for="name" class="input-group-text">Name</label>
     </div>
-    <input class="form-control" type="text" name="name" [(ngModel)]="model.name">
+    <input class="form-control" type="text" name="name" [(ngModel)]="model.name" required>
   </div>
 
   <div class="input-group mb-3">
@@ -25,7 +34,7 @@
     <div class="input-group-prepend">
       <label class="input-group-text" for="deck">Deck</label>
     </div>
-    <select class="form-control" name="deck" [(ngModel)]="model.deckId">
+    <select class="form-control" name="deck" [(ngModel)]="model.deckId" required>
       <option *ngFor="let d of decks" [value]="d.id">{{d.name}}</option>
     </select>
   </div>
@@ -40,6 +49,7 @@
   </div>
 
   <div class="d-flex flex-row justify-content-end">
-    <button type="submit" class="btn btn-primary">Create Room</button>
+    <button type="submit" class="btn btn-primary" [disabled]="!isAvailable || !model.deckId || !model.id || !model.name">Create
+      Room</button>
   </div>
 </form>

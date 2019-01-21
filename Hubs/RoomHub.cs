@@ -27,10 +27,13 @@ namespace PokeR.Hubs
                 ConnectionId = Context.ConnectionId,
                 DisplayName = request.Name,
                 RoomId = request.RoomId,
-                Id = Guid.NewGuid()
+                EmblemId = request.EmblemId,
+                Id = Guid.NewGuid(),
+                IsHost = !await db.Users.AnyAsync(u => u.RoomId == request.RoomId)
             };
             db.Users.Add(user);
             await db.SaveChangesAsync();
+            await Clients.Caller.SendAsync("Self", user);
             await Clients.Group(request.RoomId).SendAsync("UserJoined", new ListChange<User>(user, await GetRoomUsers(request.RoomId)));
         }
 
@@ -45,14 +48,87 @@ namespace PokeR.Hubs
                 db.Users.Remove(user);
                 await db.SaveChangesAsync();
 
-                if (user.IsHost || !(await db.Users.Where(u => u.RoomId == roomId).AnyAsync()))
+                if (!await db.Users.Where(u => u.RoomId == roomId).AnyAsync())
                     await CloseRoom(roomId);
                 else
-                    await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+                {
+                    if (user.IsHost)
+                    {
+                        var newHost = await db.Users.FirstOrDefaultAsync(u => u.RoomId == roomId);
+                        newHost.IsHost = true;
+                        await db.SaveChangesAsync();
+
+                        await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+                        await Notify(Clients.Group(roomId), $"{newHost.DisplayName} is now the host.");
+                        await Notify(Clients.Client(newHost.ConnectionId), "You are now the host.");
+                        await Clients.Client(newHost.ConnectionId).SendAsync("Self", newHost);
+                    }
+                    else
+                    {
+                        await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+                    }
+                }
+
+                await AssertGameEnd(user);
             }
         }
 
-        public async Task CloseRoom(string roomId)
+        public async Task PlayCard(int cardId)
+        {
+            var user = await GetUser();
+            user.CurrentCardId = cardId;
+            await db.SaveChangesAsync();
+
+            await Clients.Group(user.RoomId).SendAsync("CardPlayed", new ListChange<User>(user, await GetRoomUsers(user.RoomId)));
+            await AssertGameEnd(user);
+        }
+
+        public async Task StartRound()
+        {
+            var roomId = await GetRoomId();
+            var users = await GetRoomUsers(roomId);
+            users.ForEach(u => u.CurrentCardId = null);
+            await db.SaveChangesAsync();
+
+            await Clients.Group(roomId).SendAsync("RoundStarted");
+            await Notify(Clients.Group(roomId), $"Voting has started on a new round.");
+        }
+
+        public async Task UpdateTagline(string newTagline) => await Clients.Group(await GetRoomId()).SendAsync("TaglineUpdated", newTagline);
+
+        public async Task StoreTagline(string newTagline)
+        {
+            var room = await db.Users.Where(u => u.ConnectionId == Context.ConnectionId).Select(u => u.Room).FirstOrDefaultAsync();
+            if (room != null)
+            {
+                room.TagLine = newTagline;
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task StartTimer(int milliseconds)
+        {
+            var roomId = await GetRoomId();
+            await Clients.Group(roomId).SendAsync("TimerStarted", milliseconds);
+            var user = await GetUser();
+            await Notify(Clients.Group(roomId), $"{user.DisplayName} started a {milliseconds / 1000}-second countdown.");
+        }
+
+        public async Task EndRound() => await EndRoundForRoom(await GetRoomId());
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            await LeaveRoom();
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task AssertGameEnd(User user)
+        {
+            if (!(await RoundIsPendingVote(user)))
+                await EndRoundForRoom(user.RoomId);
+        }
+
+        private async Task CloseRoom(string roomId)
         {
             var activeUserIds = await db.Users.Where(u => u.RoomId == roomId).Select(u => u.ConnectionId).ToListAsync();
             await Clients.Group(roomId).SendAsync("RoomClosed");
@@ -65,12 +141,22 @@ namespace PokeR.Hubs
             await db.SaveChangesAsync();
         }
 
-        public override async Task OnDisconnectedAsync(Exception exception)
-        {
-            await LeaveRoom();
-            await base.OnDisconnectedAsync(exception);
-        }
+        private async Task EndRoundForRoom(string roomId) => await Clients.Group(roomId).SendAsync("RoundEnded");
 
-        private async Task<List<User>> GetRoomUsers(string roomId) => await db.Users.Where(u => u.RoomId == roomId).ToListAsync();
+        private async Task Notify(IClientProxy target, string message) => await target.SendAsync("Message", message);
+
+        private async Task<bool> RoundIsPendingVote(User user) => await db.Users.AnyAsync(u => u.RoomId == user.RoomId && u.CurrentCardId == null);
+
+        private async Task<List<User>> GetRoomUsers(string roomId) => await db.Users
+            .Include(u => u.CurrentCard)
+            .Where(u => u.RoomId == roomId).ToListAsync();
+
+        private async Task<string> GetRoomId() => await db.Users
+            .Where(u => u.ConnectionId == Context.ConnectionId)
+            .Select(u => u.RoomId)
+            .FirstOrDefaultAsync();
+
+        private async Task<User> GetUser() => await db.Users
+            .FirstOrDefaultAsync(u => u.ConnectionId == Context.ConnectionId);
     }
 }

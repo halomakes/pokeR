@@ -24,6 +24,9 @@ namespace PokeR.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Room>>> GetRooms() => await _context.Rooms.ToListAsync();
 
+        [HttpGet("available/{id}")]
+        public async Task<ActionResult<bool>> CheckAvailability(string id) => !await _context.Rooms.AnyAsync(r => r.Id == id);
+
         // GET: api/Rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(string id)

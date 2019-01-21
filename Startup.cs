@@ -44,7 +44,10 @@ namespace PokeR
             });
             services.AddTransient<DbSeeder>();
 
-            services.AddSignalR().AddJsonProtocol();
+            services.AddSignalR().AddJsonProtocol(options =>
+            {
+                options.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
