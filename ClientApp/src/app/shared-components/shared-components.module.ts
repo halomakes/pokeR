@@ -9,6 +9,7 @@ import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
 import { PlayfieldComponent } from './playfield/playfield.component';
 import { RoundStatusComponent } from './round-status/round-status.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RoundStatusComponent } from './round-status/round-status.component';
     RoundStatusComponent
   ], imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ], exports: [
     NotificationFeedComponent,
     CreateRoomComponent,

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { User } from 'src/app/models/entities/user';
-import { Observable, forkJoin, Subscribable, Subscription } from 'rxjs';
+import { Observable, forkJoin, Subscription } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -13,6 +13,10 @@ export class RoundStatusComponent implements OnInit {
   users: Array<User> = new Array<User>();
   currentTagline: string;
   player: User;
+  countdownInput: number;
+  countdownIsActive = false;
+  remainingTime: number;
+  maxTime: number;
   private textChanges: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private service: PokerService) { }
@@ -36,6 +40,27 @@ export class RoundStatusComponent implements OnInit {
     this.service.updateTagline(newText).subscribe();
   }
 
+  getCountdownValue = (): number => this.remainingTime && this.maxTime ? this.remainingTime * 100 / this.maxTime : 0;
+
+  getTimeText = (): string => {
+    let result = '';
+    const value = this.remainingTime / 1000;
+    if (value >= 60) {
+      result += `${Math.floor(value / 60)}m `;
+    }
+    result += `${Math.floor(value % 60)}s`;
+    return result;
+  }
+
+  startCountdown = (): void => {
+    if (this.countdownInput !== 0) {
+      this.service.startTimer(1000 * this.countdownInput).subscribe();
+      this.countdownIsActive = true;
+    }
+  }
+
+  startNewRound = (): Subscription => this.service.startRound().subscribe();
+
   monitorGameState = (): Observable<void> =>
     forkJoin(
       this.watchPlays(),
@@ -43,7 +68,9 @@ export class RoundStatusComponent implements OnInit {
       this.watchRoundStart(),
       this.watchJoins(),
       this.watchInputChange(),
-      this.watchTaglineChanges()
+      this.watchTaglineChanges(),
+      this.watchRoundEnd(),
+      this.watchCountdownStart()
     ).pipe(map(() => { }))
 
   watchInputChange = (): Observable<Subscription> => this.textChanges
@@ -75,8 +102,26 @@ export class RoundStatusComponent implements OnInit {
       });
     }))
 
+  watchRoundEnd = (): Observable<void> =>
+    this.service.roundEnds.pipe(map(() => {
+      this.countdownIsActive = false;
+      this.remainingTime = null;
+      this.maxTime = null;
+      this.countdownInput = null;
+    }))
+
   watchJoins = (): Observable<void> =>
     this.service.userJoins.pipe(map(c => {
       this.users = c.collection;
+    }))
+
+  watchCountdownStart = (): Observable<void> =>
+    this.service.timerStarts.pipe(map(t => {
+      this.remainingTime = t;
+      this.maxTime = t;
+      this.countdownIsActive = true;
+      setInterval(() => {
+        this.remainingTime -= 1000;
+      }, 1000);
     }))
 }
