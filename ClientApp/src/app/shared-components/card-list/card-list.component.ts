@@ -36,6 +36,9 @@ export class CardListComponent implements OnChanges, OnInit {
   watchRoundEnd = (): Observable<boolean> =>
     this.service.roundEnds.pipe(map(() => this.isEnabled = false))
 
-  watchRoundStart = (): Observable<boolean> =>
-    this.service.roundStarts.pipe(map(() => this.isEnabled = true))
+  watchRoundStart = (): Observable<void> =>
+    this.service.roundStarts.pipe(map(() => {
+      this.isEnabled = true;
+      this.selectedCardId = null;
+    }))
 }
