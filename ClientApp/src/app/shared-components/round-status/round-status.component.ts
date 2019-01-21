@@ -78,6 +78,9 @@ export class RoundStatusComponent implements OnInit {
     if (this.countdownInput !== 0) {
       this.service.startTimer(1000 * this.countdownInput).subscribe();
       this.countdownIsActive = true;
+      window.setTimeout(() => {
+        this.service.endRound().subscribe();
+      }, 1000 * this.countdownInput);
     }
   }
 

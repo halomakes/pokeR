@@ -89,6 +89,9 @@ export class PokerService {
   public startTimer = (milliseconds: number): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('startTimer', milliseconds))))
 
+  public endRound = (): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('endRound'))))
+
   public getCards = (deckId: number): Observable<Card[]> =>
     this.getDecks().pipe(map(ds => {
       console.log(ds, deckId);

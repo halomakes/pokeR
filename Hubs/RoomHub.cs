@@ -93,10 +93,9 @@ namespace PokeR.Hubs
         {
             var roomId = await GetRoomId();
             await Clients.Group(roomId).SendAsync("TimerStarted", milliseconds);
-            await Task.Delay(milliseconds);
-
-            await EndRound(roomId);
         }
+
+        public async Task EndRound() => await EndRoundForRoom(await GetRoomId());
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -107,7 +106,7 @@ namespace PokeR.Hubs
         private async Task AssertGameEnd(User user)
         {
             if (!(await RoundIsPendingVote(user)))
-                await EndRound(user.RoomId);
+                await EndRoundForRoom(user.RoomId);
         }
 
         private async Task CloseRoom(string roomId)
@@ -123,7 +122,7 @@ namespace PokeR.Hubs
             await db.SaveChangesAsync();
         }
 
-        private async Task EndRound(string roomId) => await Clients.Group(roomId).SendAsync("RoundEnded");
+        private async Task EndRoundForRoom(string roomId) => await Clients.Group(roomId).SendAsync("RoundEnded");
 
         private async Task<bool> RoundIsPendingVote(User user) => await db.Users.AnyAsync(u => u.RoomId == user.RoomId && u.CurrentCardId == null);
 
