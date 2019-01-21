@@ -24,7 +24,8 @@ export class PlayfieldComponent implements OnInit {
     forkJoin(
       this.watchPlays(),
       this.watchRoundEnd(),
-      this.watchParts()
+      this.watchParts(),
+      this.watchRoundStart()
     ).pipe(map(() => { }))
 
   watchPlays = (): Observable<void> =>
