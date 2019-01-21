@@ -63,6 +63,11 @@ export class PokerService {
       ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.users))
       : of(new Array<User>())
 
+  public getTagline = (): Observable<string> =>
+    this.room
+      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.tagLine))
+      : of('')
+
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))))
 

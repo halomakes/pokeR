@@ -1,5 +1,10 @@
 <div class="bg-light text-muted py-3">
   <div class="container">
+    <div *ngIf="player.isHost || currentTagline" class="mb-3 d-flex flex-row justify-content-center">
+      <span *ngIf="!player.isHost" class="h5">{{currentTagline}}</span>
+      <input *ngIf="player.isHost" type="text" class="form-control text-center bg-light" (input)="onTextChange($event.target.value)"
+        [value]="currentTagline">
+    </div>
     <div class="d-flex flex-row justify-content-around flex-wrap">
       <div *ngFor="let u of users" class="d-flex flex-column align-items-center">
         <div class="h5 mb-0">
