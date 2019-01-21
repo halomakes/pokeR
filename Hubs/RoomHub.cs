@@ -33,6 +33,7 @@ namespace PokeR.Hubs
             };
             db.Users.Add(user);
             await db.SaveChangesAsync();
+            await Clients.Caller.SendAsync("Self", user);
             await Clients.Group(request.RoomId).SendAsync("UserJoined", new ListChange<User>(user, await GetRoomUsers(request.RoomId)));
         }
 

@@ -23,7 +23,8 @@ export class PlayfieldComponent implements OnInit {
   watchState = (): Observable<void> =>
     forkJoin(
       this.watchPlays(),
-      this.watchRoundEnd()
+      this.watchRoundEnd(),
+      this.watchParts()
     ).pipe(map(() => { }))
 
   watchPlays = (): Observable<void> =>
@@ -41,6 +42,11 @@ export class PlayfieldComponent implements OnInit {
     this.service.roundStarts.pipe(map(() => {
       this.lastState = new Array<User>();
       this.isRevealed = false;
+    }))
+
+  watchParts = (): Observable<void> =>
+    this.service.userLeaves.pipe(map(c => {
+      this.lastState = this.lastState.filter(u => u.id !== c.delta.id);
     }))
 
   getActiveCards = (): Array<User> => this.lastState.filter((u: User) => u.currentCard !== null);

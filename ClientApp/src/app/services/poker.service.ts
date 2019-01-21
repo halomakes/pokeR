@@ -34,6 +34,8 @@ export class PokerService {
   public taglineUpdated: EventEmitter<string> = new EventEmitter<string>();
   public timerStarts: EventEmitter<number> = new EventEmitter<number>();
 
+  public player: User;
+
   constructor(private http: HttpClient) {
     this.initializeHubWatches().subscribe();
   }
@@ -54,8 +56,12 @@ export class PokerService {
       this.http.get<Emblem[]>('api/emblems').pipe(map(e => this.emblems = e))
 
   public getRoom = (roomId: string): Observable<Room> =>
-    this.room ? of(this.room) :
-      this.http.get<Room>(`api/rooms/${roomId}`).pipe(map(r => this.room = r))
+    this.http.get<Room>(`api/rooms/${roomId}`).pipe(map(r => this.room = r))
+
+  public getPlayers = (): Observable<Array<User>> =>
+    this.room
+      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.users))
+      : of(new Array<User>())
 
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))))
@@ -110,7 +116,8 @@ export class PokerService {
     this.watchRoundStarts(),
     this.watchRoundEnds(),
     this.watchTaglineUpdates(),
-    this.watchTimerStarts()
+    this.watchTimerStarts(),
+    this.watchSelfInfo()
   ).pipe(map(() => { }))
 
   private watchUsersJoin = (): Observable<void> =>
@@ -148,4 +155,7 @@ export class PokerService {
 
   private watchTimerStarts = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('TimerStarted', (d: number) => this.timerStarts.emit(d))))
+
+  private watchSelfInfo = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('Self', (u: User) => this.player = u)))
 }

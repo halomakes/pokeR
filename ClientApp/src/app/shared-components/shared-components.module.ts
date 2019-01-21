@@ -8,6 +8,7 @@ import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
 import { PlayfieldComponent } from './playfield/playfield.component';
+import { RoundStatusComponent } from './round-status/round-status.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PlayfieldComponent } from './playfield/playfield.component';
     RoomInfoComponent,
     JoinRoomComponent,
     CardListComponent,
-    PlayfieldComponent
+    PlayfieldComponent,
+    RoundStatusComponent
   ], imports: [
     CommonModule,
     FormsModule
@@ -27,7 +29,8 @@ import { PlayfieldComponent } from './playfield/playfield.component';
     RoomInfoComponent,
     JoinRoomComponent,
     CardListComponent,
-    PlayfieldComponent
+    PlayfieldComponent,
+    RoundStatusComponent
   ]
 })
 export class SharedComponentsModule { }

@@ -1,0 +1,15 @@
+<p>
+  round-status works!
+</p>
+<div class="d-flex flex-row justify-content-around flex-wrap">
+  <div *ngFor="let u of users" class="d-flex flex-column align-items-center">
+    <div>
+      <i *ngIf="u.isHost" class="mdi mdi-crown"></i>
+      {{u.displayName}}
+    </div>
+    <div>
+      <i *ngIf="!u.currentCardId" class="mdi mdi-checkbox-blank-circle-outline"></i>
+      <i *ngIf="u.currentCardId" class="mdi mdi-checkbox-marked-circle mdi"></i>
+    </div>
+  </div>
+</div>

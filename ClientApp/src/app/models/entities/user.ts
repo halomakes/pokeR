@@ -3,6 +3,7 @@ import { Emblem } from './emblem';
 import { Card } from './card';
 
 export class User {
+    public id: string;
     public roomId: string;
     public displayName: string;
     public isHost: boolean;
