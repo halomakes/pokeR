@@ -27,7 +27,6 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if (changes.roomId.currentValue) {
       this.model.roomId = changes.roomId.currentValue;
     }

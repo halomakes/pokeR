@@ -44,11 +44,9 @@ export class CreateRoomComponent implements OnInit {
   checkId = (): Observable<void> => this.idInputs
     .pipe(debounceTime(300))
     .pipe(flatMap(i => {
-      console.log(i);
       return this.service.checkAvailability(i);
     }))
     .pipe(map(r => {
       this.isAvailable = r;
-      console.log(r, typeof (r));
     }))
 }

@@ -101,7 +101,6 @@ export class PokerService {
 
   public getCards = (deckId: number): Observable<Card[]> =>
     this.getDecks().pipe(map(ds => {
-      console.log(ds, deckId);
       const deck = ds.find(d => d.id === deckId);
       return deck.cards.sort(this.orderCards);
     }))
@@ -179,7 +178,6 @@ export class PokerService {
     this.getHub().pipe(map(h => h.on('Self', (u: User) => {
       this.player = u;
       this.playerChanges.emit(u);
-      console.log(u);
     })))
 
   private watchMessages = (): Observable<void> =>
