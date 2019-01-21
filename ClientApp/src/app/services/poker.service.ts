@@ -35,6 +35,7 @@ export class PokerService {
   public roundEnds: EventEmitter<void> = new EventEmitter<void>();
   public taglineUpdated: EventEmitter<string> = new EventEmitter<string>();
   public timerStarts: EventEmitter<number> = new EventEmitter<number>();
+  public playerChanges: EventEmitter<User> = new EventEmitter<User>();
 
   public player: User;
 
@@ -171,7 +172,11 @@ export class PokerService {
     this.getHub().pipe(map(h => h.on('TimerStarted', (d: number) => this.timerStarts.emit(d))))
 
   private watchSelfInfo = (): Observable<void> =>
-    this.getHub().pipe(map(h => h.on('Self', (u: User) => this.player = u)))
+    this.getHub().pipe(map(h => h.on('Self', (u: User) => {
+      this.player = u;
+      this.playerChanges.emit(u);
+      console.log(u);
+    })))
 
   private watchMessages = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('Message', this.notifications.notify)))

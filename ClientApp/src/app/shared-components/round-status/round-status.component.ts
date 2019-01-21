@@ -95,7 +95,8 @@ export class RoundStatusComponent implements OnInit {
       this.watchInputChange(),
       this.watchTaglineChanges(),
       this.watchRoundEnd(),
-      this.watchCountdownStart()
+      this.watchCountdownStart(),
+      this.watchPlayerChanges()
     ).pipe(map(() => { }))
 
   watchInputChange = (): Observable<Subscription> => this.textChanges
@@ -150,5 +151,10 @@ export class RoundStatusComponent implements OnInit {
         this.countdownIsActive = true;
         this.timer = window.requestAnimationFrame(this.updateRemainingTime);
       }
+    }))
+
+  watchPlayerChanges = (): Observable<void> =>
+    this.service.playerChanges.pipe(map(p => {
+      this.player = p;
     }))
 }

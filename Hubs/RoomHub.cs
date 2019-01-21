@@ -48,15 +48,26 @@ namespace PokeR.Hubs
                 db.Users.Remove(user);
                 await db.SaveChangesAsync();
 
-                if (user.IsHost)
-                {
-                    await Notify(Clients.Group(roomId), $"The room has been closed because the host ({user.DisplayName}) left.");
-                    await CloseRoom(roomId);
-                }
-                else if (!await db.Users.Where(u => u.RoomId == roomId).AnyAsync())
+                if (!await db.Users.Where(u => u.RoomId == roomId).AnyAsync())
                     await CloseRoom(roomId);
                 else
-                    await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+                {
+                    if (user.IsHost)
+                    {
+                        var newHost = await db.Users.FirstOrDefaultAsync(u => u.RoomId == roomId);
+                        newHost.IsHost = true;
+                        await db.SaveChangesAsync();
+
+                        await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+                        await Notify(Clients.Group(roomId), $"{newHost.DisplayName} is now the host.");
+                        await Notify(Clients.Client(newHost.ConnectionId), "You are now the host.");
+                        await Clients.Client(newHost.ConnectionId).SendAsync("Self", newHost);
+                    }
+                    else
+                    {
+                        await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+                    }
+                }
 
                 await AssertGameEnd(user);
             }
