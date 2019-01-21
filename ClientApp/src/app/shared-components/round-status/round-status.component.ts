@@ -20,6 +20,8 @@ export class RoundStatusComponent implements OnInit {
     this.monitorGameState().subscribe();
   }
 
+  getRemainingUsers = (): number => this.users.filter(u => u.currentCardId == null).length;
+
   initialize = (): Observable<Array<User>> =>
     this.service.getPlayers().pipe(map(p => this.users = p))
 
