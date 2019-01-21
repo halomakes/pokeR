@@ -95,6 +95,10 @@ export class PokerService {
   public endRound = (): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('endRound'))))
 
+  public checkAvailability = (id: string): Observable<boolean> =>
+    this.http.get(`api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
+      .pipe(map(r => r.body === 'true'))
+
   public getCards = (deckId: number): Observable<Card[]> =>
     this.getDecks().pipe(map(ds => {
       console.log(ds, deckId);

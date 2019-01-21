@@ -10,6 +10,7 @@ import { CardListComponent } from './card-list/card-list.component';
 import { PlayfieldComponent } from './playfield/playfield.component';
 import { RoundStatusComponent } from './round-status/round-status.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ], imports: [
     CommonModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    AppRoutingModule
   ], exports: [
     NotificationFeedComponent,
     CreateRoomComponent,

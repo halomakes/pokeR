@@ -18,6 +18,7 @@ export class RoundStatusComponent implements OnInit {
   remainingTime: number;
   maxTime: number;
   deadline: Date;
+  readyToStart = false;
 
   timer: number;
 
@@ -122,6 +123,7 @@ export class RoundStatusComponent implements OnInit {
 
   watchRoundStart = (): Observable<void> =>
     this.service.roundStarts.pipe(map(() => {
+      this.readyToStart = false;
       this.users.forEach(u => {
         u.currentCard = null;
         u.currentCardId = null;
@@ -135,6 +137,7 @@ export class RoundStatusComponent implements OnInit {
       this.maxTime = null;
       this.countdownInput = null;
       window.cancelAnimationFrame(this.timer);
+      this.readyToStart = true;
     }))
 
   watchJoins = (): Observable<void> =>

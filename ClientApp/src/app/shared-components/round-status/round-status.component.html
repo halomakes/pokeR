@@ -11,8 +11,8 @@
             [disabled]="countdownInput==null || countdownIsActive" (click)="startCountdown()">
             <i class="mdi mdi-timer"></i>
           </button>
-          <button class="btn btn-outline-secondary" type="button" placement="bottom" ngbTooltip="Start New Round"
-            [disabled]="countdownIsActive" (click)="startNewRound()">
+          <button class="btn" [class.btn-outline-secondary]="!readyToStart" [class.btn-primary]="readyToStart" type="button"
+            placement="bottom" ngbTooltip="Start New Round" [disabled]="countdownIsActive" (click)="startNewRound()">
             <i class="mdi mdi-restart"></i>
           </button>
         </div>
