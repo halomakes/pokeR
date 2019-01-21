@@ -28,7 +28,8 @@ namespace PokeR.Hubs
                 DisplayName = request.Name,
                 RoomId = request.RoomId,
                 EmblemId = request.EmblemId,
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                IsHost = !await db.Users.AnyAsync(u => u.RoomId == request.RoomId)
             };
             db.Users.Add(user);
             await db.SaveChangesAsync();
@@ -50,6 +51,8 @@ namespace PokeR.Hubs
                     await CloseRoom(roomId);
                 else
                     await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
+
+                await AssertGameEnd(user);
             }
         }
 
@@ -60,9 +63,7 @@ namespace PokeR.Hubs
             await db.SaveChangesAsync();
 
             await Clients.Group(user.RoomId).SendAsync("CardPlayed", new ListChange<User>(user, await GetRoomUsers(user.RoomId)));
-
-            if (!(await RoundIsPendingVote(user)))
-                await EndRound(user.RoomId);
+            await AssertGameEnd(user);
         }
 
         public async Task StartRound()
@@ -100,6 +101,12 @@ namespace PokeR.Hubs
         {
             await LeaveRoom();
             await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task AssertGameEnd(User user)
+        {
+            if (!(await RoundIsPendingVote(user)))
+                await EndRound(user.RoomId);
         }
 
         private async Task CloseRoom(string roomId)
