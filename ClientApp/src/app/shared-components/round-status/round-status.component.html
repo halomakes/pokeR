@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="getCountdownValue()" class="mt-3">
+    <div *ngIf="countdownIsActive && getCountdownValue()" class="mt-3">
       <ngb-progressbar [value]="getCountdownValue()">
         {{getTimeText()}}
       </ngb-progressbar>

@@ -17,6 +17,10 @@ export class RoundStatusComponent implements OnInit {
   countdownIsActive = false;
   remainingTime: number;
   maxTime: number;
+  deadline: Date;
+
+  timer: number;
+
   private textChanges: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private service: PokerService) { }
@@ -40,7 +44,25 @@ export class RoundStatusComponent implements OnInit {
     this.service.updateTagline(newText).subscribe();
   }
 
-  getCountdownValue = (): number => this.remainingTime && this.maxTime ? this.remainingTime * 100 / this.maxTime : 0;
+  getRemainingTime = (): number => this.deadline ? this.deadline.getTime() - Date.now() : 0;
+
+  updateRemainingTime = (): void => {
+    const time = this.getRemainingTime();
+    if (time > 0) {
+      this.remainingTime = time;
+      this.timer = window.requestAnimationFrame(this.updateRemainingTime);
+    } else {
+      window.cancelAnimationFrame(this.timer);
+    }
+  }
+
+  getCountdownValue = (): number => {
+    const time = this.remainingTime;
+    if (time > 0 && this.maxTime) {
+      return time * 100 / this.maxTime;
+    }
+    return 0;
+  }
 
   getTimeText = (): string => {
     let result = '';
@@ -108,6 +130,7 @@ export class RoundStatusComponent implements OnInit {
       this.remainingTime = null;
       this.maxTime = null;
       this.countdownInput = null;
+      window.cancelAnimationFrame(this.timer);
     }))
 
   watchJoins = (): Observable<void> =>
@@ -117,11 +140,12 @@ export class RoundStatusComponent implements OnInit {
 
   watchCountdownStart = (): Observable<void> =>
     this.service.timerStarts.pipe(map(t => {
-      this.remainingTime = t;
-      this.maxTime = t;
-      this.countdownIsActive = true;
-      setInterval(() => {
-        this.remainingTime -= 1000;
-      }, 1000);
+      if (t) {
+        this.maxTime = t;
+        this.remainingTime = t;
+        this.deadline = new Date(Date.now() + t);
+        this.countdownIsActive = true;
+        this.timer = window.requestAnimationFrame(this.updateRemainingTime);
+      }
     }))
 }
