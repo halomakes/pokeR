@@ -26,7 +26,7 @@
         </div>
         <div>
           <i *ngIf="u.isHost" class="mdi mdi-crown"></i>
-          {{u.displayName}}
+          <span [class.font-weight-bold]="player.id == u.id">{{u.displayName}}</span>
         </div>
       </div>
     </div>
