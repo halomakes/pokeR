@@ -8,7 +8,7 @@ import { JoinRoomRequest } from './models/join-room-request';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'ClientApp';
+  title = 'PokeR';
 
   constructor(private svc: PokerService) { }
 
