@@ -11,5 +11,5 @@
       class="miniCardBack m-2">
   </div>
 
-  <button [disabled]="!model.emblemId || !model.name" class="btn btn-primary btn-lg" type="submit">Join</button>
+  <button [disabled]="isInvalid()" class="btn btn-primary btn-lg" type="submit">Join</button>
 </form>

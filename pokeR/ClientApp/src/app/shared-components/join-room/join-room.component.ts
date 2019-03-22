@@ -39,5 +39,11 @@ export class JoinRoomComponent implements OnChanges, OnInit {
 
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 
-  join = () => this.service.joinRoom(this.model).subscribe(() => this.joined.emit(true));
+  join = (): void => {
+    if (!this.isInvalid()) {
+      this.service.joinRoom(this.model).subscribe(() => this.joined.emit(true));
+    }
+  }
+
+  isInvalid = (): boolean => !this.model.emblemId || !this.model.name;
 }
