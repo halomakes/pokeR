@@ -4,6 +4,7 @@ import { PokerService } from 'src/app/services/poker.service';
 import { Emblem } from 'src/app/models/entities/emblem';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-join-room',
@@ -17,8 +18,13 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   @Output()
   joined: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  model: JoinRoomRequest = new JoinRoomRequest();
   emblems: Emblem[] = new Array<Emblem>();
+
+  form: FormGroup = new FormGroup({
+    roomId: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    emblemId: new FormControl('', Validators.required)
+  });
 
   constructor(private service: PokerService) { }
 
@@ -28,22 +34,28 @@ export class JoinRoomComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.roomId.currentValue) {
-      this.model.roomId = changes.roomId.currentValue;
+      this.form.get('roomId').setValue(changes.roomId.currentValue);
     }
   }
 
   loadEmblems = (): Observable<Emblem[]> =>
     this.service.getEmblems().pipe(map(e => this.emblems = e))
 
-  getSelectedEmblemUrl = (): string => this.getEmblemUrl(this.model.emblemId);
+  getSelectedEmblemUrl = (): string => this.getEmblemUrl(this.form.get('emblemId').value);
 
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 
   join = (): void => {
-    if (!this.isInvalid()) {
-      this.service.joinRoom(this.model).subscribe(() => this.joined.emit(true));
+    if (!this.form.valid) {
+      this.service.joinRoom(this.getModel()).subscribe(() => this.joined.emit(true));
     }
   }
 
-  isInvalid = (): boolean => !this.model.emblemId || !this.model.name;
+  setEmblem = (id: number): void => this.form.get('emblemId').setValue(id);
+
+  getModel = (): JoinRoomRequest => <JoinRoomRequest>{
+    roomId: this.form.get('roomId').value,
+    name: this.form.get('name').value,
+    emblemId: this.form.get('emblemId').value
+  }
 }
