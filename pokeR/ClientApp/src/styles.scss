@@ -17,9 +17,22 @@
 }
 
 .translucent {
-  opacity: .3;
+  opacity: 0.3;
 }
 
-.invalid-feedback{
+.invalid-feedback,
+.valid-feedback {
   display: initial;
+  animation: fallDown 0.4s ease forwards;
+}
+
+@keyframes fallDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
