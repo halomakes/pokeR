@@ -1,42 +1,69 @@
-<form (submit)="createRoom()">
+<form (submit)="createRoom()" [formGroup]="form">
 
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label for="id" class="input-group-text">Room Id</label>
+  <div class="mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label for="id" class="input-group-text">Room ID</label>
+      </div>
+      <input class="form-control" [class.is-valid]="form.get('roomId').valid && isAvailable"
+        [class.is-invalid]="(submitAttempted || form.get('roomId').touched) && (!form.get('roomId').valid || !isAvailable)"
+        name="id" type="number" required formControlName="roomId">
     </div>
-    <input class="form-control" [class.is-valid]="isAvailable" [class.is-invalid]="isAvailable==false" name="id" type="number"
-      [(ngModel)]="model.id" (input)="onInput($event.target.value)" required>
-    <div *ngIf="isAvailable==true" class="valid-feedback">
+    <div *ngIf="isAvailable==true" class="valid-feedback d-block text-right">
       <i class="mdi mdi-check"></i>
       This room is available. </div>
-    <div *ngIf="isAvailable==false" class="invalid-feedback">
+    <div *ngIf="isAvailable==false" class="invalid-feedback d-block text-right">
       <i class="mdi mdi-close"></i>
       This room is taken.
-      <a [routerLink]="['/room', model.id]">Join it</a>
+      <a [routerLink]="['/room', form.get('roomId').value]">Join it</a>
+    </div>
+    <div *ngIf="(submitAttempted || form.get('roomId').touched) && form.get('roomId').hasError('required')"
+      class="invalid-feedback d-block text-right">
+      <i class="mdi mdi-close"></i>
+      Room ID is required.
     </div>
   </div>
 
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label for="name" class="input-group-text">Name</label>
+  <div class="mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label for="name" class="input-group-text">Name</label>
+      </div>
+      <input class="form-control" type="text" name="name" formControlName="name"
+        [class.is-valid]="form.get('name').valid"
+        [class.is-invalid]="(submitAttempted || form.get('name').touched) && !form.get('name').valid" required>
     </div>
-    <input class="form-control" type="text" name="name" [(ngModel)]="model.name" required>
+    <div *ngIf="(submitAttempted || form.get('name').touched) && form.get('name').hasError('required')"
+      class="invalid-feedback d-block text-right">
+      <i class="mdi mdi-close"></i>
+      Name is required.
+    </div>
   </div>
 
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="tagline">Tagline</label>
+  <div class="mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="tagline">Tagline</label>
+      </div>
+      <input class="form-control" type="text" name="tagline" formcontrolname="tagline">
     </div>
-    <input class="form-control" type="text" name="tagline" [(ngModel)]="model.tagLine">
   </div>
 
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <label class="input-group-text" for="deck">Deck</label>
+  <div class="mb-3">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="deck">Deck</label>
+      </div>
+      <select class="form-control" name="deck" formControlName="deck" [class.is-valid]="form.get('deck').valid"
+        [class.is-invalid]="(submitAttempted || form.get('deck').touched) && !form.get('deck').valid" required>
+        <option *ngFor="let d of decks" [value]="d.id">{{d.name}}</option>
+      </select>
     </div>
-    <select class="form-control" name="deck" [(ngModel)]="model.deckId" required>
-      <option *ngFor="let d of decks" [value]="d.id">{{d.name}}</option>
-    </select>
+    <div *ngIf="(submitAttempted || form.get('deck').touched) && form.get('deck').hasError('required')"
+      class="invalid-feedback d-block text-right">
+      <i class="mdi mdi-close"></i>
+      Deck is required.
+    </div>
   </div>
 
   <div *ngIf="getSelectedDeck()" class="mb-3">
@@ -49,7 +76,9 @@
   </div>
 
   <div class="d-flex flex-row justify-content-end">
-    <button type="submit" class="btn btn-primary" [disabled]="!isAvailable || !model.deckId || !model.id || !model.name">Create
-      Room</button>
+    <button type="submit" class="btn btn-primary" [class.btn-primary]="form.valid && isAvailable"
+      [class.btn-outline-secondary]="!form.valid || !isAvailable">
+      Create Room
+    </button>
   </div>
 </form>

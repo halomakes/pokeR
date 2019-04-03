@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CreateRoomRequest } from 'src/app/models/create-room-request';
 import { PokerService } from 'src/app/services/poker.service';
 import { Deck } from 'src/app/models/entities/deck';
 import { map, debounceTime, flatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-room',
@@ -12,41 +13,48 @@ import { Observable } from 'rxjs';
   styleUrls: ['./create-room.component.scss']
 })
 export class CreateRoomComponent implements OnInit {
-  model: CreateRoomRequest = new CreateRoomRequest();
   decks: Array<Deck> = new Array<Deck>();
   isAvailable: boolean;
 
-  private idInputs: EventEmitter<string> = new EventEmitter<string>();
+  submitAttempted = false;
+
+  form: FormGroup = new FormGroup({
+    roomId: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    tagline: new FormControl(''),
+    deck: new FormControl('', Validators.required)
+  });
 
   constructor(private service: PokerService, private router: Router) { }
 
   ngOnInit() {
     this.service.getDecks().subscribe(d => this.decks = d);
-    this.checkId().subscribe();
+    this.watchIdChanges().subscribe();
   }
 
   // tslint:disable-next-line:triple-equals
-  getSelectedDeck = (): Deck => this.decks.find(d => d.id == this.model.deckId);
+  getSelectedDeck = (): Deck => this.decks.find(d => d.id == this.form.get('deck').value);
 
   createRoom = () => {
-    this.service.createRoom(this.model).pipe(map(r => {
-      this.router.navigate(['/room', this.model.id]);
-    })).subscribe();
-  }
-
-  onInput = (currentId: string) => {
-    this.isAvailable = null;
-    if (currentId) {
-      this.idInputs.emit(currentId);
+    this.submitAttempted = true;
+    if (this.form.valid && this.isAvailable) {
+      const snapshot = this.getModel();
+      this.service.createRoom(snapshot).pipe(map(() => {
+        this.router.navigate(['/room', snapshot.id]);
+      })).subscribe();
     }
   }
 
-  checkId = (): Observable<void> => this.idInputs
-    .pipe(debounceTime(300))
-    .pipe(flatMap(i => {
-      return this.service.checkAvailability(i);
-    }))
-    .pipe(map(r => {
-      this.isAvailable = r;
-    }))
+  getModel = (): CreateRoomRequest => <CreateRoomRequest>{
+    id: this.form.get('roomId').value,
+    name: this.form.get('name').value,
+    tagLine: this.form.get('tagline').value,
+    deckId: this.form.get('deck').value
+  }
+
+  watchIdChanges = (): Observable<any> => this.form.get('roomId').valueChanges.pipe(
+    debounceTime(300),
+    flatMap(this.service.checkAvailability),
+    map(r => this.isAvailable = r)
+  );
 }
