@@ -1,9 +1,14 @@
-import { Component, OnInit, ComponentFactoryResolver, ComponentFactory, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ComponentFactory, ViewChild, ViewContainerRef } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { map } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 import { NotificationComponent } from '../notification/notification.component';
 import { NotificationService } from 'src/app/services/notification.service';
+
+const baseTitle = 'PokeR';
+const charDuration = 100;
+const snipLength = 25;
+const padCharacter = 10;
 
 @Component({
   selector: 'app-notification-feed',
@@ -12,6 +17,9 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class NotificationFeedComponent implements OnInit {
   @ViewChild('notificationHolder', { read: ViewContainerRef }) notificationHolder: ViewContainerRef;
+
+  private tickerTime: number;
+  private lastTickerIndex = 0;
 
   constructor(private service: PokerService, private resolver: ComponentFactoryResolver,
     private notificationService: NotificationService) { }
@@ -23,6 +31,7 @@ export class NotificationFeedComponent implements OnInit {
   notify = (message: string) => {
     console.log('Notify:', message);
     this.createNotificationComponent(message);
+    this.setTicker(message);
   }
 
   createNotificationComponent = (message: string) => {
@@ -48,4 +57,25 @@ export class NotificationFeedComponent implements OnInit {
   ))
 
   handleMessages = (): Observable<void> => this.notificationService.messages.pipe(map(this.notify));
+
+  private setTicker = (msg: string): void => {
+    window.clearInterval(this.tickerTime);
+    this.lastTickerIndex = -snipLength + 1;
+    this.tickerTime = window.setInterval(() => {
+      const paddedTime = this.lastTickerIndex - padCharacter;
+      const targetTime = paddedTime > 0 ? paddedTime : 0;
+      const snip = msg.substring(targetTime, targetTime + snipLength);
+      if (snip.length < 1) {
+        this.endTicker();
+      } else {
+        document.title = `${baseTitle} • ${snip}`;
+      }
+      this.lastTickerIndex++;
+    }, charDuration);
+  }
+
+  private endTicker = (): void => {
+    window.clearInterval(this.tickerTime);
+    document.title = baseTitle;
+  }
 }

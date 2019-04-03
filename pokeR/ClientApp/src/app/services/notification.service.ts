@@ -5,10 +5,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 })
 export class NotificationService {
   public messages: EventEmitter<string>;
-
   constructor() {
     this.messages = new EventEmitter<string>();
   }
 
-  public notify = (msg: string) => this.messages.emit(msg);
+  public notify = (msg: string): void => this.messages.emit(msg);
 }
