@@ -71,7 +71,10 @@
       {{getSelectedDeck()?.description}}
     </div>
     <div class="d-flex flex-row flex-wrap">
-      <span class="miniCard card m-1" *ngFor="let c of getSelectedDeck()?.cards">{{c.name}}</span>
+      <span class="miniCard card m-1 card-in" *ngFor="let c of getSelectedDeck()?.cards; let i = index"
+        [ngStyle]="getDelayStyle(i)">
+        {{c.name}}
+      </span>
     </div>
   </div>
 
