@@ -48,8 +48,6 @@ export class JoinRoomComponent implements OnChanges, OnInit {
 
   join = (): void => {
     this.submitAttempted = true;
-    //this.form.updateValueAndValidity();
-    console.log(this.form);
     if (this.form.valid) {
       this.service.joinRoom(this.getModel()).subscribe(() => this.joined.emit(true));
     }

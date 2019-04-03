@@ -17,7 +17,8 @@
 
   <div class="mb-3">
     <div class="d-flex flex-row flex-wrap">
-      <img (click)="setEmblem(e.id)" [class.selected]="form.get('emblemId').value == e.id" *ngFor="let e of emblems"
+      <img (click)="setEmblem(e.id)" [class.selected]="form.get('emblemId').value == e.id"
+        [class.deselected]="form.get('emblemId').value && form.get('emblemId').value != e.id" *ngFor="let e of emblems"
         [src]="getEmblemUrl(e.id)" class="miniCardBack m-2">
     </div>
     <div *ngIf="submitAttempted && form.get('emblemId').hasError('required')"
