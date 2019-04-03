@@ -29,7 +29,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/canvas-confetti/dist/confetti.browser.js"
+            ]
           },
           "configurations": {
             "production": {

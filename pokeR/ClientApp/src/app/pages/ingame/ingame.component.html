@@ -1,9 +1,9 @@
 <div *ngIf="!isInvalid">
   <div class="full-height d-flex flex-column justify-content-center" *ngIf="!isInGame">
     <div class="container card p-3 my-5">
-    <app-room-info class="mb-3" [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
-    <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
-  </div>
+      <app-room-info class="mb-3" [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
+      <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
+    </div>
   </div>
   <div *ngIf="isInGame">
     <app-round-status></app-round-status>
@@ -17,3 +17,4 @@
     Go Home
   </button>
 </div>
+<app-confetti></app-confetti>

@@ -11,6 +11,7 @@ import { PlayfieldComponent } from './playfield/playfield.component';
 import { RoundStatusComponent } from './round-status/round-status.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from '../app-routing.module';
+import { ConfettiComponent } from './confetti/confetti.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AppRoutingModule } from '../app-routing.module';
     JoinRoomComponent,
     CardListComponent,
     PlayfieldComponent,
-    RoundStatusComponent
+    RoundStatusComponent,
+    ConfettiComponent
   ], imports: [
     CommonModule,
     FormsModule,
@@ -35,7 +37,8 @@ import { AppRoutingModule } from '../app-routing.module';
     JoinRoomComponent,
     CardListComponent,
     PlayfieldComponent,
-    RoundStatusComponent
+    RoundStatusComponent,
+    ConfettiComponent
   ]
 })
 export class SharedComponentsModule { }
