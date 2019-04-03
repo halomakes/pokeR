@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+.full-height {
+  min-height: 100vh;
+}
+
+.click-none {
+  pointer-events: none !important;
+}
+
+.click-normal {
+  pointer-events: initial;
+}
+
+.pointer-hand {
+  cursor: pointer;
+}
+
+.translucent {
+  opacity: 0.3;
+}
+
+.invalid-feedback,
+.valid-feedback {
+  display: initial;
+  animation: fallDown 0.4s ease forwards;
+}
+
+@keyframes fallDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

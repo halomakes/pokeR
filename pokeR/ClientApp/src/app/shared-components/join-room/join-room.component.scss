@@ -1,0 +1,19 @@
+.miniCardBack {
+  border-radius: 0.5rem;
+  width: 4.5rem;
+  height: 6rem;
+  object-fit: cover;
+  object-position: center;
+  transition: all ease 0.2s;
+}
+
+.miniCardBack.selected {
+  transform: scale(1.1);
+  z-index: 4;
+  box-shadow: 0 0 5px transparentize(black, 0.4);
+}
+
+.miniCardBack.deselected {
+  opacity: 0.6;
+  transform: scale(0.9);
+}
