@@ -19,6 +19,7 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   joined: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   emblems: Emblem[] = new Array<Emblem>();
+  submitAttempted = false;
 
   form: FormGroup = new FormGroup({
     roomId: new FormControl('', Validators.required),
@@ -46,7 +47,10 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 
   join = (): void => {
-    if (!this.form.valid) {
+    this.submitAttempted = true;
+    //this.form.updateValueAndValidity();
+    console.log(this.form);
+    if (this.form.valid) {
       this.service.joinRoom(this.getModel()).subscribe(() => this.joined.emit(true));
     }
   }
