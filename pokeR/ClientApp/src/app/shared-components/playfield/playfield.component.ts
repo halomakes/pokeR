@@ -4,6 +4,7 @@ import { User } from 'src/app/models/entities/user';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Card } from 'src/app/models/entities/card';
+import { ConfettiService } from '../confetti/confetti.service';
 
 @Component({
   selector: 'app-playfield',
@@ -14,7 +15,7 @@ export class PlayfieldComponent implements OnInit {
   lastState: Array<User> = new Array<User>();
   isRevealed = false;
 
-  constructor(private service: PokerService) { }
+  constructor(private service: PokerService, private confetti: ConfettiService) { }
 
   ngOnInit() {
     this.watchState().subscribe();
@@ -57,7 +58,13 @@ export class PlayfieldComponent implements OnInit {
   revealCards = (): void => {
     this.isRevealed = true;
     console.log('YOU ACTIVATED MY TRAP CARD!');
+    if (this.lastState.map(s => s.currentCardId).every(i => this.lastState.find(() => true).currentCardId === i)) {
+      console.log('party time!');
+      this.showConfetti();
+    }
   }
 
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
+
+  private showConfetti = (): void => this.confetti.pop();
 }
