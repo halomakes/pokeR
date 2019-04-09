@@ -1,18 +1,10 @@
-FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+FROM armutcom/aspnet-core:spa-latest AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
+ENV ASPNETCORE_ENVIRONMENT=Production
 
-FROM microsoft/dotnet:2.2-sdk AS build
-
-# Setup NodeJs
-RUN apt-get update && \
-    apt-get install -y wget && \
-    apt-get install -y gnupg2 && \
-    wget -qO- https://deb.nodesource.com/setup_10.x | bash - && \
-    apt-get install -y build-essential nodejs
-# End setup
-
+FROM armutcom/aspnet-core:2.2.3-sdk-2.2.105-node-8.11.2-build-bionic AS build
 WORKDIR /src
 COPY ["pokeR/PokeR.csproj", "pokeR/"]
 RUN dotnet restore "pokeR/PokeR.csproj"
@@ -26,5 +18,4 @@ RUN dotnet publish "PokeR.csproj" -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENV ASPNETCORE_ENVIRONMENT=Production
 ENTRYPOINT ["dotnet", "PokeR.dll"]
