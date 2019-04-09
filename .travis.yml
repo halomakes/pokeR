@@ -1,5 +1,9 @@
 language: csharp
-solution: pokeR.sln
+mono: none
 dotnet: 2.2.202
+
+install:
+- dotnet restore
+
 script:
- - dotnet restore
+ - dotnet build
