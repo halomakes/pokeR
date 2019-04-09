@@ -1,4 +1,4 @@
-# PokeR
+# PokeR [![Build Status](https://travis-ci.org/halomademeapc/pokeR.png?branch=master)](https://travis-ci.org/halomademeapc/pokeR)
 Realtime planning poker with [SignalR](https://github.com/SignalR/SignalR).
 
 PokeR uses Entity Framework Core in-memory.  If you need persistence for some reason, you can swap this out for SQLite or another provider.  Data is seeded on startup from the json files in the project's root directory. You can also edit options via the exposed REST API.  Documentation for the API can be viewed in the Swagger UI at /swagger.
