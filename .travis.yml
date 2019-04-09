@@ -1,0 +1,5 @@
+language: csharp
+solution: pokeR.sln
+dotnet: 2.2.202
+script:
+ - dotnet restore
