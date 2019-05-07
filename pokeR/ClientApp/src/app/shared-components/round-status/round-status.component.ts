@@ -97,7 +97,8 @@ export class RoundStatusComponent implements OnInit {
       this.watchTaglineChanges(),
       this.watchRoundEnd(),
       this.watchCountdownStart(),
-      this.watchPlayerChanges()
+      this.watchPlayerChanges(),
+      this.watchHostChanges()
     ).pipe(map(() => { }))
 
   watchInputChange = (): Observable<Subscription> => this.textChanges
@@ -160,4 +161,31 @@ export class RoundStatusComponent implements OnInit {
     this.service.playerChanges.pipe(map(p => {
       this.player = p;
     }))
+
+  watchHostChanges = (): Observable<void> =>
+    this.service.hostChanges.pipe(map(d => {
+      this.users = d.collection;
+      const playerMatch = d.collection.find(c => c.id === this.player.id);
+      if (playerMatch) {
+        this.player = playerMatch;
+      }
+    }))
+
+  logEvent = ($event: any) => console.log($event);
+
+  allowDrop = ($event: any) => {
+    $event.preventDefault();
+  }
+
+  setKing = (id: string): void => {
+    if (this.player.isHost && id !== this.getCurrentLeaderId()) {
+      console.log('Kinging ' + id);
+      this.service.changeHost(id).subscribe();
+    }
+  }
+
+  private getCurrentLeaderId = (): string => {
+    const leader = this.users.find(u => u.isHost);
+    return leader ? leader.id : null;
+  }
 }

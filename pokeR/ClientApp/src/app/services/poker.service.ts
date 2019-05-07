@@ -31,6 +31,7 @@ export class PokerService {
   public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public roomClosing: EventEmitter<void> = new EventEmitter<void>();
   public cardPlays: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public hostChanges: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public roundStarts: EventEmitter<void> = new EventEmitter<void>();
   public roundEnds: EventEmitter<void> = new EventEmitter<void>();
   public taglineUpdated: EventEmitter<string> = new EventEmitter<string>();
@@ -95,6 +96,9 @@ export class PokerService {
   public endRound = (): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('endRound'))))
 
+  public changeHost = (newHostId: string): Observable<void> =>
+    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('switchHost', newHostId))))
+
   public checkAvailability = (id: string): Observable<boolean> =>
     this.http.get(`api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
       .pipe(map(r => r.body === 'true'))
@@ -132,7 +136,8 @@ export class PokerService {
     this.watchTaglineUpdates(),
     this.watchTimerStarts(),
     this.watchSelfInfo(),
-    this.watchMessages()
+    this.watchMessages(),
+    this.watchHostChanges()
   ).pipe(map(() => { }))
 
   private watchUsersJoin = (): Observable<void> =>
@@ -182,4 +187,10 @@ export class PokerService {
 
   private watchMessages = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('Message', this.notifications.notify)))
+
+  private watchHostChanges = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('HostChange', (d: ListChange<User>) => {
+      this.users = d.collection;
+      this.hostChanges.emit(d);
+    })))
 }
