@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PokeR.Core.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace PokeR.UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private JoinRoomRequest Request = new JoinRoomRequest();
+
         public MainPage()
         {
             this.InitializeComponent();

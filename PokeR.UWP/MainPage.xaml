@@ -5,10 +5,34 @@
     xmlns:local="using:PokeR.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
+    <Page.Resources>
+        <x:String x:Key="CreateRoom">Create Room</x:String>
+    </Page.Resources>
 
-    <Grid>
 
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="163*"/>
+            <ColumnDefinition Width="87*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24,24,24,24" Grid.ColumnSpan="2" Background="{ThemeResource SystemBaseLowColor}">
+            <TextBlock Text="{StaticResource AppName}" Style="{StaticResource TitleTextBlockStyle}" FontFamily="Segoe UI" FontSize="36" Margin="0,0,0,24"/>
+            <TextBox Text="{x:Bind Request.RoomId}" AutomationProperties.IsRequiredForForm="True" Header="{StaticResource RoomID}" InputScope="Number"/>
+            <TextBox x:Name="PhoneNumber" Header="Phone Number" Margin="0,24,0,0" MaxLength="15" Width="400" HorizontalAlignment="Left" InputScope="TelephoneNumber" />
+            <TextBox x:Name="Email" Header="Email" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+            <TextBox x:Name="Address" Header="Address" PlaceholderText="Address" Margin="0,24,0,0" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+            <TextBox x:Name="Address2" Margin="0,24,0,0" PlaceholderText="Address 2" MaxLength="50" Width="400" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+            <RelativePanel>
+                <TextBox x:Name="City" PlaceholderText="City" Margin="0,24,0,0" MaxLength="50" Width="200" HorizontalAlignment="Left" InputScope="EmailNameOrAddress" />
+                <ComboBox x:Name="State" PlaceholderText="State" Margin="24,24,0,0"  Width="100" RelativePanel.RightOf="City">
+                    <x:String>WA</x:String>
+                </ComboBox>
+            </RelativePanel>
+            <TextBox x:Name="ZipCode" PlaceholderText="Zip Code" Margin="0,24,0,0" MaxLength="6" Width="100" HorizontalAlignment="Left" InputScope="Number" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                <Button Content="{StaticResource CreateRoom}"  Style="{StaticResource ButtonRevealStyle}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

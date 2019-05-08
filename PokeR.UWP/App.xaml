@@ -3,5 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PokeR.UWP">
+    <Application.Resources>
+        <x:String x:Key="AppName">Planning PokeR</x:String>
+        <x:String x:Key="RoomID">Room ID</x:String>
+        <x:String x:Key="AppUrl">https://planning.halomademeapc.com</x:String>
+    </Application.Resources>
 
 </Application>
