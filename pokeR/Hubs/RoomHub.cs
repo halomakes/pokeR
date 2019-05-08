@@ -54,14 +54,13 @@ namespace PokeR.Hubs
                 {
                     if (user.IsHost)
                     {
-                        var newHost = await db.Users.FirstOrDefaultAsync(u => u.RoomId == roomId);
-                        newHost.IsHost = true;
-                        await db.SaveChangesAsync();
+                        var newHostId = await db.Users
+                            .Where(u => u.RoomId == roomId)
+                            .Select(u => u.Id)
+                            .FirstOrDefaultAsync();
 
                         await Clients.Group(roomId).SendAsync("UserLeft", new ListChange<User>(user, await GetRoomUsers(roomId)));
-                        await Notify(Clients.Group(roomId), $"{newHost.DisplayName} is now the host.");
-                        await Notify(Clients.Client(newHost.ConnectionId), "You are now the host.");
-                        await Clients.Client(newHost.ConnectionId).SendAsync("Self", newHost);
+                        await SwitchHost(newHostId);
                     }
                     else
                     {
@@ -71,6 +70,25 @@ namespace PokeR.Hubs
 
                 await AssertGameEnd(user);
             }
+        }
+
+        public async Task SwitchHost(Guid Id)
+        {
+            var room = await db.Rooms
+                .Include(r => r.Users)
+                .FirstOrDefaultAsync(r => r.Users.Select(u => u.Id).Contains(Id));
+
+            foreach (var u in room.Users)
+                u.IsHost = u.Id == Id;
+            await db.SaveChangesAsync();
+
+            var newHost = room.Users.FirstOrDefault(u => u.Id == Id);
+
+            await Notify(Clients.Group(room.Id), $"{newHost.DisplayName} is now the host.");
+            await Notify(Clients.Client(newHost.ConnectionId), "You are now the host.");
+            await Clients.Client(newHost.ConnectionId).SendAsync("Self", newHost);
+            
+            await Clients.Group(room.Id).SendAsync("HostChange", new ListChange<User>(newHost, await GetRoomUsers(room.Id)));
         }
 
         public async Task PlayCard(int cardId)
