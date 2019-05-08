@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PokeR.Models.Entities
+namespace PokeR.Core.Entities
 {
     public class User
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PokeR.Models.ViewModels
+namespace PokeR.Core.ViewModels
 {
     public class ListChange<T>
     {

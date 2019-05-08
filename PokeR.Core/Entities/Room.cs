@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PokeR.Models.Entities
+namespace PokeR.Core.Entities
 {
     public class Room
     {

@@ -2,15 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PokeR.Models.Entities
+namespace PokeR.Core.Entities
 {
-    public class Emblem
+    public class Deck
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string ImageUrl { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Room> Rooms { get; set; }
+        public virtual ICollection<Card> Cards { get; set; }
     }
 }

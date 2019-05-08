@@ -25,8 +25,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Logs\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="Logs\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Logs\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
