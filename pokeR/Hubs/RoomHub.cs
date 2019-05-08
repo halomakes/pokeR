@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using PokeR.Models.Entities;
-using PokeR.Models.ViewModels;
+using PokeR.Core.Entities;
+using PokeR.Core.ViewModels;
 using PokeR.Services;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PokeR.Models.Entities;
+using PokeR.Core.Entities;
 using PokeR.Services;
 using System.Collections.Generic;
 using System.Linq;

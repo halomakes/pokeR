@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
-using PokeR.Models.Entities;
+using PokeR.Core.Entities;
 using PokeR.Services;
 using System;
 using System.Collections.Generic;

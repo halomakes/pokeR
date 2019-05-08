@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PokeR.Models.Entities;
+using PokeR.Core.Entities;
 
 namespace PokeR.Services
 {
