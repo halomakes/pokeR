@@ -1,0 +1,18 @@
+.drop-hover {
+  transform: scale(1.1);
+}
+
+.user-animate {
+  transition: all 0.2s ease;
+}
+
+.draggable {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.forbidden {
+    cursor: not-allowed;
+}

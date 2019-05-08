@@ -20,6 +20,8 @@ export class RoundStatusComponent implements OnInit {
   deadline: Date;
   readyToStart = false;
 
+  hoveredUser: User;
+
   timer: number;
 
   private textChanges: EventEmitter<string> = new EventEmitter<string>();
@@ -171,10 +173,9 @@ export class RoundStatusComponent implements OnInit {
       }
     }))
 
-  logEvent = ($event: any) => console.log($event);
-
-  allowDrop = ($event: any) => {
+  allowDrop = ($event: any, u: User) => {
     $event.preventDefault();
+    this.onDragEnter(u);
   }
 
   setKing = (id: string): void => {
@@ -188,4 +189,8 @@ export class RoundStatusComponent implements OnInit {
     const leader = this.users.find(u => u.isHost);
     return leader ? leader.id : null;
   }
+
+  onDragEnter = (u: User) => this.hoveredUser = u;
+
+  onDragLeave = () => this.hoveredUser = null;
 }
