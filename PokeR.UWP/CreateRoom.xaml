@@ -21,7 +21,7 @@
             <ColumnDefinition Width="163*"/>
             <ColumnDefinition Width="87*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="24,24,24,24" Grid.ColumnSpan="2" Background="{ThemeResource SystemChromeLowColor}" MaxWidth="800" MinWidth="80" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="{StaticResource Padding-Pane}" Grid.ColumnSpan="2" Background="{ThemeResource SystemChromeLowColor}" MaxWidth="{StaticResource ContainerMaxWidth}" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <TextBlock Text="{StaticResource AppName}" Style="{StaticResource TitleTextBlockStyle}" FontFamily="Segoe UI" FontSize="36" Margin="0,0,0,24"/>
             <TextBox Text="{x:Bind Request.Id, Mode=TwoWay}" AutomationProperties.IsRequiredForForm="True" Header="{StaticResource RoomID}" InputScope="Number" Margin="{StaticResource TextFieldSpacing}"/>
             <TextBox Text="{x:Bind Request.Name, Mode=TwoWay}" AutomationProperties.IsRequiredForForm="True" Header="{StaticResource RoomName}" Margin="{StaticResource TextFieldSpacing}"/>
@@ -41,6 +41,7 @@
             </GridView>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                <Button Content="Join Existing Room"  Style="{StaticResource ButtonRevealStyle}" Click="Join_Click" Margin="0,0,8,0"/>
                 <Button Content="{StaticResource CreateRoom}"  Style="{StaticResource ButtonRevealStyle}" Click="Button_Click"/>
             </StackPanel>
         </StackPanel>

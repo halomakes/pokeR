@@ -13,9 +13,9 @@ namespace PokeR.UWP.Services
         private readonly RestClient client;
         public PokerApiClient()
         {
-            /*var resourceLoader = ResourceLoader.GetForCurrentView();
-            var appUrl = resourceLoader.GetString("AppUrl");*/ //figure that out later
-            client = new RestClient("https://planning.halomademeapc.com");
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var appUrl = resourceLoader.GetString("AppUrl"); //figure that out later
+            client = new RestClient(appUrl);
         }
 
         private List<Deck> deckCache;

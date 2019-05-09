@@ -2,12 +2,14 @@
 using PokeR.Core.Entities;
 using PokeR.Core.ViewModels;
 using PokeR.UWP.Services;
+using PokeR.UWP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,14 +31,18 @@ namespace PokeR.UWP
     {
         private JoinRoomRequest Request = new JoinRoomRequest();
         private IPokerApiClient apiClient;
+        private string appUrl;
 
         private List<Emblem> emblems = new List<Emblem>();
-        Emblem selectedEmblem { get; set; }
+        FullyQualifiedEmblem selectedEmblem { get; set; }
+        IEnumerable<FullyQualifiedEmblem> emblemsWithUrls => emblems.Select(e => new FullyQualifiedEmblem(e, GetEmblemUrl(e)));
 
         public JoinRoom()
         {
             this.InitializeComponent();
             apiClient = App.Container.Resolve<IPokerApiClient>();
+            var resourceLoader = ResourceLoader.GetForViewIndependentUse();
+            appUrl = resourceLoader.GetString("AppUrl");
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -62,5 +68,7 @@ namespace PokeR.UWP
             }
             base.OnNavigatedTo(e);
         }
+
+        private string GetEmblemUrl(Emblem e) => $"{appUrl}{e.ImageUrl}";
     }
 }

@@ -62,5 +62,10 @@ namespace PokeR.UWP
             Request.DeckId = selectedDeck?.Id ?? 0;
             Bindings.Update();
         }
+
+        private void Join_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(JoinRoom), Request.Id);
+        }
     }
 }

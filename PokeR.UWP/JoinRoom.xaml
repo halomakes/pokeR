@@ -5,12 +5,59 @@
     xmlns:local="using:PokeR.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:entities="using:PokeR.Core.Entities"
+    xmlns:vms="using:PokeR.UWP.ViewModels"
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <x:Double x:Key="Font-h6">16</x:Double>
+    </Page.Resources>
 
-    <Grid>
-        <TextBox Text="{x:Bind Request.RoomId}" VerticalAlignment="Top"/>
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <StackPanel MaxWidth="{StaticResource ContainerMaxWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="{StaticResource Padding-Pane}" Background="{ThemeResource SystemChromeLowColor}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <TextBlock Text="You are joining" HorizontalAlignment="Center" FontSize="{StaticResource Font-small}" FontWeight="Normal" VerticalAlignment="Center"/>
+            <TextBlock Text="Test Room" HorizontalAlignment="Center" FontSize="{StaticResource Font-h2}"/>
+            <TextBlock Text="This is a tagline!" HorizontalAlignment="Center" FontSize="{StaticResource Font-h6}" Margin="0,8,0,0"/>
+            <Grid Margin="0,24,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*"></ColumnDefinition>
+                    <ColumnDefinition Width=".5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF57D;" Margin="{StaticResource Margin-Right-sm}"/>
+                    <TextBlock Text="T-Shirt Sizes" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE716;" Margin="{StaticResource Margin-Right-sm}"/>
+                    <TextBlock Text="0 Users" />
+                </StackPanel>
+            </Grid>
+            <TextBox  Text="John Doe" Header="Your Name" Margin="{StaticResource TextFieldSpacing}"/>
 
+            <GridView ItemsSource="{x:Bind emblemsWithUrls, Mode=OneWay}" SelectedItem="{x:Bind selectedEmblem}" SelectionMode="Single" Margin="0,0,0,24" HorizontalAlignment="Center">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="vms:FullyQualifiedEmblem">
+                        <Grid Width="72" Height="96" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image Source="{x:Bind FullUrl}"  Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition MinWidth="20" Width="50*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Stretch">
+                    <TextBox Text="https://myapp.domain.com/room/123" Height="{StaticResource LinkFieldHeight}" HorizontalContentAlignment="Center" FlowDirection="RightToLeft"/>
+                    <Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="&#xE8C8;" Style="{StaticResource ButtonRevealStyle}" Height="{StaticResource LinkFieldHeight}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+                    <Button Content="Join" Style="{StaticResource ButtonRevealStyle}"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>
