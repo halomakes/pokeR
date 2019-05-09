@@ -36,6 +36,7 @@ namespace PokeR.UWP
             this.InitializeComponent();
             Container = ConfigureServices();
             this.Suspending += OnSuspending;
+            this.FocusVisualKind = FocusVisualKind.Reveal;
         }
 
         private IContainer ConfigureServices()

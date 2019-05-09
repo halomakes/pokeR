@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -81,5 +82,13 @@ namespace PokeR.UWP
         }
 
         private string GetEmblemUrl(Emblem e) => $"{appUrl}{e.ImageUrl}";
+
+        private void CopyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dataPackage = new DataPackage();
+            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            dataPackage.SetText(inviteLink);
+            Clipboard.SetContent(dataPackage);
+        }
     }
 }
