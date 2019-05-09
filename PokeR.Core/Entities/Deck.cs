@@ -14,5 +14,7 @@ namespace PokeR.Core.Entities
 
         public virtual ICollection<Room> Rooms { get; set; }
         public virtual ICollection<Card> Cards { get; set; }
+
+        public override string ToString() => Name;
     }
 }

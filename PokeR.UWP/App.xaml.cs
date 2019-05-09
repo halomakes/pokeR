@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Autofac;
+using PokeR.UWP.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,6 +25,8 @@ namespace PokeR.UWP
     /// </summary>
     sealed partial class App : Application
     {
+        public static IContainer Container { get; set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -29,7 +34,21 @@ namespace PokeR.UWP
         public App()
         {
             this.InitializeComponent();
+            Container = ConfigureServices();
             this.Suspending += OnSuspending;
+        }
+
+        private IContainer ConfigureServices()
+        {
+            var containerBuilder = new ContainerBuilder();
+
+            //  Register services.
+            containerBuilder.RegisterType<PokerApiClient>()
+                       .As<IPokerApiClient>()
+                       .SingleInstance();
+
+            var container = containerBuilder.Build();
+            return container;
         }
 
         /// <summary>
