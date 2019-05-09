@@ -18,22 +18,22 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace PokeR.UWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class JoinRoom : Page
     {
-        private CreateRoomRequest Request = new CreateRoomRequest();
+        private JoinRoomRequest Request = new JoinRoomRequest();
         private IPokerApiClient apiClient;
 
-        private List<Deck> decks = new List<Deck>();
-        Deck selectedDeck { get; set; }
+        private List<Emblem> emblems = new List<Emblem>();
+        Emblem selectedEmblem { get; set; }
 
-        public MainPage()
+        public JoinRoom()
         {
             this.InitializeComponent();
             apiClient = App.Container.Resolve<IPokerApiClient>();
@@ -41,26 +41,26 @@ namespace PokeR.UWP
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await LoadDeckOptions();
+            await LoadEmblemOptions();
         }
 
-        private async Task LoadDeckOptions()
+        private async Task LoadEmblemOptions()
         {
-            decks = await apiClient.GetDecks();
+            emblems = await apiClient.GetEmblems();
             Bindings.Update();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Console.Write("Submit clicked~");
-            await apiClient.CreateRoom(Request);
-            Frame.Navigate(typeof(JoinRoom), Request.Id);
-        }
-
-        private void DeckList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Request.DeckId = selectedDeck?.Id ?? 0;
-            Bindings.Update();
+            if (e.Parameter is string && !string.IsNullOrWhiteSpace((string)e.Parameter))
+            {
+                Request.RoomId = e.Parameter.ToString();
+            }
+            else
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
+            base.OnNavigatedTo(e);
         }
     }
 }

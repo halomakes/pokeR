@@ -5,6 +5,7 @@
     xmlns:local="using:PokeR.UWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:entities="using:PokeR.Core.Entities"
     mc:Ignorable="d"
     Loaded="Page_Loaded">
     <Page.Resources>
@@ -20,7 +21,7 @@
             <ColumnDefinition Width="163*"/>
             <ColumnDefinition Width="87*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="24,24,24,24" Grid.ColumnSpan="2" Background="{ThemeResource SystemBaseLowColor}" MaxWidth="800" MinWidth="100">
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="24,24,24,24" Grid.ColumnSpan="2" Background="{ThemeResource SystemChromeLowColor}" MaxWidth="800" MinWidth="80" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <TextBlock Text="{StaticResource AppName}" Style="{StaticResource TitleTextBlockStyle}" FontFamily="Segoe UI" FontSize="36" Margin="0,0,0,24"/>
             <TextBox Text="{x:Bind Request.Id, Mode=TwoWay}" AutomationProperties.IsRequiredForForm="True" Header="{StaticResource RoomID}" InputScope="Number" Margin="{StaticResource TextFieldSpacing}"/>
             <TextBox Text="{x:Bind Request.Name, Mode=TwoWay}" AutomationProperties.IsRequiredForForm="True" Header="{StaticResource RoomName}" Margin="{StaticResource TextFieldSpacing}"/>
@@ -28,6 +29,16 @@
 
             <ComboBox ItemsSource="{x:Bind decks, Mode=OneWay}" Header="{StaticResource Deck}" AutomationProperties.IsRequiredForForm="True" HorizontalAlignment="Stretch"
                       SelectedItem="{x:Bind selectedDeck, Mode=TwoWay}" Margin="{StaticResource TextFieldSpacing}" SelectionChanged="DeckList_SelectionChanged"></ComboBox>
+
+            <GridView ItemsSource="{x:Bind selectedDeck.Cards, Mode=OneWay}" SelectionMode="None">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:Card">
+                        <Border Width="48" Height="58" BorderThickness="1" BorderBrush="{ThemeResource SystemBaseLowColor}" >
+                            <TextBlock Text="{x:Bind Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
                 <Button Content="{StaticResource CreateRoom}"  Style="{StaticResource ButtonRevealStyle}" Click="Button_Click"/>
