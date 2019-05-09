@@ -32,10 +32,15 @@ namespace PokeR.UWP
         private JoinRoomRequest Request = new JoinRoomRequest();
         private IPokerApiClient apiClient;
         private string appUrl;
+        private Room room;
 
         private List<Emblem> emblems = new List<Emblem>();
         FullyQualifiedEmblem selectedEmblem { get; set; }
         IEnumerable<FullyQualifiedEmblem> emblemsWithUrls => emblems.Select(e => new FullyQualifiedEmblem(e, GetEmblemUrl(e)));
+
+        string userCount => $"{(room?.Users?.Count() ?? 0)} user(s)";
+        string inviteLink => $"{appUrl}/room/{Request.RoomId}";
+        string tagline => string.IsNullOrEmpty(room?.TagLine) ? "(No tagline)" : room.TagLine;
 
         public JoinRoom()
         {
@@ -47,12 +52,18 @@ namespace PokeR.UWP
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await LoadEmblemOptions();
+            await Task.WhenAll(LoadRoomInfo(), LoadEmblemOptions());
         }
 
         private async Task LoadEmblemOptions()
         {
             emblems = await apiClient.GetEmblems();
+            Bindings.Update();
+        }
+
+        private async Task LoadRoomInfo()
+        {
+            room = await apiClient.GetRoom(Request.RoomId);
             Bindings.Update();
         }
 

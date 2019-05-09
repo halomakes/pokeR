@@ -10,15 +10,12 @@
     mc:Ignorable="d"
     Loaded="Page_Loaded"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
-        <x:Double x:Key="Font-h6">16</x:Double>
-    </Page.Resources>
 
     <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
         <StackPanel MaxWidth="{StaticResource ContainerMaxWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="{StaticResource Padding-Pane}" Background="{ThemeResource SystemChromeLowColor}" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <TextBlock Text="You are joining" HorizontalAlignment="Center" FontSize="{StaticResource Font-small}" FontWeight="Normal" VerticalAlignment="Center"/>
-            <TextBlock Text="Test Room" HorizontalAlignment="Center" FontSize="{StaticResource Font-h2}"/>
-            <TextBlock Text="This is a tagline!" HorizontalAlignment="Center" FontSize="{StaticResource Font-h6}" Margin="0,8,0,0"/>
+            <TextBlock Text="{x:Bind room.Name, Mode=OneWay}" HorizontalAlignment="Center" FontSize="{StaticResource Font-h2}"/>
+            <TextBlock Text="{x:Bind tagline, Mode=OneWay}" HorizontalAlignment="Center" FontSize="{StaticResource Font-h6}" Margin="0,8,0,0"/>
             <Grid Margin="0,24,0,24">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width=".5*"></ColumnDefinition>
@@ -26,14 +23,14 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xF57D;" Margin="{StaticResource Margin-Right-sm}"/>
-                    <TextBlock Text="T-Shirt Sizes" />
+                    <TextBlock Text="{x:Bind room.Deck.Name, Mode=OneWay}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE716;" Margin="{StaticResource Margin-Right-sm}"/>
-                    <TextBlock Text="0 Users" />
+                    <TextBlock Text="{x:Bind userCount, Mode=OneWay}" />
                 </StackPanel>
             </Grid>
-            <TextBox  Text="John Doe" Header="Your Name" Margin="{StaticResource TextFieldSpacing}"/>
+            <TextBox Header="Your Name" Margin="{StaticResource TextFieldSpacing}"/>
 
             <GridView ItemsSource="{x:Bind emblemsWithUrls, Mode=OneWay}" SelectedItem="{x:Bind selectedEmblem}" SelectionMode="Single" Margin="0,0,0,24" HorizontalAlignment="Center">
                 <GridView.ItemTemplate>
@@ -51,7 +48,7 @@
                     <ColumnDefinition MinWidth="20" Width="50*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Stretch">
-                    <TextBox Text="https://myapp.domain.com/room/123" Height="{StaticResource LinkFieldHeight}" HorizontalContentAlignment="Center" FlowDirection="RightToLeft"/>
+                    <TextBox Text="{x:Bind inviteLink}" Height="{StaticResource LinkFieldHeight}" HorizontalContentAlignment="Center" FlowDirection="RightToLeft"/>
                     <Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="&#xE8C8;" Style="{StaticResource ButtonRevealStyle}" Height="{StaticResource LinkFieldHeight}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
