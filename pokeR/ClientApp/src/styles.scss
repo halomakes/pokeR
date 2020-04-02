@@ -1,4 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+@import './theme/variables';
+
+:root {
+  --primary-color: #{$theme-dark-primary};
+  --accent-color: #{$theme-dark-accent};
+  --contrast-color: #{$theme-dark-contrast};
+}
+
+* {
+  font-family: #{$theme-dark-font};
+  color: var(--contrast-color);
+}
 
 .full-height {
   min-height: 100vh;
@@ -31,8 +42,13 @@
     opacity: 0;
     transform: translateY(-100%);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+body {
+  margin: 0;
 }

@@ -44,32 +44,32 @@ export class PokerService {
     this.initializeHubWatches().subscribe();
   }
 
-  public getEmblemUrl = (id: number): string => `api/emblems/${id}/image`;
+  public getEmblemUrl = (id: number): string => `https://planning.halomademeapc.com/api/emblems/${id}/image`;
 
   public reset = (): void => this.room = null;
 
   public createRoom = (request: CreateRoomRequest): Observable<void> =>
-    this.http.post<void>('api/rooms', request)
+    this.http.post<void>('https://planning.halomademeapc.com/api/rooms', request)
 
   public getDecks = (): Observable<Deck[]> =>
     this.decks.length ? of(this.decks) :
-      this.http.get<Deck[]>('api/decks').pipe(map(d => this.decks = d))
+      this.http.get<Deck[]>('https://planning.halomademeapc.com/api/decks').pipe(map(d => this.decks = d))
 
   public getEmblems = (): Observable<Emblem[]> =>
     this.emblems.length ? of(this.emblems) :
-      this.http.get<Emblem[]>('api/emblems').pipe(map(e => this.emblems = e))
+      this.http.get<Emblem[]>('https://planning.halomademeapc.com/api/emblems').pipe(map(e => this.emblems = e))
 
   public getRoom = (roomId: string): Observable<Room> =>
-    this.http.get<Room>(`api/rooms/${roomId}`).pipe(map(r => this.room = r))
+    this.http.get<Room>(`https://planning.halomademeapc.com/api/rooms/${roomId}`).pipe(map(r => this.room = r))
 
   public getPlayers = (): Observable<Array<User>> =>
     this.room
-      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.users))
+      ? this.http.get<Room>(`https://planning.halomademeapc.com/api/rooms/${this.room.id}`).pipe(map(r => r.users))
       : of(new Array<User>())
 
   public getTagline = (): Observable<string> =>
     this.room
-      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.tagLine))
+      ? this.http.get<Room>(`https://planning.halomademeapc.com/api/rooms/${this.room.id}`).pipe(map(r => r.tagLine))
       : of('')
 
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
@@ -100,7 +100,7 @@ export class PokerService {
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('switchHost', newHostId))))
 
   public checkAvailability = (id: string): Observable<boolean> =>
-    this.http.get(`api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
+    this.http.get(`https://planning.halomademeapc.com/api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
       .pipe(map(r => r.body === 'true'))
 
   public getCards = (deckId: number): Observable<Card[]> =>
@@ -117,7 +117,7 @@ export class PokerService {
 
   private prepareHub = (): Promise<HubConnection> => {
     this.hub = new HubConnectionBuilder()
-      .withUrl('/notify/room')
+      .withUrl('https://planning.halomademeapc.com/notify/room')
       .withHubProtocol(new JsonHubProtocol())
       .build();
     return this.hub.start().catch(console.error).then(() => {
