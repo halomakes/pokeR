@@ -3,6 +3,7 @@
 .switcher {
     color: var(--contrast-color);
     position: relative;
+    z-index: 30;
 
     .switcher-icon {
         font-size: 18px;
@@ -21,6 +22,7 @@
         flex-direction: column;
         background-color: var(--primary-color);
         border-radius: $slim;
+        z-index: 35;
 
         .switcher-option {
             display: flex;
@@ -56,7 +58,7 @@
         .switcher-menu {
             opacity: 1;
             transform: translateX(0);
-            pointer-events: inherit;
+            pointer-events: initial;
         }
     }
 }

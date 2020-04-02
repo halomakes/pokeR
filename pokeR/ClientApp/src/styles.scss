@@ -3,6 +3,7 @@
 * {
   font-family: var(--font-family);
   color: var(--contrast-color);
+  transition: background .5s ease, color .5s ease;
 }
 
 .full-height {
