@@ -12,6 +12,7 @@ import { RoundStatusComponent } from './round-status/round-status.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from '../app-routing.module';
 import { ConfettiComponent } from './confetti/confetti.component';
+import { EntrywayComponent } from './entryway/entryway.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ConfettiComponent } from './confetti/confetti.component';
     CardListComponent,
     PlayfieldComponent,
     RoundStatusComponent,
-    ConfettiComponent
+    ConfettiComponent,
+    EntrywayComponent
   ], imports: [
     CommonModule,
     FormsModule,
@@ -38,7 +40,8 @@ import { ConfettiComponent } from './confetti/confetti.component';
     CardListComponent,
     PlayfieldComponent,
     RoundStatusComponent,
-    ConfettiComponent
+    ConfettiComponent,
+    EntrywayComponent
   ]
 })
 export class SharedComponentsModule { }
