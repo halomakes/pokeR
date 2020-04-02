@@ -1,0 +1,132 @@
+@import './form-reset';
+@import './variables';
+
+@mixin box-input {
+    border: $slim solid var(--accent-color);
+    padding-left: $mid;
+    padding-right: $mid;
+    padding-bottom: $mid;
+    padding-top: $mid;
+
+    &:focus {
+        border-color: var(--contrast-color);
+    }
+
+    &.ng-invalid.ng-touched {
+        border-color: var(--invalid-color);
+    }
+
+    &.ng-valid:focus {
+        border-color: var(--valid-color);
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: $thicc;
+    margin-bottom: $thicc*1.5;
+    position: relative;
+
+    &:hover {
+        .floating-label {
+            color: var(--contrast-color);
+        }
+    }
+
+    .floating-label {
+        position: absolute;
+        pointer-events: none;
+        transition: .2s ease all;
+        color: var(--accent-color);
+        left: $slim + $mid;
+        top: 11px;
+        z-index: 3;
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -20px;
+            left: -8px;
+            right: -8px;
+            bottom: 0;
+            background-color: var(--primary-color);
+            z-index: -1;
+            transform: scaleX(0);
+            transition: transform .2s ease, top .2s ease;
+        }
+    }
+
+    .form-control:focus~.floating-label,
+    .form-control:not(:focus):valid~.floating-label {
+        transform: translateY(-22px) scale(0.8);
+
+        &::after {
+            transform: scaleX(1);
+            top: 0;
+        }
+    }
+
+    .form-control:focus~.floating-label {
+        color: var(--contrast-color);
+    }
+
+    .helper {
+        position: absolute;
+        top: 48px;
+        font-size: 14px;
+        display: initial;
+        animation: fallDown 0.4s ease forwards;
+
+        &.invalid-feedback,
+        &.invalid-feedback>i {
+            color: var(--invalid-color);
+        }
+    }
+
+    &.form-control:focus~.helper.valid-feedback {
+        color: var(--valid-color);
+
+        &>i {
+            color: var(--valid-color);
+        }
+    }
+}
+
+@keyframes fallDown {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+input {
+    @extend %form-reset-input;
+    @include box-input();
+}
+
+label {
+    @extend %form-reset-label;
+
+}
+
+select {
+    @extend %form-reset-select;
+    @include box-input();
+}
+
+button {
+    @extend %form-reset-button;
+}
+
+textarea {
+    @extend %form-reset-textarea;
+    @include box-input();
+}

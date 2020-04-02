@@ -1,9 +1,10 @@
 @import './theme/variables';
+@import "./theme/forms";
 
 * {
   font-family: var(--font-family);
   color: var(--contrast-color);
-  transition: background .5s ease, color .5s ease;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
 }
 
 .full-height {
@@ -24,24 +25,6 @@
 
 .translucent {
   opacity: 0.3;
-}
-
-.invalid-feedback,
-.valid-feedback {
-  display: initial;
-  animation: fallDown 0.4s ease forwards;
-}
-
-@keyframes fallDown {
-  from {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 body {

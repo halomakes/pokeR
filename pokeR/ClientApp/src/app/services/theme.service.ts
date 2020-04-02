@@ -8,14 +8,18 @@ const themes = {
     '--contrast-color': 'white',
     '--hover-color': 'rgba(255,255,255,0.1)',
     '--active-color': 'rgba(255,255,255,0.2)',
-    '--font-family': '\'Open Sans\',sans-serif'
+    '--font-family': '\'Open Sans\',sans-serif',
+    '--valid-color': 'green',
+    '--invalid-color': '#ff5c5c'
   }, light: {
     '--primary-color': '#E9E9E9',
     '--accent-color': '#9FA2C2',
     '--contrast-color': '#353749',
     '--hover-color': 'rgba(0,0,0,0.1)',
     '--active-color': 'rgba(0,0,0,0.2)',
-    '--font-family': '\'Open Sans\',sans-serif'
+    '--font-family': '\'Open Sans\',sans-serif',
+    '--valid-color': 'green',
+    '--invalid-color': 'red'
   }
 };
 
