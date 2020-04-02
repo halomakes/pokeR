@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entryway.component.scss']
 })
 export class EntrywayComponent implements OnInit {
-
+  public action: string = null;
   constructor() { }
 
   ngOnInit() {

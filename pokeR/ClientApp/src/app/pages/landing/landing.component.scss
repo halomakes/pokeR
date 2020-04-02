@@ -7,13 +7,14 @@
     flex-direction: row;
     align-items: stretch;
     overflow: hidden;
+    flex-wrap: wrap;
 
     .promo-pane {
-        max-width: 640px;
         background-color: var(--accent-color);
         padding: $thicc;
         flex-grow: 1;
         position: relative;
+        overflow-x: hidden;
 
         .cards {
             position: absolute;
@@ -85,6 +86,10 @@
         flex-grow: 2;
         background-color: var(--primary-color);
         padding: $thicc;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
     }
 }
 
