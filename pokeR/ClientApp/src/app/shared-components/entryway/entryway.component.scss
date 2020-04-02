@@ -3,7 +3,7 @@
 .actionable {
     overflow-y: hidden;
     max-height: 100vh;
-    transition: max-height 1s ease, background-color .2s ease;
+    transition: max-height 1s ease;
     margin-top: $slim;
     margin-bottom: $slim;
     border-radius: $slim;
@@ -19,6 +19,7 @@
         border-radius: $slim;
         cursor: pointer;
         position: relative;
+        transition: background-color .2s ease;
 
         .forward-icon,
         .back-icon {
@@ -90,7 +91,7 @@
     &:not(.active) {
         &:hover {
             .selector-bar {
-                background-color: transparentize(white, .9);
+                background-color: var(--hover-color);
             }
         }
     }

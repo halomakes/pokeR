@@ -4,10 +4,12 @@
   --primary-color: #{$theme-dark-primary};
   --accent-color: #{$theme-dark-accent};
   --contrast-color: #{$theme-dark-contrast};
+  --hover-color: #{transparentize(white, 0.9)};
+  --font-family: #{$theme-dark-font};
 }
 
 * {
-  font-family: #{$theme-dark-font};
+  font-family: var(--font-family);
   color: var(--contrast-color);
 }
 

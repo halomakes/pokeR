@@ -14,7 +14,7 @@
         padding: $thicc;
         flex-grow: 1;
         position: relative;
-        overflow-x: hidden;
+        overflow: hidden;
 
         .cards {
             position: absolute;

@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from '../app-routing.module';
 import { ConfettiComponent } from './confetti/confetti.component';
 import { EntrywayComponent } from './entryway/entryway.component';
+import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { EntrywayComponent } from './entryway/entryway.component';
     PlayfieldComponent,
     RoundStatusComponent,
     ConfettiComponent,
-    EntrywayComponent
+    EntrywayComponent,
+    ThemeSwitcherComponent
   ], imports: [
     CommonModule,
     FormsModule,
@@ -41,7 +43,8 @@ import { EntrywayComponent } from './entryway/entryway.component';
     PlayfieldComponent,
     RoundStatusComponent,
     ConfettiComponent,
-    EntrywayComponent
+    EntrywayComponent,
+    ThemeSwitcherComponent
   ]
 })
 export class SharedComponentsModule { }
