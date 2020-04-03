@@ -6,13 +6,12 @@
         [class.is-invalid]="(form.get('roomId').touched) && (!form.get('roomId').valid || !exists)" name="id"
         type="number" required formControlName="roomId">
       <label for="id" class="floating-label">Room Number</label>
-      <div *ngIf="exists==true" class="valid-feedback helper">
+      <div *ngIf="exists==true && form.get('roomId').value" class="valid-feedback helper">
         <i class="mdi mdi-check"></i>
         You can join this room. </div>
-      <div *ngIf="exists==false" class="invalid-feedback helper">
+      <div *ngIf="exists==false && form.get('roomId').value" class="invalid-feedback helper">
         <i class="mdi mdi-close"></i>
         This room doesn't exist.
-        <a [routerLink]="['/room', form.get('roomId').value]">Join it</a>
       </div>
       <div *ngIf="(form.get('roomId').touched) && form.get('roomId').hasError('required')"
         class="invalid-feedback helper">

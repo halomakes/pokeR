@@ -6,13 +6,13 @@
         [class.is-invalid]="(submitAttempted || form.get('roomId').touched) && (!form.get('roomId').valid || !isAvailable)"
         name="id" type="number" required formControlName="roomId">
       <label for="id" class="floating-label">Room Number</label>
-      <div *ngIf="isAvailable==true" class="valid-feedback helper">
+      <div *ngIf="isAvailable==true && form.get('roomId').value" class="valid-feedback helper">
         <i class="mdi mdi-check"></i>
         This room is available. </div>
-      <div *ngIf="isAvailable==false" class="invalid-feedback helper">
+      <div *ngIf="isAvailable==false && form.get('roomId').value" class="invalid-feedback helper">
         <i class="mdi mdi-close"></i>
         This room is taken.
-        <a [routerLink]="['/room', form.get('roomId').value]">Join it</a>
+        <a class="pointer-hand" (click)="join()">Join it</a>
       </div>
       <div *ngIf="(submitAttempted || form.get('roomId').touched) && form.get('roomId').hasError('required')"
         class="invalid-feedback helper">

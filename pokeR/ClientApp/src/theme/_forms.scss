@@ -15,7 +15,7 @@
 
     &.ng-invalid.ng-touched,
     &.is-invalid.ng-touched {
-        border-color: var(--invalid-color);
+        border-color: var(--invalid-color) !important;
     }
 
     &.ng-valid:focus,
@@ -150,6 +150,11 @@ label {
 select {
     @extend %form-reset-select;
     @include box-input();
+
+    option {
+        color: var(--contrast-color);
+        background-color: var(--primary-color);
+    }
 }
 
 button {

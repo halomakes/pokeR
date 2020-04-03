@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, flatMap, map } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,14 +10,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./find-room.component.scss']
 })
 export class FindRoomComponent implements OnInit {
+  @Output() exit: EventEmitter<any[]> = new EventEmitter<any[]>();
   public exists: boolean = null;
   form: FormGroup = new FormGroup({
     roomId: new FormControl('', Validators.required)
   });
 
   constructor(
-    private service: PokerService,
-    private router: Router
+    private service: PokerService
   ) { }
 
   ngOnInit() {
@@ -28,7 +27,7 @@ export class FindRoomComponent implements OnInit {
   onSubmit = (): void => {
     if (this.form.valid && this.exists) {
       const id = this.form.get('roomId').value;
-      this.router.navigate(['/room', id]);
+      this.exit.emit(['/room', id]);
     }
   }
 

@@ -5,7 +5,7 @@
     <i class="mdi mdi-chevron-right forward-icon"></i>
   </div>
   <div class="content">
-    <app-find-room></app-find-room>
+    <app-find-room (exit)="onExit($event)"></app-find-room>
   </div>
 </div>
 <div class="actionable" [class.active]="action=='create'" [class.inactive]="action && action!='create'">
@@ -15,6 +15,6 @@
     <i class="mdi mdi-chevron-right forward-icon"></i>
   </div>
   <div class="content">
-    <app-create-room></app-create-room>
+    <app-create-room (exit)="onExit($event)"></app-create-room>
   </div>
 </div>

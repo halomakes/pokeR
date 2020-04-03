@@ -1,4 +1,4 @@
-<div class="landing-container">
+<div class="landing-container" [class.exiting]="exiting">
   <div class="promo-pane">
     <div class="cards">
       <div class="card pos-a"></div>
@@ -14,6 +14,6 @@
     </div>
   </div>
   <div class="content-pane">
-    <app-entryway></app-entryway>
+    <app-entryway (exit)="onExit($event)"></app-entryway>
   </div>
 </div>

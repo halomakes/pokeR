@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CreateRoomRequest } from 'src/app/models/create-room-request';
 import { PokerService } from 'src/app/services/poker.service';
 import { Deck } from 'src/app/models/entities/deck';
 import { map, debounceTime, flatMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -15,6 +14,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class CreateRoomComponent implements OnInit {
   decks: Array<Deck> = new Array<Deck>();
   isAvailable: boolean;
+  @Output() exit: EventEmitter<any[]> = new EventEmitter<any[]>();
 
   submitAttempted = false;
 
@@ -25,12 +25,14 @@ export class CreateRoomComponent implements OnInit {
     deck: new FormControl('', Validators.required)
   });
 
-  constructor(private service: PokerService, private router: Router) { }
+  constructor(private service: PokerService) { }
 
   ngOnInit() {
     this.service.getDecks().subscribe(d => this.decks = d);
     this.watchIdChanges().subscribe();
   }
+
+  join = (): void => this.exit.emit(['/room', this.form.get('roomId').value]);
 
   // tslint:disable-next-line:triple-equals
   getSelectedDeck = (): Deck => this.decks.find(d => d.id == this.form.get('deck').value);
@@ -40,7 +42,7 @@ export class CreateRoomComponent implements OnInit {
     if (this.form.valid && this.isAvailable) {
       const snapshot = this.getModel();
       this.service.createRoom(snapshot).pipe(map(() => {
-        this.router.navigate(['/room', snapshot.id]);
+        this.exit.emit(['/room', snapshot.id]);
       })).subscribe();
     }
   }
