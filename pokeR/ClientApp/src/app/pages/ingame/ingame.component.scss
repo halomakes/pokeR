@@ -1,5 +1,22 @@
+@import '../../../theme/variables';
+
 .enter-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.bg-underlay {
+    z-index: -1;
+}
+
+.contained {
+    max-width: 800px;
+}
+
+.bg-feather-mask {
+    box-shadow: 0 0 $thicc $thicc var(--primary-color);
+    padding: $some;
+    background-color: var(--primary-color);
 }

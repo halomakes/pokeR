@@ -1,0 +1,26 @@
+@import '../../../theme/variables';
+
+.join-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: $thicc;
+}
+
+h2 {
+    margin: 0;
+    font-size: 64px;
+    font-weight: 100;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: var(--accent-color);
+
+    &>div {
+        margin-left: $mid;
+        margin-right: $mid;
+    }
+}
