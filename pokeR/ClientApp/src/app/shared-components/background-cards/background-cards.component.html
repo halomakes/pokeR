@@ -1,0 +1,9 @@
+<div class="bg-cards">
+  <div class="perspective-container">
+    <div class="bg-card" *ngFor="let c of cardViews" [ngStyle]="getStyle(c)">
+      <div class="card-label">
+        {{c.text}}
+      </div>
+    </div>
+  </div>
+</div>
