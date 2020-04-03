@@ -8,6 +8,7 @@
     bottom: 0;
     perspective: 900px;
     pointer-events: none;
+    overflow: hidden;
 
     .perspective-container {
         width: 100%;
