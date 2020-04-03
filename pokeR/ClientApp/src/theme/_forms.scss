@@ -73,6 +73,7 @@
         left: $slim + $mid;
         top: 11px;
         z-index: 3;
+        font-weight: 700;
 
         &::after {
             content: '';

@@ -21,6 +21,7 @@
     box-shadow: 0 0 $thicc $thicc var(--primary-color);
     padding: $some;
     background-color: var(--primary-color);
+    border-radius: 40%;
 }
 
 @keyframes fan-fade-in {
