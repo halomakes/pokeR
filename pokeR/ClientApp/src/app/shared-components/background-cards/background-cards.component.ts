@@ -27,7 +27,7 @@ export class BackgroundCardsComponent implements OnChanges {
   })
 
   getStyle = (v: any): any => ({
-    'transform': `translateZ(${v.zBase * 5000 - 1200}px) rotateX(${v.ox}deg) rotateY(${v.oy}deg) rotateZ(${v.oz}deg)`,
+    'transform': `translateZ(${v.zBase * 1200 - 600}px) rotateX(${v.ox}deg) rotateY(${v.oy}deg) rotateZ(${v.oz}deg)`,
     'left': `${v.px}%`,
     'top': `${v.py}%`,
     'opacity': v.zBase * 0.7 + 0.3
