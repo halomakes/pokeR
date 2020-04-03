@@ -14,6 +14,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ConfettiComponent } from './confetti/confetti.component';
 import { EntrywayComponent } from './entryway/entryway.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
+import { FindRoomComponent } from './find-room/find-room.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.componen
     RoundStatusComponent,
     ConfettiComponent,
     EntrywayComponent,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    FindRoomComponent
   ], imports: [
     CommonModule,
     FormsModule,

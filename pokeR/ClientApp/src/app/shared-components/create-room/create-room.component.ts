@@ -56,7 +56,7 @@ export class CreateRoomComponent implements OnInit {
     debounceTime(300),
     flatMap(this.service.checkAvailability),
     map(r => this.isAvailable = r)
-  );
+  )
 
   getDelayStyle = (i: number) => <any>{
     'animation-delay': `${i * 60}ms`

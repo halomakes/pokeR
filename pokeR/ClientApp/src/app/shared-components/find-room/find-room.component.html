@@ -1,0 +1,30 @@
+<form (submit)="onSubmit()" [formGroup]="form">
+
+  <div class="mb-3">
+    <div class="input-group">
+      <input class="form-control" [class.is-valid]="form.get('roomId').valid && exists"
+        [class.is-invalid]="(submitAttempted || form.get('roomId').touched) && (!form.get('roomId').valid || !isAvailable)"
+        name="id" type="number" required formControlName="roomId">
+      <label for="id" class="floating-label">Room Number</label>
+      <div *ngIf="isAvailable==true" class="valid-feedback helper">
+        <i class="mdi mdi-check"></i>
+        This room exists. </div>
+      <div *ngIf="exists==false" class="invalid-feedback helper">
+        <i class="mdi mdi-close"></i>
+        This room doesn't exist.
+        <a [routerLink]="['/room', form.get('roomId').value]">Join it</a>
+      </div>
+      <div *ngIf="(submitAttempted || form.get('roomId').touched) && form.get('roomId').hasError('required')"
+        class="invalid-feedback helper">
+        <i class="mdi mdi-close"></i>
+        Room Number is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-end">
+    <button type="submit" [class.disabled]="!form.valid || !exists">
+      Join Room
+    </button>
+  </div>
+</form>
