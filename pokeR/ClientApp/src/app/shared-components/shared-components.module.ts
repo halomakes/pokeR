@@ -7,8 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
-import { PlayfieldComponent } from './playfield/playfield.component';
-import { RoundStatusComponent } from './round-status/round-status.component';
+import { PlayfieldComponent } from './playfield/playfield.component'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from '../app-routing.module';
 import { ConfettiComponent } from './confetti/confetti.component';
@@ -16,6 +15,7 @@ import { EntrywayComponent } from './entryway/entryway.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 import { FindRoomComponent } from './find-room/find-room.component';
 import { BackgroundCardsComponent } from './background-cards/background-cards.component';
+import { RosterComponent } from './roster/roster.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { BackgroundCardsComponent } from './background-cards/background-cards.co
     JoinRoomComponent,
     CardListComponent,
     PlayfieldComponent,
-    RoundStatusComponent,
+    RosterComponent,
     ConfettiComponent,
     EntrywayComponent,
     ThemeSwitcherComponent,
@@ -45,7 +45,7 @@ import { BackgroundCardsComponent } from './background-cards/background-cards.co
     JoinRoomComponent,
     CardListComponent,
     PlayfieldComponent,
-    RoundStatusComponent,
+    RosterComponent,
     ConfettiComponent,
     EntrywayComponent,
     ThemeSwitcherComponent,

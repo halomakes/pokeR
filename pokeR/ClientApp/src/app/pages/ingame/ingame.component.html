@@ -7,7 +7,7 @@
     <app-background-cards class="bg-underlay" *ngIf="room && room.deck && room.deck.cards" [cards]="room.deck.cards"></app-background-cards>
   </div>
   <div *ngIf="isInGame">
-    <app-round-status></app-round-status>
+    <app-roster></app-roster>
     <app-playfield></app-playfield>
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>
   </div>

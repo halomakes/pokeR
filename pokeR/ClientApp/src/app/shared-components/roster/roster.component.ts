@@ -5,11 +5,11 @@ import { Observable, forkJoin, Subscription } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-round-status',
-  templateUrl: './round-status.component.html',
-  styleUrls: ['./round-status.component.scss']
+  selector: 'app-roster',
+  templateUrl: './roster.component.html',
+  styleUrls: ['./roster.component.scss']
 })
-export class RoundStatusComponent implements OnInit {
+export class RosterComponent implements OnInit {
   users: Array<User> = new Array<User>();
   currentTagline: string;
   player: User;
@@ -24,6 +24,8 @@ export class RoundStatusComponent implements OnInit {
 
   timer: number;
 
+  open = false;
+
   private textChanges: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private service: PokerService) { }
@@ -32,6 +34,10 @@ export class RoundStatusComponent implements OnInit {
     this.player = this.service.player;
     this.initialize().subscribe();
     this.monitorGameState().subscribe();
+  }
+
+  get playerName(): string {
+    return this.player.displayName;
   }
 
   getRemainingUsers = (): number => this.users.filter(u => u.currentCardId == null).length;
@@ -193,4 +199,6 @@ export class RoundStatusComponent implements OnInit {
   onDragEnter = (u: User) => this.hoveredUser = u;
 
   onDragLeave = () => this.hoveredUser = null;
+
+  togglePanel = () => this.open = !this.open;
 }

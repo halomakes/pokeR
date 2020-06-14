@@ -1,0 +1,81 @@
+@import "../../../theme/variables";
+
+.drop-hover {
+  transform: scale(1.1);
+}
+
+.user-animate {
+  transition: all 0.2s ease;
+}
+
+.draggable {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.forbidden {
+  cursor: not-allowed;
+}
+
+.roster {
+  position: fixed;
+  height: 100%;
+
+  $tab-width: 24px;
+
+  & > .shade {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+    color: black;
+    transition: opacity 0.2s ease;
+    width: 100%;
+    height: 100%;
+  }
+
+  & > .pane {
+    background-color: var(--accent-color);
+    width: 100%;
+    height: 100%;
+    padding: $some;
+    color: var(--contrast-color);
+    position: relative;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+
+    & > .tab {
+      width: $tab-width;
+      transform: rotate(90deg);
+      background-color: var(--accent-color);
+      cursor: pointer;
+      writing-mode: vertical-lr;
+      transform: translateY(-50%);
+      right: -1 * $tab-width;
+      top: 50%;
+      position: absolute;
+
+      & > .tab__icon {
+        transition: transform 0.2s ease;
+      }
+    }
+  }
+
+  &.active {
+    & > .shade {
+      pointer-events: initial;
+      opacity: 0.4;
+    }
+
+    & > .pane {
+      transform: translateX(0);
+
+      & > .tab {
+        & > .tab__icon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+}
