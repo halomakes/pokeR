@@ -43,6 +43,21 @@
     </div>
   </div>
 </div>-->
-<app-pane-drawer label="roster" direction="left">
-  stuff goes in here from paretn comp
+<app-pane-drawer label="Roster" direction="left">
+  <div class="player-list">
+    <div *ngFor="let u of users" class="player user-animate" (dragenter)="onDragEnter(u)" (dragleave)="onDragLeave()"
+      (drop)="setKing(u.id)" (dragover)="allowDrop($event, u)" [class.drop-hover]="u==hoveredUser"
+      [class.played]="u.currentCardId">
+      <div class="icon">
+        <i *ngIf="!u.currentCardId" class="mdi mdi-checkbox-blank-circle-outline"
+          [class.text-danger]="getRemainingUsers() == 1"></i>
+        <i *ngIf="u.currentCardId" class="mdi mdi-checkbox-marked-circle"></i>
+      </div>
+      <div>
+        <span>{{u.displayName}}</span>
+        <i *ngIf="u.isHost" [draggable]="player.isHost" [class.draggable]="player.isHost"
+          [class.forbidden]="!player.isHost" class="mdi mdi-crown host-icon" (dragend)="onDragLeave()"></i>
+      </div>
+    </div>
+  </div>
 </app-pane-drawer>
