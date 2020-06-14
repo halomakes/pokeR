@@ -7,8 +7,9 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
 import { NotificationComponent } from './shared-components/notification/notification.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
+
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { SharedComponentsModule } from './shared-components/shared-components.mo
     HttpClientModule,
     PagesModule,
     FormsModule,
-    NgbModule,
+    TooltipModule,
     SharedComponentsModule
   ],
   providers: [],

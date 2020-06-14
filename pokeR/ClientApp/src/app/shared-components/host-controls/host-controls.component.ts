@@ -105,7 +105,7 @@ export class HostControlsComponent implements OnInit {
       this.countdownIsActive = false;
       this.remainingTime = null;
       this.maxTime = null;
-      this.countdownInput = null;
+      this.formGroup.get('countdown').setValue('');
       window.cancelAnimationFrame(this.timer);
     }))
 

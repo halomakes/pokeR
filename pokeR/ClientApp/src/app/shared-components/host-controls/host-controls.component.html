@@ -12,19 +12,19 @@
             [disabled]="countdownIsActive" required [class.is-invalid]="false">
           <label for="name" class="floating-label">Countdown</label>
         </div>
-        <button class="btn btn-outline-secondary" type="button" placement="bottom" ngbTooltip="Start Countdown"
+        <button class="btn btn-outline-secondary" type="button" placement="bottom" tooltip="Start Countdown"
           [disabled]="!formGroup.get('countdown').value || countdownIsActive" (click)="startCountdown()">
           <i class="mdi mdi-timer"></i>
         </button>
-        <button class="btn" type="button" placement="bottom" ngbTooltip="Start New Round" [disabled]="countdownIsActive"
+        <button class="btn" type="button" placement="bottom" tooltip="Start New Round" [disabled]="countdownIsActive"
           (click)="startNewRound()">
           <i class="mdi mdi-restart"></i>
         </button>
       </div>
       <div *ngIf="countdownIsActive && getCountdownValue()" class="countdown">
-        <ngb-progressbar [value]="getCountdownValue()">
+        <div class="bar" [style.width]="getCountdownValue() + '%'">
           {{getTimeText()}}
-        </ngb-progressbar>
+        </div>
       </div>
     </div>
   </div>

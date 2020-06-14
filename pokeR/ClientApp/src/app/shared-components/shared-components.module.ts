@@ -8,7 +8,6 @@ import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
 import { PlayfieldComponent } from './playfield/playfield.component'
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from '../app-routing.module';
 import { ConfettiComponent } from './confetti/confetti.component';
 import { EntrywayComponent } from './entryway/entryway.component';
@@ -18,6 +17,7 @@ import { BackgroundCardsComponent } from './background-cards/background-cards.co
 import { RosterComponent } from './roster/roster.component';
 import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
 import { HostControlsComponent } from './host-controls/host-controls.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { HostControlsComponent } from './host-controls/host-controls.component';
   ], imports: [
     CommonModule,
     FormsModule,
-    NgbModule,
+    TooltipModule,
     AppRoutingModule,
     ReactiveFormsModule
   ], exports: [
