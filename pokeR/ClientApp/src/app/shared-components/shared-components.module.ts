@@ -17,6 +17,7 @@ import { FindRoomComponent } from './find-room/find-room.component';
 import { BackgroundCardsComponent } from './background-cards/background-cards.component';
 import { RosterComponent } from './roster/roster.component';
 import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
+import { HostControlsComponent } from './host-controls/host-controls.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
     ThemeSwitcherComponent,
     FindRoomComponent,
     BackgroundCardsComponent,
-    PaneDrawerComponent
+    PaneDrawerComponent,
+    HostControlsComponent
   ], imports: [
     CommonModule,
     FormsModule,
@@ -52,7 +54,8 @@ import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
     EntrywayComponent,
     ThemeSwitcherComponent,
     BackgroundCardsComponent,
-    PaneDrawerComponent
+    PaneDrawerComponent,
+    HostControlsComponent
   ]
 })
 export class SharedComponentsModule { }

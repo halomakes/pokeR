@@ -1,11 +1,11 @@
-@import './theme/variables';
+@import "./theme/variables";
 @import "./theme/forms";
 @import "./theme/flex";
 
 * {
   font-family: var(--font-family);
   color: var(--contrast-color);
-  transition: background .2s ease, color .2s ease, border-color .2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .full-height {
@@ -31,4 +31,13 @@
 body {
   margin: 0;
   background-color: var(--primary-color);
+}
+
+.container {
+  padding-left: $some;
+  padding-right: $some;
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }

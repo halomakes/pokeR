@@ -4,10 +4,12 @@
       <app-room-info class="mb-3" [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
       <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
     </div>
-    <app-background-cards class="bg-underlay" *ngIf="room && room.deck && room.deck.cards" [cards]="room.deck.cards"></app-background-cards>
+    <app-background-cards class="bg-underlay" *ngIf="room && room.deck && room.deck.cards" [cards]="room.deck.cards">
+    </app-background-cards>
   </div>
   <div *ngIf="isInGame">
     <app-roster></app-roster>
+    <app-host-controls></app-host-controls>
     <app-playfield></app-playfield>
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>
   </div>
