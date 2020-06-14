@@ -9,7 +9,7 @@
     </div>
     <div *ngIf="room?.users">
       <span class="mdi mdi-account-multiple"></span>
-      {{room?.users?.length}} user(s)
+      {{room?.users?.length}} {{room?.users?.length == 1 ? 'participant' : 'participants'}}
     </div>
   </div>
 </div>
