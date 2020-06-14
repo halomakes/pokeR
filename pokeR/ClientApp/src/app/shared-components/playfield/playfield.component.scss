@@ -1,5 +1,9 @@
+@import "../../../theme/variables";
+
 .cardScene {
   perspective: 1200px;
+
+  margin-top: 80px;
 }
 
 .playCard {
@@ -8,14 +12,15 @@
   position: relative;
   transform-style: preserve-3d;
   border-radius: 5px;
-  overflow: hidden;
+  transition: transform 1s ease;
+  transform-origin: -25% 50%;
 }
 
 .card-face {
   position: absolute;
   width: 100%;
   height: 100%;
-  //backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .card-back {
@@ -25,39 +30,42 @@
   object-position: center;
 }
 
-.card-face-front {
-  opacity: 1;
+@media #{$query-ie} {
+  .card-face-front {
+    opacity: 1;
+  }
+  .card-face-back {
+    opacity: 0;
+  }
 }
 
 .card-face-back {
-  opacity: 0;
-  transform: rotateY(180deg);
+  background-color: var(--primary-color);
+  color: var(--contrast-color);
+  box-shadow: 0 0 0 $slim inset var(--accent-color);
+  transform: rotateY(180deg) rotateZ(180deg);
+
+  font-size: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-flipped {
-  animation: flipCard 1s ease forwards;
+  transform: rotateY(180deg) rotateZ(-180deg);
 
-  .card-face-front {
-    animation: crossFadeOut 1s ease forwards;
-  }
+  @media #{$query-ie} {
+    .card-face-front {
+      animation: crossFadeOut 1s ease forwards;
+    }
 
-  .card-face-back {
-    animation: crossFadeIn 1s ease forwards;
-  }
-}
-
-@keyframes flipCard {
-  from {
-    transform: rotateY(0);
-  }
-
-  to {
-    transform: rotateY(180deg);
+    .card-face-back {
+      animation: crossFadeIn 1s ease forwards;
+    }
   }
 }
 
 @keyframes crossFadeIn {
-
   0%,
   40% {
     opacity: 0;
@@ -70,7 +78,6 @@
 }
 
 @keyframes crossFadeOut {
-
   0%,
   40% {
     opacity: 1;
@@ -80,4 +87,12 @@
   100% {
     opacity: 0;
   }
+}
+
+.cardholder {
+  display: flex;
+  flex-direction: column;
+  margin: $mid;
+  align-items: center;
+  text-align: center;
 }

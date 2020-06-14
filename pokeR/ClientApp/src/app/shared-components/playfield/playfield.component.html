@@ -1,6 +1,6 @@
 <div class="container">
   <div class="d-flex flex-row flex-wrap cardScene">
-    <div class="d-flex flex-column align-items-center m-3" *ngFor="let u of getActiveCards()">
+    <div class="cardholder" *ngFor="let u of getActiveCards()">
       <div class="playCard" [class.card-flipped]="isRevealed">
         <div class="card-face card-face-front rounded">
           <img class="card-back" [src]="getEmblemUrl(u.emblemId)">
