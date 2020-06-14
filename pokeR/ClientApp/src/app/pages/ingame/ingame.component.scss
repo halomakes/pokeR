@@ -1,37 +1,54 @@
-@import '../../../theme/variables';
+@import "../../../theme/variables";
 
 .enter-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    animation: fan-fade-in 1s 1s ease forwards;
-    opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fan-fade-in 1s 1s ease forwards;
+  opacity: 0;
 }
 
 .bg-underlay {
-    z-index: -1;
+  z-index: -1;
 }
 
 .contained {
-    max-width: 800px;
+  max-width: 800px;
 }
 
 .bg-feather-mask {
-    box-shadow: 0 0 $thicc $thicc var(--primary-color);
-    padding: $some;
-    background-color: var(--primary-color);
-    border-radius: 40%;
+  box-shadow: 0 0 $thicc $thicc var(--primary-color);
+  padding: $some;
+  background-color: var(--primary-color);
+  border-radius: 40%;
 }
 
 @keyframes fan-fade-in {
-    from {
-        opacity: 0;
-        transform: scale(.9);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.invalid-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  h4 {
+    font-size: 2.3rem;
+    font-weight: lighter;
+  }
+
+  .btn {
+    margin: $some;
+  }
 }

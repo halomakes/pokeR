@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Room } from 'src/app/models/entities/room';
 import { Observable } from 'rxjs';
 import { PokerService } from 'src/app/services/poker.service';
-import { map, flatMap } from 'rxjs/operators';
+import { map, flatMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ingame',
@@ -21,16 +21,21 @@ export class IngameComponent implements OnInit {
 
   ngOnInit() {
     this.loadRoom().subscribe();
-    this.route.params.subscribe(p => {
-      this.roomId = p['id'];
-    });
   }
 
   onRoomError = (): boolean => this.isInvalid = true;
 
   onJoined = (): boolean => this.isInGame = true;
 
-  loadRoom = (): Observable<Room> => this.route.params
-    .pipe(flatMap(p => this.service.getRoom(p['id'])))
-    .pipe(map(r => this.room = r))
+  loadRoom = (): Observable<Room> => this.route.params.pipe(
+    map(params => params['id']),
+    tap(id => this.roomId = id),
+    flatMap(id => this.service.getRoom(id)),
+    map(room => this.room = room)
+  )
+
+  reload = () => {
+    this.service.getRoom(this.roomId).pipe(map(room => this.room = room)).subscribe();
+    this.isInvalid = false;
+  }
 }
