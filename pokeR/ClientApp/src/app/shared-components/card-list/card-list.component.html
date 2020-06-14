@@ -1,7 +1,9 @@
-<div [class.translucent]="!isEnabled" class="fixed-bottom w-100 click-none card-list">
-  <div (click)="onCardSelected(c.id)" [class.border]="selectedCardId == c.id" [class.border-primary]="selectedCardId == c.id"
-    [class.selected]="selectedCardId == c.id" [class.click-none]="!isEnabled" class="click-normal card"
-    *ngFor="let c of cards">
-    {{c.name}}
+<div [class.translucent]="!isEnabled" class="fixed-bottom card-list">
+  <div class="card-list__inner">
+    <div (click)="onCardSelected(c.id)" [class.border]="selectedCardId == c.id"
+      [class.border-primary]="selectedCardId == c.id" [class.selected]="selectedCardId == c.id"
+      [class.click-none]="!isEnabled" class="card" *ngFor="let c of cards">
+      {{c.name}}
+    </div>
   </div>
 </div>

@@ -1,7 +1,12 @@
+@import "../../../theme/variables";
+
 .notification-feed {
   z-index: 26;
   position: fixed;
-  bottom: 160px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
+  width: 100%;
+  padding-left: $some;
+  padding-right: $some;
 }
