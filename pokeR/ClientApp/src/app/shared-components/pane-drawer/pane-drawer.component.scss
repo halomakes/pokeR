@@ -4,6 +4,7 @@
   position: fixed;
   height: 100%;
   z-index: 30;
+  pointer-events: none;
 
   $tab-width: 24px;
 
@@ -26,6 +27,7 @@
     position: relative;
     transform: translateX(-100%);
     transition: all 0.2s ease;
+    pointer-events: initial;
 
     & > .pane__content {
       width: 100%;
