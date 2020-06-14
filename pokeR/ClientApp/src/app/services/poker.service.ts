@@ -5,7 +5,7 @@ import { Deck } from '../models/entities/deck';
 import { of, Observable, from, forkJoin } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
 import { Room } from '../models/entities/room';
-import { HubConnection, HubConnectionBuilder, JsonHubProtocol } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, JsonHubProtocol } from '@microsoft/signalr';
 import { JoinRoomRequest } from '../models/join-room-request';
 import { User } from '../models/entities/user';
 import { ListChange } from '../models/list-change';
@@ -118,7 +118,7 @@ export class PokerService {
   private prepareHub = (): Promise<HubConnection> => {
     this.hub = new HubConnectionBuilder()
       .withUrl('/notify/room')
-      // .withAutomaticReconnect([0, 1000, 2000, 3000, 5000, 10000, 12000, 15000, 30000, null]) uncomment after upgrade to SignalR 3.0
+      .withAutomaticReconnect([0, 1000, 2000, 3000, 5000, 10000, 12000, 15000, 30000, null])
       .withHubProtocol(new JsonHubProtocol())
       .build();
     return this.hub.start().catch(console.error).then(() => {
