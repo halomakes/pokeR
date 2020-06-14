@@ -118,6 +118,7 @@ export class PokerService {
   private prepareHub = (): Promise<HubConnection> => {
     this.hub = new HubConnectionBuilder()
       .withUrl('/notify/room')
+      // .withAutomaticReconnect([0, 1000, 2000, 3000, 5000, 10000, 12000, 15000, 30000, null]) uncomment after upgrade to SignalR 3.0
       .withHubProtocol(new JsonHubProtocol())
       .build();
     return this.hub.start().catch(console.error).then(() => {
