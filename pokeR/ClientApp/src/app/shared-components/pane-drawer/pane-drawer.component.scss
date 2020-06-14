@@ -1,12 +1,12 @@
 @import "../../../theme/variables";
+$tab-width: 24px;
 
 .pane-drawer {
   position: fixed;
   height: 100%;
   z-index: 30;
   pointer-events: none;
-
-  $tab-width: 24px;
+  animation: slide-in-left 1s forwards ease;
 
   & > .shade {
     position: fixed;
@@ -14,7 +14,7 @@
     opacity: 0;
     background-color: black;
     transition: opacity 0.2s ease;
-    width: 100%;
+    width: 100vw;
     height: 100%;
   }
 
@@ -75,6 +75,7 @@
 
   &.right {
     right: 0;
+    animation: slide-in-right 1s forwards ease;
 
     & > .pane {
       transform: translateX(100%);
@@ -97,5 +98,23 @@
         }
       }
     }
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-1 * $tab-width);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX($tab-width);
+  }
+  100% {
+    transform: translateX(0);
   }
 }

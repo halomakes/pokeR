@@ -1,7 +1,7 @@
 <div class="host-controls">
   <div class="container">
     <div *ngIf="player.isHost || currentTagline">
-      <span *ngIf="!player.isHost" class="current-tagline">{{currentTagline}}</span>
+      <div *ngIf="!player.isHost" class="current-tagline">{{currentTagline}}</div>
       <div *ngIf="player.isHost" class="control-bar" [formGroup]="formGroup">
         <div class="input-group subject--input">
           <input class="form-control" type="text" formControlName="subject" required [class.is-invalid]="false">

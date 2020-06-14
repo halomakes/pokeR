@@ -6,6 +6,12 @@
   left: 0;
   right: 0;
   z-index: 28;
+  animation: slide-down forwards 1s ease;
+
+  .current-tagline {
+    text-align: center;
+    font-size: 1.4rem;
+  }
 
   .control-bar {
     display: flex;
@@ -37,5 +43,16 @@
         transform: scale(1.3) translateY(-3px);
       }
     }
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
