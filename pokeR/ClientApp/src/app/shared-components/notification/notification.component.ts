@@ -23,13 +23,13 @@ export class NotificationComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.dismiss();
-    }, 10000);
+    }, 5000);
   }
 
   dismiss = (): boolean => this.animOut = true;
 
   transitionEnd = (e: AnimationEvent) => {
-    if (e.animationName === 'fadeOutUp') {
+    if (e.animationName === 'fadeOut') {
       try {
         this.selfRef.destroy();
       } catch {

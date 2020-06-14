@@ -16,23 +16,26 @@
   .control-bar {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 
     & > .input-group {
-      margin-bottom: $thicc;
+      margin-bottom: $some;
+      margin-top: $some;
       margin-right: $some;
     }
 
     & > .subject--input {
-      flex-grow: 1;
+      flex-grow: 10;
     }
 
     & > .countdown--input {
       min-width: 120px;
+      flex-grow: 1;
     }
 
     & > .btn {
-      margin-bottom: $thicc;
-      margin-top: $thicc;
+      margin-bottom: $some;
+      margin-top: $some;
       $size: 46px;
       height: $size;
       width: $size;

@@ -8,6 +8,8 @@
   left: 50%;
   transform: translateX(-50%);
   animation: slide-up forwards 1s ease;
+  width: 100%;
+  flex-wrap: wrap;
 
   & > .card {
     font-size: 1.4rem;

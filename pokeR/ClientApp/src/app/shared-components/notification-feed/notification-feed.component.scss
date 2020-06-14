@@ -1,9 +1,7 @@
-.fixed-tr {
-    position: fixed;
-    top: 0;
-    right: 0;
-}
-
-.z-top {
-    z-index: 30;
+.notification-feed {
+  z-index: 26;
+  position: fixed;
+  bottom: 160px;
+  left: 50%;
+  transform: translateX(-50%);
 }

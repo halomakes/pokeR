@@ -1,5 +1,5 @@
-<div [class.animIn]="!animOut" [class.animOut]="animOut" (animationend)="transitionEnd($event)">
-  <div class="alert alert-primary w-100" role="alert" (click)="dismiss()">
+<div [class.in]="!animOut" [class.out]="animOut" (animationend)="transitionEnd($event)" class="notification">
+  <div class="notification__content" (click)="dismiss()">
     {{message}}
   </div>
 </div>
