@@ -1,25 +1,6 @@
 @import "../../../theme/variables";
 
-.drop-hover {
-  transform: scale(1.1);
-}
-
-.user-animate {
-  transition: all 0.2s ease;
-}
-
-.draggable {
-  cursor: grab;
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-.forbidden {
-  cursor: not-allowed;
-}
-
-.roster {
+.pane-drawer {
   position: fixed;
   height: 100%;
   z-index: 30;
@@ -48,7 +29,6 @@
 
     & > .tab {
       width: $tab-width;
-      transform: rotate(90deg);
       background-color: var(--accent-color);
       cursor: pointer;
       writing-mode: vertical-lr;
@@ -81,6 +61,32 @@
 
         & > .tab__icon::before {
           transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &.right {
+    right: 0;
+
+    & > .pane {
+      transform: translateX(100%);
+
+      & > .tab {
+        writing-mode: vertical-rl;
+        right: unset;
+        left: -1 * $tab-width;
+      }
+    }
+
+    &.active {
+      & > .pane {
+        padding-right: $some;
+        padding-left: $some + $tab-width;
+
+        & > .tab {
+          left: 0;
+          right: unset;
         }
       }
     }

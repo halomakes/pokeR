@@ -36,10 +36,6 @@ export class RosterComponent implements OnInit {
     this.monitorGameState().subscribe();
   }
 
-  get playerName(): string {
-    return this.player.displayName;
-  }
-
   getRemainingUsers = (): number => this.users.filter(u => u.currentCardId == null).length;
 
   initialize = (): Observable<void> =>
