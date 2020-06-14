@@ -1,0 +1,39 @@
+@import "../../../theme/variables";
+
+.host-controls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .control-bar {
+    display: flex;
+    flex-direction: row;
+
+    & > .input-group {
+      margin-bottom: $thicc;
+      margin-right: $some;
+    }
+
+    & > .subject--input {
+      flex-grow: 1;
+    }
+
+    & > .countdown--input {
+      min-width: 120px;
+    }
+
+    & > .btn {
+      margin-bottom: $thicc;
+      margin-top: $thicc;
+      $size: 46px;
+      height: $size;
+      width: $size;
+      margin-right: $some;
+      padding: $some;
+      & > i::before {
+        transform: scale(1.3) translateY(-3px);
+      }
+    }
+  }
+}

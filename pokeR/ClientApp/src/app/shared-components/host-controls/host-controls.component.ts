@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { Observable, Subscription, forkJoin } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { map, debounceTime, flatMap } from 'rxjs/operators';
 import { User } from 'src/app/models/entities/user';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-host-controls',
@@ -11,14 +12,16 @@ import { User } from 'src/app/models/entities/user';
 })
 export class HostControlsComponent implements OnInit {
   currentTagline: string;
-  countdownInput: number;
   countdownIsActive = false;
   remainingTime: number;
   maxTime: number;
   deadline: Date;
   timer: number;
   player: User;
-  private textChanges: EventEmitter<string> = new EventEmitter<string>();
+  formGroup: FormGroup = new FormGroup({
+    subject: new FormControl(''),
+    countdown: new FormControl('')
+  });
 
   constructor(private service: PokerService) { }
 
@@ -36,12 +39,8 @@ export class HostControlsComponent implements OnInit {
       this.watchTaglineChanges(),
       this.watchRoundEnd(),
       this.watchCountdownStart(),
+      this.watchHostChanges()
     )
-
-  onTextChange = (newText: string): void => {
-    this.textChanges.emit(newText);
-    this.service.updateTagline(newText).subscribe();
-  }
 
   getRemainingTime = (): number => this.deadline ? this.deadline.getTime() - Date.now() : 0;
 
@@ -74,20 +73,25 @@ export class HostControlsComponent implements OnInit {
   }
 
   startCountdown = (): void => {
-    if (this.countdownInput !== 0) {
-      this.service.startTimer(1000 * this.countdownInput).subscribe();
+    const countdownLength = Number(this.formGroup.get('countdown').value);
+    if (countdownLength) {
+      this.service.startTimer(1000 * countdownLength).subscribe();
       this.countdownIsActive = true;
       window.setTimeout(() => {
         this.service.endRound().subscribe();
-      }, 1000 * this.countdownInput);
+      }, 1000 * countdownLength);
     }
   }
 
   startNewRound = (): Subscription => this.service.startRound().subscribe();
 
-  watchInputChange = (): Observable<Subscription> => this.textChanges
-    .pipe(debounceTime(500))
-    .pipe(map(t => this.service.storeTagline(t).subscribe()))
+  watchInputChange = (): Observable<any> => {
+    const source = this.formGroup.get('subject').valueChanges;
+    return forkJoin(
+      source.pipe(debounceTime(500), flatMap(this.service.storeTagline)),
+      source.pipe(flatMap(this.service.updateTagline))
+    );
+  };
 
   watchTaglineChanges = (): Observable<void> =>
     this.service.taglineUpdated.pipe(map(t => {
@@ -113,6 +117,14 @@ export class HostControlsComponent implements OnInit {
         this.deadline = new Date(Date.now() + t);
         this.countdownIsActive = true;
         this.timer = window.requestAnimationFrame(this.updateRemainingTime);
+      }
+    }))
+
+  watchHostChanges = (): Observable<void> =>
+    this.service.hostChanges.pipe(map(d => {
+      const playerMatch = d.collection.find(c => c.id === this.player.id);
+      if (playerMatch) {
+        this.player = playerMatch;
       }
     }))
 }

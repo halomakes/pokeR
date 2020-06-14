@@ -1,7 +1,7 @@
 <form class="join-form" (submit)="join()" [formGroup]="form">
   <div class="input-group">
     <input class="form-control" type="text" name="name" formControlName="name" [class.is-valid]="form.get('name').valid"
-      [class.is-invalid]="(submitAttempted || form.get('name').touched) && !form.get('name').valid" autofocus>
+      [class.is-invalid]="(submitAttempted || form.get('name').touched) && !form.get('name').valid" autofocus required>
     <label for="name" class="floating-label">Your Name</label>
     <div *ngIf="(submitAttempted || form.get('name').touched) && form.get('name').hasError('required')"
       class="invalid-feedback helper">
