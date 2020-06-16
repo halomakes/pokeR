@@ -1,15 +1,10 @@
 <div class="container">
   <div class="d-flex flex-row flex-wrap cardScene">
     <div class="cardholder" *ngFor="let u of getActiveCards()">
-      <div class="playCard" [class.card-flipped]="isRevealed">
-        <div class="card-face card-face-front">
-          <img class="card-back" [src]="getEmblemUrl(u.emblemId)">
-        </div>
-        <div class="card-face card-face-back">
-          <span>{{u.currentCard?.name}}</span>
-        </div>
+      <div class="card--aligner">
       </div>
       <span>{{u.displayName}}</span>
     </div>
   </div>
 </div>
+<div #overlayCardHolder></div>

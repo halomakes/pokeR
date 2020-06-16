@@ -18,6 +18,7 @@ import { RosterComponent } from './roster/roster.component';
 import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
 import { HostControlsComponent } from './host-controls/host-controls.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
+import { PlayfieldCardComponent } from './playfield-card/playfield-card.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     FindRoomComponent,
     BackgroundCardsComponent,
     PaneDrawerComponent,
-    HostControlsComponent
+    HostControlsComponent,
+    PlayfieldCardComponent
   ], imports: [
     CommonModule,
     FormsModule,
@@ -56,6 +58,10 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     BackgroundCardsComponent,
     PaneDrawerComponent,
     HostControlsComponent
+  ],
+  entryComponents: [
+    NotificationComponent,
+    PlayfieldCardComponent
   ]
 })
 export class SharedComponentsModule { }
