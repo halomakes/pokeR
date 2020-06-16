@@ -45,7 +45,7 @@ export class PlayfieldCardComponent implements AfterViewInit, OnDestroy {
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 
   onAnimationEnd = (e: AnimationEvent) => {
-    if (e.animationName === 'withdraw') {
+    if (e.animationName === 'withdraw' || e.animationName === 'withdraw-revealed') {
       try {
         this.selfRef.destroy();
       } catch {

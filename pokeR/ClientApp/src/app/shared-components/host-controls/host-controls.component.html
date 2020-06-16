@@ -21,10 +21,10 @@
           <i class="mdi mdi-restart"></i>
         </button>
       </div>
-      <div *ngIf="countdownIsActive && getCountdownValue()" class="countdown">
-        <div class="bar" [style.width]="getCountdownValue() + '%'">
-          {{getTimeText()}}
-        </div>
+    </div>
+    <div *ngIf="countdownIsActive && getCountdownValue()" class="countdown">
+      <div class="bar" [style.width]="getCountdownValue() + '%'">
+        {{getTimeText()}}
       </div>
     </div>
   </div>

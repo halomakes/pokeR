@@ -53,7 +53,7 @@
   align-items: center;
 }
 
-.card-flipped {
+.card-flipped:not(.card-exiting) {
   transform: rotateY(180deg) rotateZ(-180deg) !important;
 
   @media #{$query-ie} {
@@ -69,6 +69,10 @@
 
 .card-exiting {
   animation: withdraw 0.3s ease forwards;
+
+  &.card-flipped {
+    animation: withdraw-revealed 0.1s ease forwards;
+  }
 }
 
 @keyframes crossFadeIn {
@@ -106,12 +110,13 @@
   }
 }
 
-@keyframes play {
+@keyframes withdraw-revealed {
   0% {
-    transform: translateY(80%) translateZ(-150px) !important;
-    //opacity: 0;
+    transform: rotateY(180deg) rotateZ(-180deg) translateY(0) !important;
+    opacity: 1;
   }
   100% {
-    //opacity: 1;
+    transform: rotateY(180deg) rotateZ(-180deg) translateY(200%) !important;
+    opacity: 0;
   }
 }

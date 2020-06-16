@@ -59,3 +59,13 @@
     opacity: 1;
   }
 }
+
+.countdown {
+  width: 100%;
+  & > .bar {
+    border-radius: $mid;
+    color: var(--contrast-color);
+    background-color: var(--accent-color);
+    text-align: center;
+  }
+}
