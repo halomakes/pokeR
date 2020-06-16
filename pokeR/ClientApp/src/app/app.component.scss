@@ -1,0 +1,8 @@
+@import '../theme/variables';
+
+.corner-button {
+    position: fixed;
+    top: $mid;
+    right: $mid;
+    z-index: 30;
+}

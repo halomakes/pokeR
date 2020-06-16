@@ -1,20 +1,28 @@
 <div *ngIf="!isInvalid">
-  <div class="full-height d-flex flex-column justify-content-center" *ngIf="!isInGame">
-    <div class="container card p-3 my-5">
+  <div class="full-height enter-form" *ngIf="!isInGame">
+    <div class="contained bg-feather-mask">
       <app-room-info class="mb-3" [roomId]="roomId" (roomError)="onRoomError()"></app-room-info>
       <app-join-room [roomId]="roomId" (joined)="onJoined()"></app-join-room>
     </div>
+    <app-background-cards class="bg-underlay" *ngIf="room && room.deck && room.deck.cards" [cards]="room.deck.cards">
+    </app-background-cards>
   </div>
   <div *ngIf="isInGame">
-    <app-round-status></app-round-status>
+    <app-roster></app-roster>
+    <app-host-controls></app-host-controls>
     <app-playfield></app-playfield>
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>
   </div>
 </div>
-<div class="full-height d-flex flex-column justify-content-center align-items-center" *ngIf="isInvalid">
-  <h4 class="display-4 mb-5">Room not found 😢</h4>
-  <button role="button" routerLink="/" class="btn btn-primary btn-lg">
-    Go Home
-  </button>
+<div class="invalid-container" *ngIf="isInvalid">
+  <h4>Room not found 😢</h4>
+  <div>
+    <button role="button" (click)="reload()" class="btn">
+      Try Again
+    </button>
+    <button role="button" routerLink="/" class="btn">
+      Go Home
+    </button>
+  </div>
 </div>
 <app-confetti></app-confetti>

@@ -1,0 +1,134 @@
+@import '../../../theme/variables';
+
+.landing-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+    flex-wrap: wrap;
+
+    .promo-pane {
+        background-color: var(--accent-color);
+        padding: $thicc;
+        flex-grow: 1;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+
+        .cards {
+            position: absolute;
+            pointer-events: none;
+            transform: rotate(-36deg);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+
+            .card {
+                width: 340px;
+                height: 410px;
+                border-radius: 48px;
+                display: block;
+                background: linear-gradient(0deg, transparent, var(--primary-color));
+                opacity: 0;
+                position: absolute;
+                animation-name: slide-up;
+                animation-timing-function: ease;
+                animation-duration: .8s;
+                animation-fill-mode: forwards;
+
+                &.pos-a {
+                    top: 12%;
+                    left: 47%;
+                    animation-delay: 0.8s;
+                }
+
+                &.pos-b {
+                    top: 18%;
+                    left: 15%;
+                    animation-delay: 1.1s;
+                }
+
+                &.pos-c {
+                    top: 41%;
+                    left: 32%;
+                    animation-delay: 1.24s;
+                }
+            }
+        }
+
+        .promo-text {
+            z-index: 4;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+
+            h1 {
+                font-weight: normal;
+                font-size: 48px;
+                margin: 0;
+                animation: slide-left 0.8s .5s ease forwards;
+                opacity: 0;
+            }
+
+            p {
+                font-size: 20px;
+                animation: slide-left 0.8s .7s ease forwards;
+                opacity: 0;
+            }
+        }
+    }
+
+    .content-pane {
+        flex-grow: 2;
+        background-color: var(--primary-color);
+        padding: $thicc;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        box-shadow: 0 0 0 0 var(--primary-color);
+        z-index: 1;
+    }
+
+    &.exiting {
+        pointer-events: none;
+
+        .content-pane {
+            &>* {
+                transition: opacity .5s ease;
+                opacity: 0;
+            }
+
+            transition: box-shadow .5s ease;
+            box-shadow: 0 0 0 100vw var(--primary-color);
+        }
+    }
+}
+
+@keyframes slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(168px);
+    }
+
+    to {
+        opacity: 0.35;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-left {
+    from {
+        opacity: 0;
+        transform: translateX(-168px);
+    }
+
+    to {
+        opacity: 2;
+        transform: translateX(0);
+    }
+}

@@ -11,9 +11,9 @@ namespace PokeR.Data
     public class DbSeeder
     {
         private RoomContext db;
-        private readonly IHostingEnvironment environment;
+        private readonly IWebHostEnvironment environment;
 
-        public DbSeeder(RoomContext db, IHostingEnvironment environment)
+        public DbSeeder(RoomContext db, IWebHostEnvironment environment)
         {
             this.db = db;
             this.environment = environment;

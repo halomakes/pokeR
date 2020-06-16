@@ -21,6 +21,8 @@ namespace PokeR.Models.Entities
 
         public int? CurrentCardId { get; set; }
 
+        public DateTime? LastPlayed { get; set; }
+
         public virtual Room Room { get; set; }
         public virtual Emblem Emblem { get; set; }
         [ForeignKey("CurrentCardId")]

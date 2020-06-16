@@ -1,15 +1,15 @@
-<div class="d-flex flex-column align-items-center justify-content-center" *ngIf="exists">
-  <div class="small">You are joining</div>
+<div class="join-container" *ngIf="exists">
+  <small>You are joining</small>
   <h2 *ngIf="room?.name">{{room?.name}}</h2>
   <h6 *ngIf="room?.tagLine">{{room?.tagLine}}</h6>
-  <div class="d-flex justify-content-around col-md-6 col-lg-4 text-muted">
-    <div *ngIf="room?.deck?.name" class="mr-2">
+  <div class="info-list">
+    <div *ngIf="room?.deck?.name">
       <span class="mdi mdi-cards"></span>
       {{room?.deck?.name}}
     </div>
-    <div *ngIf="room?.users" class="ml-2">
+    <div *ngIf="room?.users">
       <span class="mdi mdi-account-multiple"></span>
-      {{room?.users?.length}} user(s)
+      {{room?.users?.length}} {{room?.users?.length == 1 ? 'participant' : 'participants'}}
     </div>
   </div>
 </div>

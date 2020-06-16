@@ -1,15 +1,19 @@
-<div class="full-height d-flex flex-column justify-content-center">
-  <div class="container">
-    <div class="card my-5 p-3">
-      <div class="d-flex">
-        <h2 class="display-4">Planning PokeR</h2>
-        <div>
-          <span class="badge badge-pill badge-light">v1.2</span>
-        </div>
-      </div>
-      <small class="mb-3 text-muted">Made by <a href="https://www.halomademeapc.com" target="_blank">Alex Griffith</a>,
-        powered by <a target="_blank" href="https://github.com/SignalR/SignalR">SignalR.</a></small>
-      <app-create-room></app-create-room>
+<div class="landing-container" [class.exiting]="exiting">
+  <div class="promo-pane">
+    <div class="cards">
+      <div class="card pos-a"></div>
+      <div class="card pos-b"></div>
+      <div class="card pos-c"></div>
     </div>
+    <div class="promo-text">
+      <div class="spacer"></div>
+      <div class="content">
+        <h1>Plan your heart out.</h1>
+        <p>Created by Alex Griffith, powered by SignalR</p>
+      </div>
+    </div>
+  </div>
+  <div class="content-pane">
+    <app-entryway (exit)="onExit($event)"></app-entryway>
   </div>
 </div>

@@ -1,0 +1,12 @@
+<div class="pane-drawer" [class.active]="open" [class.pane-drawer--right]="direction == 'right'">
+  <div class="shade" (click)="togglePanel()"></div>
+  <div class="pane">
+    <div class="tab" (click)="togglePanel()">
+      <i class="mdi mdi-chevron-right tab__icon"></i>
+      {{ label }}
+    </div>
+    <div class="pane__content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

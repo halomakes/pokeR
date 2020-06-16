@@ -1,17 +1,51 @@
-.cardTray {
-    font-size: 1.4rem;
-    min-width: 2em;
-    padding-top: .5em;
-    padding-bottom: .5em;
-    text-align: center;
-    transition: font-size .2s ease;
-}
+@import "../../../theme/variables";
 
-.cardTray.selected {
-    font-size: 2rem;
+.card-list {
+  left: 50%;
+  transform: translateX(-50%);
+  animation: slide-up forwards 1s ease;
+  width: 100%;
+  overflow-x: auto;
+
+  & > .card-list__inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+
+    @media screen and (max-width: 768px) {
+      justify-content: flex-start;
+    }
+
+    & > .card {
+      font-size: 1.4rem;
+      min-width: 2em;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      text-align: center;
+      transition: font-size 0.2s ease;
+      border: $thinn solid var(--accent-color);
+      border-radius: $slim;
+      cursor: pointer;
+      margin: $mid;
+
+      &.selected {
+        font-size: 2rem;
+      }
+    }
+  }
 }
 
 .fixed-bottom {
-    position: fixed;
-    bottom: 0;
+  position: fixed;
+  bottom: 0;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%) translateX(-50%);
+  }
+  100% {
+    transform: translateY(0) translateX(-50%);
+  }
 }

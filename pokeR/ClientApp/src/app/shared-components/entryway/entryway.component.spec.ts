@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RoundStatusComponent } from './round-status.component';
+import { EntrywayComponent } from './entryway.component';
 
-describe('RoundStatusComponent', () => {
-  let component: RoundStatusComponent;
-  let fixture: ComponentFixture<RoundStatusComponent>;
+describe('EntrywayComponent', () => {
+  let component: EntrywayComponent;
+  let fixture: ComponentFixture<EntrywayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoundStatusComponent ]
+      declarations: [ EntrywayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoundStatusComponent);
+    fixture = TestBed.createComponent(EntrywayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

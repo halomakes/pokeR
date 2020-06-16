@@ -1,0 +1,120 @@
+@import "../../../theme/variables";
+$tab-width: 24px;
+
+.pane-drawer {
+  position: fixed;
+  height: 100%;
+  z-index: 30;
+  pointer-events: none;
+  animation: slide-in-left 1s forwards ease;
+
+  & > .shade {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+    background-color: black;
+    transition: opacity 0.2s ease;
+    width: 100vw;
+    height: 100%;
+  }
+
+  & > .pane {
+    background-color: var(--accent-color);
+    width: 100%;
+    height: 100%;
+    padding: $some;
+    color: var(--contrast-color);
+    position: relative;
+    transform: translateX(-100%);
+    transition: all 0.2s ease;
+    pointer-events: initial;
+
+    & > .pane__content {
+      width: 100%;
+      height: 100%;
+    }
+
+    & > .tab {
+      width: $tab-width;
+      background-color: var(--accent-color);
+      cursor: pointer;
+      writing-mode: vertical-lr;
+      transform: translateY(-50%);
+      right: -1 * $tab-width;
+      top: 50%;
+      position: absolute;
+      padding-top: $mid;
+      padding-bottom: $mid;
+      transition: right 0.2s ease;
+
+      & > .tab__icon::before {
+        transition: transform 0.2s ease;
+      }
+    }
+  }
+
+  &.active {
+    & > .shade {
+      pointer-events: initial;
+      opacity: 0.4;
+    }
+
+    & > .pane {
+      transform: translateX(0);
+      padding-right: $some + $tab-width;
+
+      & > .tab {
+        right: 0;
+
+        & > .tab__icon::before {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &.right {
+    right: 0;
+    animation: slide-in-right 1s forwards ease;
+
+    & > .pane {
+      transform: translateX(100%);
+
+      & > .tab {
+        writing-mode: vertical-rl;
+        right: unset;
+        left: -1 * $tab-width;
+      }
+    }
+
+    &.active {
+      & > .pane {
+        padding-right: $some;
+        padding-left: $some + $tab-width;
+
+        & > .tab {
+          left: 0;
+          right: unset;
+        }
+      }
+    }
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-1 * $tab-width);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX($tab-width);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

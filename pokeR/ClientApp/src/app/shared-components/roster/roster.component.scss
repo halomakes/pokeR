@@ -1,0 +1,49 @@
+@import "../../../theme/variables";
+
+.drop-hover {
+  transform: scale(1.1);
+}
+
+.user-animate {
+  transition: all 0.2s ease;
+}
+
+.draggable {
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.forbidden {
+  cursor: not-allowed;
+}
+
+.player-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  & > .player {
+    display: flex;
+    padding: $mid;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1.3rem;
+
+    &:not(.played) {
+      opacity: 0.6;
+    }
+
+    & > .icon {
+      margin-right: $mid;
+    }
+
+    .host-icon {
+      margin-left: $mid;
+    }
+  }
+}

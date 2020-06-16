@@ -1,0 +1,31 @@
+<div class="host-controls">
+  <div class="container">
+    <div *ngIf="player.isHost || currentTagline">
+      <div *ngIf="!player.isHost" class="current-tagline">{{currentTagline}}</div>
+      <div *ngIf="player.isHost" class="control-bar" [formGroup]="formGroup">
+        <div class="input-group subject--input">
+          <input class="form-control" type="text" formControlName="subject" required [class.is-invalid]="false">
+          <label for="name" class="floating-label">Current Subject</label>
+        </div>
+        <div class="input-group countdown--input">
+          <input class="form-control" type="number" min="0" max="600" formControlName="countdown"
+            [disabled]="countdownIsActive" required [class.is-invalid]="false">
+          <label for="name" class="floating-label">Countdown</label>
+        </div>
+        <button class="btn btn-outline-secondary" type="button" placement="bottom" tooltip="Start Countdown"
+          [disabled]="!formGroup.get('countdown').value || countdownIsActive" (click)="startCountdown()">
+          <i class="mdi mdi-timer"></i>
+        </button>
+        <button class="btn" type="button" placement="bottom" tooltip="Start New Round" [disabled]="countdownIsActive"
+          (click)="startNewRound()">
+          <i class="mdi mdi-restart"></i>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="countdownIsActive && getCountdownValue()" class="countdown">
+      <div class="bar" [style.width]="getCountdownValue() + '%'">
+        {{getTimeText()}}
+      </div>
+    </div>
+  </div>
+</div>

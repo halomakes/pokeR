@@ -2,10 +2,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CreateRoomRequest } from '../models/create-room-request';
 import { Deck } from '../models/entities/deck';
-import { of, Observable, from, Subject, forkJoin } from 'rxjs';
+import { of, Observable, from, forkJoin } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
 import { Room } from '../models/entities/room';
-import { HubConnection, HubConnectionBuilder, JsonHubProtocol } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, JsonHubProtocol } from '@microsoft/signalr';
 import { JoinRoomRequest } from '../models/join-room-request';
 import { User } from '../models/entities/user';
 import { ListChange } from '../models/list-change';
@@ -44,32 +44,32 @@ export class PokerService {
     this.initializeHubWatches().subscribe();
   }
 
-  public getEmblemUrl = (id: number): string => `api/emblems/${id}/image`;
+  public getEmblemUrl = (id: number): string => `/api/emblems/${id}/image`;
 
   public reset = (): void => this.room = null;
 
   public createRoom = (request: CreateRoomRequest): Observable<void> =>
-    this.http.post<void>('api/rooms', request)
+    this.http.post<void>('/api/rooms', request)
 
   public getDecks = (): Observable<Deck[]> =>
     this.decks.length ? of(this.decks) :
-      this.http.get<Deck[]>('api/decks').pipe(map(d => this.decks = d))
+      this.http.get<Deck[]>('/api/decks').pipe(map(d => this.decks = d))
 
   public getEmblems = (): Observable<Emblem[]> =>
     this.emblems.length ? of(this.emblems) :
-      this.http.get<Emblem[]>('api/emblems').pipe(map(e => this.emblems = e))
+      this.http.get<Emblem[]>('/api/emblems').pipe(map(e => this.emblems = e))
 
   public getRoom = (roomId: string): Observable<Room> =>
-    this.http.get<Room>(`api/rooms/${roomId}`).pipe(map(r => this.room = r))
+    this.http.get<Room>(`/api/rooms/${roomId}`).pipe(map(r => this.room = r))
 
   public getPlayers = (): Observable<Array<User>> =>
     this.room
-      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.users))
+      ? this.http.get<Room>(`/api/rooms/${this.room.id}`).pipe(map(r => r.users))
       : of(new Array<User>())
 
   public getTagline = (): Observable<string> =>
     this.room
-      ? this.http.get<Room>(`api/rooms/${this.room.id}`).pipe(map(r => r.tagLine))
+      ? this.http.get<Room>(`/api/rooms/${this.room.id}`).pipe(map(r => r.tagLine))
       : of('')
 
   public joinRoom = (request: JoinRoomRequest): Observable<void> =>
@@ -100,7 +100,7 @@ export class PokerService {
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('switchHost', newHostId))))
 
   public checkAvailability = (id: string): Observable<boolean> =>
-    this.http.get(`api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
+    this.http.get(`/api/rooms/available/${id}`, { observe: 'response', responseType: 'text' as 'json' })
       .pipe(map(r => r.body === 'true'))
 
   public getCards = (deckId: number): Observable<Card[]> =>
@@ -118,6 +118,7 @@ export class PokerService {
   private prepareHub = (): Promise<HubConnection> => {
     this.hub = new HubConnectionBuilder()
       .withUrl('/notify/room')
+      .withAutomaticReconnect([0, 1000, 2000, 3000, 5000, 10000, 12000, 15000, 30000, null])
       .withHubProtocol(new JsonHubProtocol())
       .build();
     return this.hub.start().catch(console.error).then(() => {

@@ -1,0 +1,22 @@
+<div class="switcher">
+  <div class="switcher-icon">
+    <i *ngIf="currentTheme==modes.automatic" class="mdi mdi-brightness-auto"></i>
+    <i *ngIf="currentTheme==modes.dark" class="mdi mdi-weather-night"></i>
+    <i *ngIf="currentTheme==modes.light" class="mdi mdi-white-balance-sunny"></i>
+  </div>
+  <div class="switcher-menu">
+    <div class="switcher-option" (click)="setTheme(modes.automatic)" [class.active]="currentTheme==modes.automatic">
+      <i class="mdi mdi-brightness-auto"></i>
+      <span>Automatic</span>
+    </div>
+    <div class="switcher-option" (click)="setTheme(currentTheme=modes.dark)" [class.active]="currentTheme==modes.dark">
+      <i class="mdi mdi-weather-night"></i>
+      <span>Dark</span>
+    </div>
+    <div class="switcher-option" (click)="setTheme(currentTheme=modes.light)"
+      [class.active]="currentTheme==modes.light">
+      <i class="mdi mdi-white-balance-sunny"></i>
+      <span>Light</span>
+    </div>
+  </div>
+</div>

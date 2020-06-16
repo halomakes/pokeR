@@ -1,0 +1,9 @@
+<div class="playCard" [class.card-flipped]="isRevealed" [class.card-exiting]="isExiting" [class.pre-play]="!initialized"
+  (animationend)="onAnimationEnd($event)" [ngStyle]="getStyle()">
+  <div class="card-face card-face-front">
+    <img class="card-back" [src]="getEmblemUrl(user?.emblemId)">
+  </div>
+  <div class="card-face card-face-back">
+    <span>{{user.currentCard?.name}}</span>
+  </div>
+</div>

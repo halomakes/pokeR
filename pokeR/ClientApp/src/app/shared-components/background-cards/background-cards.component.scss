@@ -1,0 +1,52 @@
+@import '../../../theme/variables';
+
+.bg-cards {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    perspective: 900px;
+    pointer-events: none;
+    overflow: hidden;
+
+    .perspective-container {
+        width: 100%;
+        height: 100%;
+        animation: pan-in 20s ease 0s forwards;
+        transform-style: preserve-3d;
+
+        .bg-card {
+            position: absolute;
+            border: $slim solid var(--accent-color);
+            border-radius: $slim;
+            width: 4.5rem;
+            height: 6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: .5;
+            transform-style: preserve-3d;
+            background-color: var(--primary-color);
+
+            .card-label {
+                color: var(--accent-color);
+                font-size: 56px;
+            }
+        }
+    }
+}
+
+@keyframes pan-in {
+    0% {
+        transform: translateZ(-10000px);
+    }
+
+    5% {
+        transform: translateZ(-240px);
+    }
+
+    100% {
+        transform: translateZ(0);
+    }
+}

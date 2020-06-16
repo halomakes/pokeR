@@ -7,11 +7,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoomInfoComponent } from './room-info/room-info.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { CardListComponent } from './card-list/card-list.component';
-import { PlayfieldComponent } from './playfield/playfield.component';
-import { RoundStatusComponent } from './round-status/round-status.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PlayfieldComponent } from './playfield/playfield.component'
 import { AppRoutingModule } from '../app-routing.module';
 import { ConfettiComponent } from './confetti/confetti.component';
+import { EntrywayComponent } from './entryway/entryway.component';
+import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
+import { FindRoomComponent } from './find-room/find-room.component';
+import { BackgroundCardsComponent } from './background-cards/background-cards.component';
+import { RosterComponent } from './roster/roster.component';
+import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
+import { HostControlsComponent } from './host-controls/host-controls.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { PlayfieldCardComponent } from './playfield-card/playfield-card.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +29,19 @@ import { ConfettiComponent } from './confetti/confetti.component';
     JoinRoomComponent,
     CardListComponent,
     PlayfieldComponent,
-    RoundStatusComponent,
-    ConfettiComponent
+    RosterComponent,
+    ConfettiComponent,
+    EntrywayComponent,
+    ThemeSwitcherComponent,
+    FindRoomComponent,
+    BackgroundCardsComponent,
+    PaneDrawerComponent,
+    HostControlsComponent,
+    PlayfieldCardComponent
   ], imports: [
     CommonModule,
     FormsModule,
-    NgbModule,
+    TooltipModule,
     AppRoutingModule,
     ReactiveFormsModule
   ], exports: [
@@ -37,8 +51,17 @@ import { ConfettiComponent } from './confetti/confetti.component';
     JoinRoomComponent,
     CardListComponent,
     PlayfieldComponent,
-    RoundStatusComponent,
-    ConfettiComponent
+    RosterComponent,
+    ConfettiComponent,
+    EntrywayComponent,
+    ThemeSwitcherComponent,
+    BackgroundCardsComponent,
+    PaneDrawerComponent,
+    HostControlsComponent
+  ],
+  entryComponents: [
+    NotificationComponent,
+    PlayfieldCardComponent
   ]
 })
 export class SharedComponentsModule { }

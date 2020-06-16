@@ -1,0 +1,20 @@
+<div class="actionable" [class.active]="action=='join'" [class.inactive]="action && action!='join'">
+  <div class="selector-bar" (click)="action='join'">
+    <i class="mdi mdi-chevron-left back-icon" (click)="action=null;$event.stopPropagation()"></i>
+    <span class="label">Join an existing room</span>
+    <i class="mdi mdi-chevron-right forward-icon"></i>
+  </div>
+  <div class="content">
+    <app-find-room (exit)="onExit($event)"></app-find-room>
+  </div>
+</div>
+<div class="actionable" [class.active]="action=='create'" [class.inactive]="action && action!='create'">
+  <div class="selector-bar" (click)="action='create'">
+    <i class="mdi mdi-chevron-left back-icon" (click)="action=null;$event.stopPropagation()"></i>
+    <span class="label">Create a new room</span>
+    <i class="mdi mdi-chevron-right forward-icon"></i>
+  </div>
+  <div class="content">
+    <app-create-room (exit)="onExit($event)"></app-create-room>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+@import '../../../theme/variables';
+
+.switcher {
+    color: var(--contrast-color);
+    position: relative;
+    z-index: 30;
+
+    .switcher-icon {
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .switcher-menu {
+        position: absolute;
+        pointer-events: none;
+        transition: all .3s ease;
+        opacity: 0;
+        transform: translateX(20px);
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--primary-color);
+        border-radius: $slim;
+        z-index: 35;
+
+        .switcher-option {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: $mid;
+            border-radius: $slim;
+            cursor: pointer;
+            box-shadow: 0 0 0 0 inset var(--accent-color);
+            transition: all .3s ease;
+            user-select: none;
+
+            i.mdi {
+                margin-right: $mid;
+            }
+
+            &:hover {
+                background-color: var(--hover-color);
+            }
+
+            &:active {
+                background-color: var(--active-color);
+                transition: all .1s ease;
+            }
+
+            &.active {
+                box-shadow: 0 0 0 $slim inset var(--accent-color);
+            }
+        }
+    }
+
+    &:hover {
+        .switcher-menu {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: initial;
+        }
+    }
+}

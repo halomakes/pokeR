@@ -1,32 +1,40 @@
-@keyframes slideIn {
-    from {
-        transform: translateX(105%);
-    }
-    to {
-        transform: translateX(0);
-    }
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+  50% {
+    opacity: 0;
+    max-height: 30px;
+    overflow: hidden;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-@keyframes fadeOutUp {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-        max-height: 200px;
-        overflow: hidden;
-    }
-    100% {
-        opacity: 0;
-        max-height: 0;
-        overflow: hidden;
-    }
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-.animIn {
-    animation: slideIn .5s ease;
-}
+.notification {
+  &.in {
+    // using separate keyframes instead of reversing because js checks animation name
+    animation: fadeInUp 0.3s ease forwards;
+  }
 
-.animOut {
-    animation: fadeOutUp .7s ease forwards;
+  &.out {
+    animation: fadeOut 0.3s ease forwards;
+  }
+
+  & > .notification__content {
+    text-align: center;
+    color: var(--accent-color);
+  }
 }

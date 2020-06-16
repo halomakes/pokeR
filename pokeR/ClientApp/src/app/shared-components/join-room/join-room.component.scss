@@ -1,3 +1,5 @@
+@import '../../../theme/forms';
+
 .miniCardBack {
   border-radius: 0.5rem;
   width: 4.5rem;
@@ -5,6 +7,8 @@
   object-fit: cover;
   object-position: center;
   transition: all ease 0.2s;
+  margin: $mid;
+  cursor: pointer;
 }
 
 .miniCardBack.selected {
@@ -16,4 +20,36 @@
 .miniCardBack.deselected {
   opacity: 0.6;
   transform: scale(0.9);
+}
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .input-group {
+    width: 100%;
+  }
+}
+
+.emblem-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.faux-label {
+  font-weight: 700;
+  color: var(--contrast-color);
+
+  &.inactive {
+    color: var(--accent-color);
+  }
+}
+
+.faux-group {
+  .helper {
+    bottom: -16px;
+    top: initial;
+  }
 }

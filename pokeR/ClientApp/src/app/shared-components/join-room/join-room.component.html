@@ -1,35 +1,29 @@
-<form class="d-flex flex-column align-items-center" (submit)="join()" [formGroup]="form">
-  <div class="mb-3 w-100">
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <label for="name" class="input-group-text">Your Name</label>
-      </div>
-      <input class="form-control" type="text" name="name" formControlName="name"
-        [class.is-valid]="form.get('name').valid"
-        [class.is-invalid]="(submitAttempted || form.get('name').touched) && !form.get('name').valid">
-    </div>
+<form class="join-form" (submit)="join()" [formGroup]="form">
+  <div class="input-group">
+    <input class="form-control" type="text" name="name" formControlName="name" [class.is-valid]="form.get('name').valid"
+      [class.is-invalid]="(submitAttempted || form.get('name').touched) && !form.get('name').valid" autofocus required>
+    <label for="name" class="floating-label">Your Name</label>
     <div *ngIf="(submitAttempted || form.get('name').touched) && form.get('name').hasError('required')"
-      class="invalid-feedback d-block text-right">
+      class="invalid-feedback helper">
       <i class="mdi mdi-close"></i>
       Name is required.
     </div>
   </div>
 
-  <div class="mb-3">
-    <div class="d-flex flex-row flex-wrap">
+  <div class="input-group faux-group">
+    <label class="faux-label" [class.inactive]="form.get('emblemId').value">Choose an Emblem</label>
+    <div class="emblem-list">
       <img (click)="setEmblem(e.id)" [class.selected]="form.get('emblemId').value == e.id"
         [class.deselected]="form.get('emblemId').value && form.get('emblemId').value != e.id" *ngFor="let e of emblems"
-        [src]="getEmblemUrl(e.id)" class="miniCardBack m-2">
+        [src]="getEmblemUrl(e.id)" class="miniCardBack">
     </div>
-    <div *ngIf="submitAttempted && form.get('emblemId').hasError('required')"
-      class="invalid-feedback d-block text-right">
+    <div *ngIf="submitAttempted && form.get('emblemId').hasError('required')" class="invalid-feedback helper">
       <i class="mdi mdi-close"></i>
       Select an emblem.
     </div>
   </div>
 
-  <button class="btn btn-primary btn-lg" [class.btn-primary]="form.valid" [class.btn-outline-secondary]="!form.valid"
-    type="submit">
-    Join
+  <button [class.disabled]="!form.valid" type="submit">
+    Join Room
   </button>
 </form>
