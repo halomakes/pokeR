@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ComponentRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { User } from 'src/app/models/entities/user';
 
@@ -7,13 +7,16 @@ import { User } from 'src/app/models/entities/user';
   templateUrl: './playfield-card.component.html',
   styleUrls: ['./playfield-card.component.scss']
 })
-export class PlayfieldCardComponent implements AfterViewInit {
+export class PlayfieldCardComponent implements AfterViewInit, OnDestroy {
   isRevealed = false;
   isExiting = false;
   initialized = false;
   @Input() user: User;
   @Input() public selfRef: ComponentRef<PlayfieldCardComponent>;
   private rotation: number;
+  private x: number = null;
+  private y: number = null;
+  trackerInterval: number;
 
   constructor(private service: PokerService) {
     this.rotation = (Math.random() * 16) - 8;
@@ -21,11 +24,21 @@ export class PlayfieldCardComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     window.setTimeout(() => this.initialized = true, 10);
+    this.trackTarget();
+    this.trackerInterval = window.setInterval(this.trackTarget, 200);
   }
 
-  reveal = (timeout?: number): any => timeout ? window.setTimeout(() => this.isRevealed = true, timeout) : this.isRevealed = true;
+  ngOnDestroy(): void {
+    this.stopTracking();
+  }
 
-  withdraw = (): void => {
+  public reveal = (timeout?: number): any => {
+    console.log(`revealing ${this.user.currentCardId} with delay of ${timeout}`);
+    timeout ? window.setTimeout(() => this.isRevealed = true, timeout) : this.isRevealed = true;
+  }
+
+  public withdraw = (): void => {
+    this.stopTracking();
     this.isExiting = true;
   };
 
@@ -41,6 +54,24 @@ export class PlayfieldCardComponent implements AfterViewInit {
   }
 
   getStyle = (): any => ({
-    'transform': `rotateZ(${this.rotation}deg)`
+    'transform': `rotateZ(${this.rotation}deg)`,
+    'top': this.y != null ? `${this.y}px` : 'initial',
+    'left': this.x != null ? `${this.x}px` : 'initial'
   })
+
+  private trackTarget = (): void => {
+    const tracker = document.getElementById(`card-${this.user.id}`);
+    if (tracker) {
+      const rect = tracker.getBoundingClientRect();
+      this.x = rect.left;
+      this.y = rect.top;
+    }
+  }
+
+  private stopTracking = (): void => {
+    if (this.trackerInterval) {
+      window.clearInterval(this.trackerInterval);
+      this.trackerInterval = null;
+    }
+  }
 }

@@ -8,17 +8,25 @@
 .cardholder {
   display: flex;
   flex-direction: column;
-  margin: $mid;
+  margin: $some;
   align-items: center;
   text-align: center;
 
   .card--aligner {
     width: 160px;
     height: 220px;
-    background-color: transparentize($color: white, $amount: 0.8);
   }
 }
 
 .overlayCardScene {
   perspective: 500px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.card--label {
+  margin-top: 20px;
 }

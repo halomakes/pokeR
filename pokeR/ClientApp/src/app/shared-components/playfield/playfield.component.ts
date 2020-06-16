@@ -111,5 +111,6 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
   private removeCardComponent = (user: User): void => {
     const components = this.cardComponents.filter(r => r.instance.user.id === user.id);
     components.forEach(c => c.instance.withdraw());
+    this.cardComponents = this.cardComponents.filter(c => !components.includes(c));
   }
 }

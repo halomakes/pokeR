@@ -87,7 +87,7 @@ namespace PokeR.Hubs
             await Notify(Clients.Group(room.Id), $"{newHost.DisplayName} is now the host.");
             await Notify(Clients.Client(newHost.ConnectionId), "You are now the host.");
             await Clients.Client(newHost.ConnectionId).SendAsync("Self", newHost);
-            
+
             await Clients.Group(room.Id).SendAsync("HostChange", new ListChange<User>(newHost, await GetRoomUsers(room.Id)));
         }
 
@@ -95,6 +95,7 @@ namespace PokeR.Hubs
         {
             var user = await GetUser();
             user.CurrentCardId = cardId;
+            user.LastPlayed = DateTime.Now;
             await db.SaveChangesAsync();
 
             await Clients.Group(user.RoomId).SendAsync("CardPlayed", new ListChange<User>(user, await GetRoomUsers(user.RoomId)));
@@ -167,7 +168,9 @@ namespace PokeR.Hubs
 
         private async Task<List<User>> GetRoomUsers(string roomId) => await db.Users
             .Include(u => u.CurrentCard)
-            .Where(u => u.RoomId == roomId).ToListAsync();
+            .Where(u => u.RoomId == roomId)
+            .OrderBy(u => u.LastPlayed)
+            .ToListAsync();
 
         private async Task<string> GetRoomId() => await db.Users
             .Where(u => u.ConnectionId == Context.ConnectionId)

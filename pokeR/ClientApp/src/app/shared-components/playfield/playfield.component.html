@@ -3,7 +3,7 @@
     <div class="cardholder" *ngFor="let u of getActiveCards()">
       <div class="card--aligner" [id]="'card-'+u.id">
       </div>
-      <span>{{u.displayName}}</span>
+      <span class="card--label">{{u.displayName}}</span>
     </div>
   </div>
 </div>
