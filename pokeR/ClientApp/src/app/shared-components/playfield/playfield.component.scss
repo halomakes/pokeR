@@ -2,7 +2,7 @@
 
 .cardScene {
   perspective: 500px;
-  margin-top: 80px;
+  margin-top: 24px;
 }
 
 .cardholder {
@@ -25,6 +25,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  pointer-events: none;
 }
 
 .card--label {
