@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ComponentRef } from '@angular/core';
+import { Component, OnInit, Input, ComponentRef, AfterViewInit } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { User } from 'src/app/models/entities/user';
 
@@ -7,17 +7,20 @@ import { User } from 'src/app/models/entities/user';
   templateUrl: './playfield-card.component.html',
   styleUrls: ['./playfield-card.component.scss']
 })
-export class PlayfieldCardComponent implements OnInit {
+export class PlayfieldCardComponent implements AfterViewInit {
   isRevealed = false;
   isExiting = false;
+  initialized = false;
   @Input() user: User;
+  @Input() public selfRef: ComponentRef<PlayfieldCardComponent>;
+  private rotation: number;
 
-  @Input()
-  public selfRef: ComponentRef<PlayfieldCardComponent>;
+  constructor(private service: PokerService) {
+    this.rotation = (Math.random() * 16) - 8;
+  }
 
-  constructor(private service: PokerService) { }
-
-  ngOnInit() {
+  ngAfterViewInit(): void {
+    window.setTimeout(() => this.initialized = true, 10);
   }
 
   reveal = (timeout?: number): any => timeout ? window.setTimeout(() => this.isRevealed = true, timeout) : this.isRevealed = true;
@@ -36,4 +39,8 @@ export class PlayfieldCardComponent implements OnInit {
       }
     }
   }
+
+  getStyle = (): any => ({
+    'transform': `rotateZ(${this.rotation}deg)`
+  })
 }

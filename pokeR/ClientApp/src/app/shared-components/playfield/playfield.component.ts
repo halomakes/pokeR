@@ -94,8 +94,8 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
     const cardsToRemove = previousState.filter(p => !newState.find(n => p.id === n.id && p.currentCardId === n.currentCardId));
 
     console.log('updating', cardsToAdd, cardsToRemove);
-    cardsToAdd.forEach(this.createCardComponent);
     cardsToRemove.forEach(this.removeCardComponent);
+    cardsToAdd.forEach(this.createCardComponent);
   }
 
   private createCardComponent = (user: User) => {

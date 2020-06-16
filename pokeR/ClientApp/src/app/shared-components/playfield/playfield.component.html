@@ -1,10 +1,12 @@
 <div class="container">
   <div class="d-flex flex-row flex-wrap cardScene">
     <div class="cardholder" *ngFor="let u of getActiveCards()">
-      <div class="card--aligner">
+      <div class="card--aligner" [id]="'card-'+u.id">
       </div>
       <span>{{u.displayName}}</span>
     </div>
   </div>
 </div>
-<div #overlayCardHolder></div>
+<div class="overlayCardScene">
+  <div #overlayCardHolder></div>
+</div>

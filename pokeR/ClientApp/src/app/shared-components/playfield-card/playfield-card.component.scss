@@ -6,8 +6,13 @@
   position: relative;
   transform-style: preserve-3d;
   border-radius: 5px;
-  transition: transform 1s ease;
+  transition: transform 1s ease, opacity 0.2s ease, top 0.3s ease, left 0.3s ease;
   transform-origin: -25% 50%;
+}
+
+.pre-play {
+  transform: translateY(80%) translateZ(60px) !important;
+  opacity: 0;
 }
 
 .card-face {
@@ -48,7 +53,7 @@
 }
 
 .card-flipped {
-  transform: rotateY(180deg) rotateZ(-180deg);
+  transform: rotateY(180deg) rotateZ(-180deg) !important;
 
   @media #{$query-ie} {
     .card-face-front {
@@ -59,6 +64,10 @@
       animation: crossFadeIn 1s ease forwards;
     }
   }
+}
+
+.card-exiting {
+  animation: withdraw 0.3s ease forwards;
 }
 
 @keyframes crossFadeIn {
@@ -82,5 +91,26 @@
   60%,
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes withdraw {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+@keyframes play {
+  0% {
+    transform: translateY(80%) translateZ(-150px) !important;
+    //opacity: 0;
+  }
+  100% {
+    //opacity: 1;
   }
 }

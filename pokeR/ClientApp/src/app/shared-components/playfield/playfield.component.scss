@@ -18,3 +18,7 @@
     background-color: transparentize($color: white, $amount: 0.8);
   }
 }
+
+.overlayCardScene {
+  perspective: 500px;
+}
