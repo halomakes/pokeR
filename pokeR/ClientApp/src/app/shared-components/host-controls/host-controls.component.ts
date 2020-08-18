@@ -11,7 +11,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./host-controls.component.scss']
 })
 export class HostControlsComponent implements OnInit {
-  currentTagline: string;
+  private _currentTagline: string;
   countdownIsActive = false;
   remainingTime: number;
   maxTime: number;
@@ -22,6 +22,15 @@ export class HostControlsComponent implements OnInit {
     subject: new FormControl(''),
     countdown: new FormControl('')
   });
+
+  get currentTagLine() {
+    return this._currentTagline;
+  }
+
+  set currentTagline(value: string) {
+    this._currentTagline = value;
+    this.formGroup.get('subject').setValue(value);
+  }
 
   constructor(private service: PokerService) { }
 
