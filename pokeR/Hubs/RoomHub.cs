@@ -12,7 +12,7 @@ namespace PokeR.Hubs
 {
     public class RoomHub : Hub
     {
-        private RoomContext db;
+        private readonly RoomContext db;
 
         public RoomHub(RoomContext db)
         {
@@ -70,6 +70,14 @@ namespace PokeR.Hubs
 
                 await AssertGameEnd(user);
             }
+        }
+
+        public async Task NotifyUserUpdated()
+        {
+            var userQuery = db.Users.Where(u => u.ConnectionId == Context.ConnectionId);
+            var user = await userQuery.FirstOrDefaultAsync();
+            var roomId = user?.RoomId;
+            await Clients.Group(roomId).SendAsync("UserUpdated", new ListChange<User>(user, await GetRoomUsers(roomId)));
         }
 
         public async Task SwitchHost(Guid Id)
