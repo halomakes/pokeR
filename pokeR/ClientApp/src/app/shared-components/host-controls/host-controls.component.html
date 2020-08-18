@@ -5,7 +5,7 @@
       <div *ngIf="player.isHost" class="control-bar" [formGroup]="formGroup">
         <div class="input-group subject--input">
           <input class="form-control" type="text" formControlName="subject" required [class.is-invalid]="false">
-          <label for="name" class="floating-label">Current Subject</label>
+          <label for="name" class="floating-label">Current Topic</label>
         </div>
         <div class="input-group countdown--input">
           <input class="form-control" type="number" min="0" max="600" formControlName="countdown"
