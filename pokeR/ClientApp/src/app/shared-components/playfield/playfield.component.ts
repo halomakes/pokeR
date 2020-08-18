@@ -71,15 +71,13 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
     console.log('YOU ACTIVATED MY TRAP CARD!');
     if (this.lastState.map(s => s.currentCardId).every(i => this.lastState.find(() => true).currentCardId === i)) {
       console.log('party time!');
-      this.showConfetti();
+      this.confetti.pop(true);
     }
 
     this.cardComponents.forEach((componentRef, index) => componentRef.instance.reveal(index * 70));
   }
 
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
-
-  private showConfetti = (): void => this.confetti.pop();
 
   private updateState = (newState: Array<User>): void => {
     const previousState = this.lastState;

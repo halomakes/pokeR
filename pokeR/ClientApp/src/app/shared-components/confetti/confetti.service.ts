@@ -7,7 +7,7 @@ export class ConfettiService {
 
   constructor() { }
 
-  public confettiPlz: EventEmitter<number> = new EventEmitter<number>();
+  public confettiPlz: EventEmitter<{ duration: number, cheer?: boolean }> = new EventEmitter<{ duration: number, cheer?: boolean }>();
 
-  public pop = (): void => this.confettiPlz.emit(5000);
+  public pop = (cheer?: boolean): void => this.confettiPlz.emit({ duration: 5000, cheer });
 }
