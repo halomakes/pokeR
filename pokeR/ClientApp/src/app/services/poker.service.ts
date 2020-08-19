@@ -79,8 +79,14 @@ export class PokerService {
   public leaveRoom = (): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('leaveRoom'))))
 
-  public updateUser = (updated: JoinRoomRequest): Observable<void> =>
-    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('updateUser', updated))))
+  public updateUser = (updated: JoinRoomRequest): Observable<void> => {
+    if (this.player) {
+      this.player.displayName = updated.name;
+      this.player.emblemId = updated.emblemId;
+    }
+
+    return this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('updateUser', updated))))
+  }
 
   public playCard = (cardId: number): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('playCard', cardId))))

@@ -8,8 +8,11 @@ import { PokerService } from 'src/app/services/poker.service';
 })
 export class PlayerSettingsComponent implements OnInit {
   roomId: string;
+  get playerName(): string {
+    return this.service.player.displayName;
+  }
 
-  constructor(service: PokerService) {
+  constructor(private service: PokerService) {
     this.roomId = service.player.roomId;
   }
 

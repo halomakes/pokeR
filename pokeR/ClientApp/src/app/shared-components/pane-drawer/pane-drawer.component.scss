@@ -46,6 +46,9 @@ $tab-width: 24px;
       padding-top: $mid;
       padding-bottom: $mid;
       transition: all 0.2s ease;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
 
       & > .tab__icon::before {
         transition: transform 0.2s ease;
@@ -86,9 +89,12 @@ $tab-width: 24px;
       transform: translateX(100%);
 
       & > .tab {
-        writing-mode: vertical-rl;
         right: unset;
         left: -1 * $tab-width;
+
+        & > span {
+          transform: rotate(180deg);
+        }
       }
     }
 
