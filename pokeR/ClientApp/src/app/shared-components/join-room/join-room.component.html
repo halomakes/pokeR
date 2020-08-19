@@ -1,4 +1,4 @@
-<form class="join-form" (submit)="join()" [formGroup]="form">
+<form class="join-form" (submit)="submit()" [formGroup]="form">
   <div class="input-group">
     <input class="form-control" type="text" name="name" formControlName="name" [class.is-valid]="form.get('name').valid"
       [class.is-invalid]="(submitAttempted || form.get('name').touched) && !form.get('name').valid" autofocus required>
@@ -24,6 +24,6 @@
   </div>
 
   <button [class.disabled]="!form.valid" type="submit">
-    Join Room
+    {{isUpdate ? 'Update' : 'Join Room'}}
   </button>
 </form>

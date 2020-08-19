@@ -29,6 +29,7 @@ export class PokerService {
 
   public userJoins: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
+  public userUpdates: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public roomClosing: EventEmitter<void> = new EventEmitter<void>();
   public cardPlays: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public hostChanges: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
@@ -77,6 +78,15 @@ export class PokerService {
 
   public leaveRoom = (): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('leaveRoom'))))
+
+  public updateUser = (updated: JoinRoomRequest): Observable<void> => {
+    if (this.player) {
+      this.player.displayName = updated.name;
+      this.player.emblemId = updated.emblemId;
+    }
+
+    return this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('updateUser', updated))))
+  }
 
   public playCard = (cardId: number): Observable<void> =>
     this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('playCard', cardId))))
@@ -129,7 +139,8 @@ export class PokerService {
 
   private initializeHubWatches = (): Observable<void> => forkJoin(
     this.watchUsersJoin(),
-    this.watchusersLeave(),
+    this.watchUsersLeave(),
+    this.watchUsersUpdate(),
     this.watchRoomClose(),
     this.watchCardPlays(),
     this.watchRoundStarts(),
@@ -147,10 +158,16 @@ export class PokerService {
       this.userJoins.emit(d);
     })))
 
-  private watchusersLeave = (): Observable<void> =>
+  private watchUsersLeave = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('UserLeft', (d: ListChange<User>) => {
       this.users = d.collection;
       this.userLeaves.emit(d);
+    })))
+
+  private watchUsersUpdate = (): Observable<void> =>
+    this.getHub().pipe(map(h => h.on('UserUpdated', (d: ListChange<User>) => {
+      this.users = d.collection;
+      this.userUpdates.emit(d);
     })))
 
   private watchRoomClose = (): Observable<void> =>

@@ -9,6 +9,7 @@
   </div>
   <div *ngIf="isInGame">
     <app-roster></app-roster>
+    <app-player-settings></app-player-settings>
     <app-host-controls></app-host-controls>
     <app-playfield></app-playfield>
     <app-card-list [cards]="room?.deck?.cards"></app-card-list>

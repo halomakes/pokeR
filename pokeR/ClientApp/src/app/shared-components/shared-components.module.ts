@@ -19,6 +19,7 @@ import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
 import { HostControlsComponent } from './host-controls/host-controls.component';
 import { TooltipModule } from 'ng2-tooltip-directive';
 import { PlayfieldCardComponent } from './playfield-card/playfield-card.component';
+import { PlayerSettingsComponent } from './player-settings/player-settings.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PlayfieldCardComponent } from './playfield-card/playfield-card.componen
     BackgroundCardsComponent,
     PaneDrawerComponent,
     HostControlsComponent,
-    PlayfieldCardComponent
+    PlayfieldCardComponent,
+    PlayerSettingsComponent
   ], imports: [
     CommonModule,
     FormsModule,
@@ -57,7 +59,8 @@ import { PlayfieldCardComponent } from './playfield-card/playfield-card.componen
     ThemeSwitcherComponent,
     BackgroundCardsComponent,
     PaneDrawerComponent,
-    HostControlsComponent
+    HostControlsComponent,
+    PlayerSettingsComponent
   ],
   entryComponents: [
     NotificationComponent,
