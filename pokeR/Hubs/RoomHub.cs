@@ -81,10 +81,6 @@ namespace PokeR.Hubs
             await db.SaveChangesAsync();
             var roomId = user?.RoomId;
             await Clients.Group(roomId).SendAsync("UserUpdated", new ListChange<User>(user, await GetRoomUsers(roomId)));
-            if (user.CurrentCardId.HasValue)
-            {
-                await PlayCard(user.CurrentCardId.Value);
-            }
         }
 
         public async Task SwitchHost(Guid Id)
