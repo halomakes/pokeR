@@ -40,7 +40,7 @@ export class JoinRoomComponent implements OnChanges, OnInit {
     if (changes.roomId.currentValue) {
       this.form.get('roomId').setValue(changes.roomId.currentValue);
     }
-    if (changes.isUpdate.currentValue) {
+    if (changes.isUpdate && changes.isUpdate.currentValue) {
       this.initializeUpdate();
     }
   }

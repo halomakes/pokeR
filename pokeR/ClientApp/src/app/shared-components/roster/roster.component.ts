@@ -29,6 +29,7 @@ export class RosterComponent implements OnInit {
       this.watchParts(),
       this.watchRoundStart(),
       this.watchJoins(),
+      this.watchUserUpdates(),
       this.watchPlayerChanges(),
       this.watchHostChanges()
     )
@@ -53,6 +54,11 @@ export class RosterComponent implements OnInit {
 
   watchJoins = (): Observable<void> =>
     this.service.userJoins.pipe(map(c => {
+      this.users = c.collection;
+    }))
+
+  watchUserUpdates = (): Observable<void> =>
+    this.service.userUpdates.pipe(map(c => {
       this.users = c.collection;
     }))
 

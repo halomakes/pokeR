@@ -37,7 +37,8 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
       this.watchPlays(),
       this.watchRoundEnd(),
       this.watchParts(),
-      this.watchRoundStart()
+      this.watchRoundStart(),
+      this.watchUserChanges()
     ).pipe(map(() => { }))
 
   watchPlays = (): Observable<void> =>
@@ -60,6 +61,13 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
   watchParts = (): Observable<void> =>
     this.service.userLeaves.pipe(map(c => {
       this.updateState(this.lastState.filter(u => u.id !== c.delta.id));
+    }))
+
+    watchUserChanges = (): Observable<void> =>
+    this.service.userUpdates.pipe(map(c => {
+      // temporarily remove old card to trigger change checking
+      this.updateState(this.lastState.filter(u => u.id !== c.delta.id));
+      this.updateState(c.collection);
     }))
 
   getActiveCards = (): Array<User> => this.lastState.filter((u: User) => u.currentCard !== null);
