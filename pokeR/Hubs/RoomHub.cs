@@ -72,10 +72,13 @@ namespace PokeR.Hubs
             }
         }
 
-        public async Task NotifyUserUpdated()
+        public async Task UpdateUser(User updated)
         {
             var userQuery = db.Users.Where(u => u.ConnectionId == Context.ConnectionId);
             var user = await userQuery.FirstOrDefaultAsync();
+            user.DisplayName = updated.DisplayName;
+            user.EmblemId = updated.EmblemId;
+            await db.SaveChangesAsync();
             var roomId = user?.RoomId;
             await Clients.Group(roomId).SendAsync("UserUpdated", new ListChange<User>(user, await GetRoomUsers(roomId)));
         }

@@ -73,9 +73,13 @@ $tab-width: 24px;
     }
   }
 
-  &.right {
+  &.pane-drawer--right {
     right: 0;
     animation: slide-in-right 1s forwards ease;
+
+    & > .shade {
+      right: 0;
+    }
 
     & > .pane {
       transform: translateX(100%);
@@ -91,6 +95,7 @@ $tab-width: 24px;
       & > .pane {
         padding-right: $some;
         padding-left: $some + $tab-width;
+        transform: translateX(0);
 
         & > .tab {
           left: 0;
