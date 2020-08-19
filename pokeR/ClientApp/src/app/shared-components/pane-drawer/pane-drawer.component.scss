@@ -88,6 +88,7 @@ $tab-width: 24px;
         writing-mode: vertical-rl;
         right: unset;
         left: -1 * $tab-width;
+        transition: left 0.2s ease;
       }
     }
 
