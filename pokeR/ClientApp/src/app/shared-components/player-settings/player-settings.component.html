@@ -1,5 +1,9 @@
 <app-pane-drawer [label]="playerName" direction="right">
   <div class="player-settings">
+    <h3>Player Settings</h3>
     <app-join-room [isUpdate]="true" [roomId]="roomId"></app-join-room>
+    <div class="spacer"></div>
+    <h3>Theme</h3>
+    <app-theme-switcher></app-theme-switcher>
   </div>
 </app-pane-drawer>
