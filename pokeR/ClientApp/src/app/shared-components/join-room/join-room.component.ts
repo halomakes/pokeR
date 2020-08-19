@@ -15,6 +15,9 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   @Input()
   roomId: string;
 
+  @Input()
+  isUpdate: boolean;
+
   @Output()
   joined: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -37,6 +40,9 @@ export class JoinRoomComponent implements OnChanges, OnInit {
     if (changes.roomId.currentValue) {
       this.form.get('roomId').setValue(changes.roomId.currentValue);
     }
+    if (changes.isUpdate.currentValue) {
+      this.initializeUpdate();
+    }
   }
 
   loadEmblems = (): Observable<Emblem[]> =>
@@ -46,10 +52,14 @@ export class JoinRoomComponent implements OnChanges, OnInit {
 
   getEmblemUrl = (id: number): string => this.service.getEmblemUrl(id);
 
-  join = (): void => {
+  submit = (): void => {
     this.submitAttempted = true;
     if (this.form.valid) {
-      this.service.joinRoom(this.getModel()).subscribe(() => this.joined.emit(true));
+      if (this.isUpdate) {
+        this.service.updateUser(this.getModel()).subscribe();
+      } else {
+        this.service.joinRoom(this.getModel()).subscribe(() => this.joined.emit(true));
+      }
     }
   }
 
@@ -59,5 +69,10 @@ export class JoinRoomComponent implements OnChanges, OnInit {
     roomId: this.form.get('roomId').value,
     name: this.form.get('name').value,
     emblemId: this.form.get('emblemId').value
+  }
+
+  private initializeUpdate = (): void => {
+    this.form.get('name').setValue(this.service.player.displayName);
+    this.form.get('emblemId').setValue(this.service.player.emblemId);
   }
 }

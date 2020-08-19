@@ -1,169 +1,172 @@
-@import './form-reset';
-@import './variables';
+@import "./form-reset";
+@import "./variables";
 
 @mixin box-input {
-    border: $slim solid var(--accent-color);
-    border-radius: $slim;
-    padding-left: $mid;
-    padding-right: $mid;
-    padding-bottom: $mid;
-    padding-top: $mid;
+  border: $slim solid var(--accent-color);
+  border-radius: $slim;
+  padding-left: $mid;
+  padding-right: $mid;
+  padding-bottom: $mid;
+  padding-top: $mid;
 
-    &:focus {
-        border-color: var(--contrast-color);
-    }
+  &:focus {
+    border-color: var(--contrast-color);
+  }
 
-    &.ng-invalid.ng-touched,
-    &.is-invalid.ng-touched {
-        border-color: var(--invalid-color) !important;
-    }
+  &.ng-invalid.ng-touched,
+  &.is-invalid.ng-touched {
+    border-color: var(--invalid-color) !important;
+  }
 
-    &.ng-valid:focus,
-    &.is-valid:focus {
-        border-color: var(--valid-color);
-    }
+  &.ng-valid:focus,
+  &.is-valid:focus {
+    border-color: var(--valid-color);
+  }
 }
 
 @mixin button {
-    border: $slim solid var(--accent-color);
-    padding-left: $thicc;
-    padding-right: $thicc;
-    padding-top: $some;
-    padding-bottom: $some;
-    border-radius: $slim;
-    cursor: pointer;
-    box-shadow: 0 0 0 0 inset var(--accent-color);
-    transition: background-color .2s ease, box-shadow .2s ease, color .2s ease;
+  border: $slim solid var(--accent-color);
+  padding-left: $thicc;
+  padding-right: $thicc;
+  padding-top: $some;
+  padding-bottom: $some;
+  border-radius: $slim;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 inset var(--accent-color);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 
-    &:hover {
-        background-color: var(--hover-color);
-    }
+  &:hover {
+    background-color: var(--hover-color);
+  }
 
-    &:active {
-        background-color: var(--active-color);
-        box-shadow: 0 0 0 $slim inset var(--accent-color);
-    }
+  &:active {
+    background-color: var(--active-color);
+    box-shadow: 0 0 0 $slim inset var(--accent-color);
+  }
 
-    &:disabled,
-    &.disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-    }
+  &:disabled,
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 
 .input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin-top: $thicc;
-    margin-bottom: $thicc*1.5;
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: $thicc;
+  margin-bottom: $thicc * 1.5;
+  position: relative;
 
-    &:hover {
-        .floating-label {
-            color: var(--contrast-color);
-        }
-    }
-
+  &:hover {
     .floating-label {
-        position: absolute;
-        pointer-events: none;
-        transition: .2s ease all;
-        color: var(--accent-color);
-        left: $slim + $mid;
-        top: 11px;
-        z-index: 3;
-        font-weight: 700;
-
-        &::after {
-            content: '';
-            display: block;
-            position: absolute;
-            top: -20px;
-            left: -8px;
-            right: -8px;
-            bottom: 0;
-            background-color: var(--primary-color);
-            z-index: -1;
-            transform: scaleX(0);
-            transition: transform .2s ease, top .2s ease;
-        }
+      color: var(--contrast-color);
     }
+  }
 
-    .form-control:focus~.floating-label,
-    .form-control:not(:focus):valid~.floating-label {
-        transform: translateY(-22px) scale(0.8);
+  .floating-label {
+    position: absolute;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    color: var(--accent-color);
+    left: $slim + $mid;
+    top: 11px;
+    z-index: 3;
+    font-weight: 700;
 
-        &::after {
-            transform: scaleX(1);
-            top: 0;
-        }
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: -20px;
+      left: -8px;
+      right: -8px;
+      bottom: 0;
+      background-color: var(--primary-color);
+      z-index: -1;
+      transform: scaleX(0);
+      transition: transform 0.2s ease, top 0.2s ease;
     }
+  }
 
-    .form-control:focus~.floating-label {
-        color: var(--contrast-color);
+  .form-control:focus ~ .floating-label,
+  .form-control:not(:focus):valid ~ .floating-label {
+    transform: translateY(-22px) scale(0.8);
+
+    &::after {
+      transform: scaleX(1);
+      top: 0;
     }
+  }
 
-    .helper {
-        position: absolute;
-        top: 48px;
-        font-size: 14px;
-        display: initial;
-        animation: fallDown 0.4s ease forwards;
+  .form-control:focus ~ .floating-label {
+    color: var(--contrast-color);
+  }
 
-        &.invalid-feedback,
-        &.invalid-feedback>i {
-            color: var(--invalid-color);
-        }
+  .helper {
+    position: absolute;
+    top: 48px;
+    font-size: 14px;
+    display: initial;
+    animation: fallDown 0.4s ease forwards;
+
+    &.invalid-feedback,
+    &.invalid-feedback > i {
+      color: var(--invalid-color);
     }
+  }
 
-    &.form-control:focus~.helper.valid-feedback {
-        color: var(--valid-color);
+  &.form-control:focus ~ .helper.valid-feedback {
+    color: var(--valid-color);
 
-        &>i {
-            color: var(--valid-color);
-        }
+    & > i {
+      color: var(--valid-color);
     }
+  }
 }
 
 @keyframes fallDown {
-    from {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 input {
-    @extend %form-reset-input;
-    @include box-input();
+  @extend %form-reset-input;
+  @include box-input();
 }
 
 label {
-    @extend %form-reset-label;
-
+  @extend %form-reset-label;
 }
 
 select {
-    @extend %form-reset-select;
-    @include box-input();
+  @extend %form-reset-select;
+  @include box-input();
 
-    option {
-        color: var(--contrast-color);
-        background-color: var(--primary-color);
-    }
+  option {
+    color: var(--contrast-color);
+    background-color: var(--primary-color);
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 button {
-    @extend %form-reset-button;
-    @include button();
+  @extend %form-reset-button;
+  @include button();
 }
 
 textarea {
-    @extend %form-reset-textarea;
-    @include box-input();
+  @extend %form-reset-textarea;
+  @include box-input();
 }

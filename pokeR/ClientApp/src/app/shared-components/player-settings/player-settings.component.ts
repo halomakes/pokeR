@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PokerService } from 'src/app/services/poker.service';
 
 @Component({
   selector: 'app-player-settings',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-settings.component.scss']
 })
 export class PlayerSettingsComponent implements OnInit {
+  roomId: string;
 
-  constructor() { }
+  constructor(service: PokerService) {
+    this.roomId = service.player.roomId;
+  }
 
   ngOnInit() {
   }
-
 }
