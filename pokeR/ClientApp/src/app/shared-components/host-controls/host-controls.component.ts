@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { Observable, Subscription, forkJoin } from 'rxjs';
-import { map, debounceTime, flatMap } from 'rxjs/operators';
+import { map, debounceTime, flatMap, filter } from 'rxjs/operators';
 import { User } from 'src/app/models/entities/user';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -12,6 +12,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class HostControlsComponent implements OnInit {
   private _currentTagline: string;
+  private latestTaglineInput: string;
   countdownIsActive = false;
   remainingTime: number;
   maxTime: number;
@@ -95,10 +96,12 @@ export class HostControlsComponent implements OnInit {
   startNewRound = (): Subscription => this.service.startRound().subscribe();
 
   watchInputChange = (): Observable<any> => {
-    const source = this.formGroup.get('subject').valueChanges;
+    const control = this.formGroup.get('subject');
+    const source = control.valueChanges.pipe(filter(v => v !== this.latestTaglineInput));
     return forkJoin(
-      source.pipe(debounceTime(500), flatMap(this.service.storeTagline)),
-      source.pipe(flatMap(this.service.updateTagline))
+      source.pipe(debounceTime(2000), flatMap(this.service.storeTagline)),
+      source.pipe(debounceTime(300), flatMap(this.service.updateTagline)),
+      source.pipe(map(v => this.latestTaglineInput = v))
     );
   };
 
