@@ -30,6 +30,7 @@ export class HostControlsComponent implements OnInit {
 
   set currentTagline(value: string) {
     this._currentTagline = value;
+    this.latestTaglineInput = value;
     this.formGroup.get('subject').setValue(value);
   }
 
