@@ -62,6 +62,7 @@ export class ConfettiComponent implements AfterViewInit {
     // only cheer at most once every 8 seconds to avoid spam
     if (((new Date()).getTime() - this.lastCheer.getTime()) > 8000) {
       var audio = new Audio('/audio/yahtzee.mp3');
+      audio.volume = 0.4;
       audio.play();
       this.lastCheer = new Date();
     }
