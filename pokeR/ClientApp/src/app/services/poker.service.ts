@@ -24,8 +24,16 @@ export class PokerService {
   private room: Room;
   private users: User[];
   private emblems: Emblem[] = new Array<Emblem>();
+  private lastJoinRequest: JoinRoomRequest;
 
-  private isHubReady = false;
+  private _isHubReady: boolean = false;
+  private get isHubReady(): boolean {
+    return this._isHubReady;
+  }
+  private set isHubReady(value: boolean) {
+    this.connectionState.emit(value);
+    this._isHubReady = value;
+  }
 
   public userJoins: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
@@ -38,6 +46,7 @@ export class PokerService {
   public taglineUpdated: EventEmitter<string> = new EventEmitter<string>();
   public timerStarts: EventEmitter<number> = new EventEmitter<number>();
   public playerChanges: EventEmitter<User> = new EventEmitter<User>();
+  public connectionState: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public player: User;
 
@@ -71,11 +80,15 @@ export class PokerService {
     ? this.getRoom(this.room.id).pipe(map(r => r.tagLine))
     : of('');
 
-  public joinRoom = (request: JoinRoomRequest): Observable<void> =>
-    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))));
+  public joinRoom = (request: JoinRoomRequest): Observable<void> => {
+    this.lastJoinRequest = request;
+    return this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('joinRoom', request))));
+  }
 
-  public leaveRoom = (): Observable<void> =>
-    this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('leaveRoom'))));
+  public leaveRoom = (): Observable<void> => {
+    this.lastJoinRequest = null;
+    return this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('leaveRoom'))));
+  }
 
   public updateUser = (updated: JoinRoomRequest): Observable<void> => {
     if (this.player) {
@@ -123,17 +136,37 @@ export class PokerService {
   private getHub = (): Observable<HubConnection> =>
     this.isHubReady ? of(this.hub) : from(this.prepareHub());
 
-  private prepareHub = (): Promise<HubConnection> => {
+  private prepareHub = async (): Promise<HubConnection> => {
     this.hub = new HubConnectionBuilder()
       .withUrl('/notify/room')
       .withAutomaticReconnect([0, 1000, 2000, 3000, 5000, 10000, 12000, 15000, 30000, null])
       .withHubProtocol(new JsonHubProtocol())
       .build();
-    return this.hub.start().catch(console.error).then(() => {
+
+    this.hub.onreconnecting(this.onDisconnect);
+    this.hub.onreconnected(this.onReconnected);
+    try {
+      await this.hub.start();
       this.isHubReady = true;
-      return this.hub;
-    });
+    } catch (ex) {
+      console.error('could not start hub', ex);
+    }
+    return this.hub;
   };
+
+  private onDisconnect = (): void => {
+    this.isHubReady = false;
+    this.notifications.notify('Lost connection to server… attempting to reconnect.');
+  }
+
+  private onReconnected = (): void => {
+    this.notifications.notify('Connection restored.  Getting you back in the game…');
+    if (this.lastJoinRequest) {
+      this.joinRoom(this.lastJoinRequest).subscribe(r => this.isHubReady = true);
+    } else {
+      this.isHubReady = true;
+    }
+  }
 
   private initializeHubWatches = (): Observable<void> => forkJoin(
     this.watchUsersJoin(),

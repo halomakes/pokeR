@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, ComponentRef, OnDestroy } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { User } from 'src/app/models/entities/user';
-import { Observable, forkJoin } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { flatMap, map, tap } from 'rxjs/operators';
 import { ConfettiService } from '../confetti/confetti.service';
 import { PlayfieldCardComponent } from '../playfield-card/playfield-card.component';
 
@@ -40,7 +40,8 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
       this.watchRoundEnd(),
       this.watchParts(),
       this.watchRoundStart(),
-      this.watchUserChanges()
+      this.watchUserChanges(),
+      this.watchReconnections()
     ).pipe(map(() => { }));
 
   private watchPlays = (): Observable<void> =>
@@ -68,6 +69,10 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
       this.updateState(this.lastState.filter(u => u.id !== c.delta.id));
       this.updateState(c.collection);
     }));
+
+  private watchReconnections = (): Observable<any> => this.service.connectionState.pipe(
+    flatMap(c => c ? this.loadInitialState() : of(null))
+  );
 
   getActiveCards = (): Array<User> => this.lastState.filter((u: User) => u.currentCard !== null);
 
