@@ -32,7 +32,7 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
     this.cardComponents.forEach(c => c.destroy());
   };
 
-  private loadInitialState = (): Observable<any> => this.service.getPlayers().pipe(tap(this.updateState));
+  private loadInitialState = (): Observable<any> => this.service.getPlayers().pipe(tap(this.assertReveal), tap(this.updateState));
 
   private watchState = (): Observable<void> =>
     forkJoin(
@@ -105,6 +105,14 @@ export class PlayfieldComponent implements OnInit, OnDestroy {
     cardsToRemove.forEach(this.removeCardComponent);
     cardsToAdd.forEach(this.createCardComponent);
   };
+
+  private assertReveal = (newState: Array<User>): void => {
+    if (!newState.find(player => !player.currentCard)) {
+      this.revealCards();
+    } else {
+      this.isRevealed = false;
+    }
+  }
 
   private createCardComponent = (user: User) => {
     const factory: ComponentFactory<PlayfieldCardComponent> = this.resolver.resolveComponentFactory(PlayfieldCardComponent);

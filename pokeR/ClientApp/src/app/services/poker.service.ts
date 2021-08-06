@@ -34,6 +34,7 @@ export class PokerService {
     this.connectionState.emit(value);
     this._isHubReady = value;
   }
+  private isRejoining = false;
 
   public userJoins: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
   public userLeaves: EventEmitter<ListChange<User>> = new EventEmitter<ListChange<User>>();
@@ -155,14 +156,20 @@ export class PokerService {
   };
 
   private onDisconnect = (): void => {
+    if (!this.isRejoining) {
+      this.notifications.notify('Lost connection to server… attempting to reconnect.');
+      this.isRejoining = true;
+    }
     this.isHubReady = false;
-    this.notifications.notify('Lost connection to server… attempting to reconnect.');
   }
 
   private onReconnected = (): void => {
-    this.notifications.notify('Connection restored.  Getting you back in the game…');
+    if (this.isRejoining) {
+      this.isRejoining = false;
+      this.notifications.notify('Connection restored.  Getting you back in the game…');
+    }
     if (this.lastJoinRequest) {
-      this.joinRoom(this.lastJoinRequest).subscribe(r => this.isHubReady = true);
+      this.joinRoom(this.lastJoinRequest).pipe(flatMap(this.initializeHubWatches)).subscribe(r => this.isHubReady = true);
     } else {
       this.isHubReady = true;
     }
