@@ -96,6 +96,10 @@ export class PokerService {
       this.player.displayName = updated.name;
       this.player.emblemId = updated.emblemId;
     }
+    if (this.lastJoinRequest) {
+      this.lastJoinRequest.name = updated.name;
+      this.lastJoinRequest.emblemId = updated.emblemId;
+    }
 
     return this.getHub().pipe(flatMap((hub: HubConnection) => from(hub.invoke('updateUser', updated))))
   };
