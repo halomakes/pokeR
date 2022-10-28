@@ -1,6 +1,6 @@
 {
   "name": "poker-web",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --live-reload false",

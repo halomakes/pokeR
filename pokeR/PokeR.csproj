@@ -13,7 +13,7 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>2655f33f-2971-4c41-bf5e-0ad9afe6f19a</UserSecretsId>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
