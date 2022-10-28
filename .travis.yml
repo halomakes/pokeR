@@ -1,8 +1,14 @@
 language: csharp
 mono: none
 sudo: required
-dist: xenial
-dotnet: 3.1
+dist: focal
+dotnet: 6.0
+addons:
+  apt:
+    sources:
+      - deadsnakes
+    packages:
+       - python2.7
 
 script:
 - dotnet restore
