@@ -4,7 +4,7 @@ import { PokerService } from 'src/app/services/poker.service';
 import { Deck } from 'src/app/models/entities/deck';
 import { map, debounceTime, flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-room',
@@ -18,11 +18,11 @@ export class CreateRoomComponent implements OnInit {
 
   submitAttempted = false;
 
-  form: FormGroup = new FormGroup({
-    roomId: new FormControl('', Validators.required),
-    name: new FormControl('', Validators.required),
-    tagline: new FormControl(''),
-    deck: new FormControl('', Validators.required)
+  form: UntypedFormGroup = new UntypedFormGroup({
+    roomId: new UntypedFormControl('', Validators.required),
+    name: new UntypedFormControl('', Validators.required),
+    tagline: new UntypedFormControl(''),
+    deck: new UntypedFormControl('', Validators.required)
   });
 
   constructor(private service: PokerService) { }
