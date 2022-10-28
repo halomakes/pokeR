@@ -242,6 +242,7 @@ export class PokerService {
   private watchSelfInfo = (): Observable<void> =>
     this.getHub().pipe(map(h => h.on('Self', (u: User) => {
       this.player = u;
+      this.lastJoinRequest.playerId = u.id;
       this.playerChanges.emit(u);
     })));
 
