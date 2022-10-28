@@ -10,7 +10,7 @@ declare const confetti;
   styleUrls: ['./confetti.component.scss']
 })
 export class ConfettiComponent implements AfterViewInit {
-  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('canvas', { static: true }) canvas: ElementRef;
   private confettiLauncher: any;
   private lastCheer: Date;
 

@@ -21,6 +21,11 @@ namespace PokeR.Hubs
 
         public async Task JoinRoom(JoinRoomRequest request)
         {
+            if (request.IsRejoin)
+            {
+                await RemoveOldUsers(request.PlayerId.Value, request.RoomId);
+            }
+
             await Groups.AddToGroupAsync(Context.ConnectionId, request.RoomId);
             var user = new User
             {
@@ -28,13 +33,30 @@ namespace PokeR.Hubs
                 DisplayName = request.Name,
                 RoomId = request.RoomId,
                 EmblemId = request.EmblemId,
-                Id = Guid.NewGuid(),
+                Id = request.PlayerId ?? Guid.NewGuid(),
                 IsHost = !await db.Users.AnyAsync(u => u.RoomId == request.RoomId)
             };
             db.Users.Add(user);
             await db.SaveChangesAsync();
             await Clients.Caller.SendAsync("Self", user);
             await Clients.Group(request.RoomId).SendAsync("UserJoined", new ListChange<User>(user, await GetRoomUsers(request.RoomId)));
+        }
+
+        private async Task RemoveOldUsers(Guid userId, string roomId)
+        {
+            var users = await db.Users.Where(u => u.Id == userId && u.RoomId == roomId).ToListAsync();
+            foreach (var user in users)
+            {
+                try
+                {
+                    await Groups.RemoveFromGroupAsync(user.ConnectionId, roomId);
+                }
+                finally
+                {
+                    db.Entry(user).State = EntityState.Deleted;
+                }
+            }
+            await db.SaveChangesAsync();
         }
 
         public async Task LeaveRoom()

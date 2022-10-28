@@ -10,5 +10,11 @@ namespace PokeR.Models.ViewModels
         public string RoomId { get; set; }
         public string Name { get; set; }
         public int EmblemId { get; set; }
+        /// <summary>
+        /// Player ID used when rejoining
+        /// </summary>
+        public Guid? PlayerId { get; set; }
+
+        public bool IsRejoin => PlayerId is not null && PlayerId != Guid.Empty;
     }
 }

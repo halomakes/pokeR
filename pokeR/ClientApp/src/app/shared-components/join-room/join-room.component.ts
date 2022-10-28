@@ -4,7 +4,7 @@ import { PokerService } from 'src/app/services/poker.service';
 import { Emblem } from 'src/app/models/entities/emblem';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-join-room',
@@ -24,10 +24,10 @@ export class JoinRoomComponent implements OnChanges, OnInit {
   emblems: Emblem[] = new Array<Emblem>();
   submitAttempted = false;
 
-  form: FormGroup = new FormGroup({
-    roomId: new FormControl('', Validators.required),
-    name: new FormControl('', Validators.required),
-    emblemId: new FormControl('', Validators.required)
+  form: UntypedFormGroup = new UntypedFormGroup({
+    roomId: new UntypedFormControl('', Validators.required),
+    name: new UntypedFormControl('', Validators.required),
+    emblemId: new UntypedFormControl('', Validators.required)
   });
 
   constructor(private service: PokerService) { }

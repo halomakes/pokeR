@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { PokerService } from 'src/app/services/poker.service';
 import { Observable } from 'rxjs';
 import { debounceTime, flatMap, map } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-find-room',
@@ -12,8 +12,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class FindRoomComponent implements OnInit {
   @Output() exit: EventEmitter<any[]> = new EventEmitter<any[]>();
   public exists: boolean = null;
-  form: FormGroup = new FormGroup({
-    roomId: new FormControl('', Validators.required)
+  form: UntypedFormGroup = new UntypedFormGroup({
+    roomId: new UntypedFormControl('', Validators.required)
   });
 
   constructor(

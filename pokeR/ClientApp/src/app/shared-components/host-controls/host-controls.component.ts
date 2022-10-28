@@ -3,7 +3,7 @@ import { PokerService } from 'src/app/services/poker.service';
 import { Observable, Subscription, forkJoin } from 'rxjs';
 import { map, debounceTime, flatMap, filter } from 'rxjs/operators';
 import { User } from 'src/app/models/entities/user';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-host-controls',
@@ -19,9 +19,9 @@ export class HostControlsComponent implements OnInit {
   deadline: Date;
   timer: number;
   player: User;
-  formGroup: FormGroup = new FormGroup({
-    subject: new FormControl(''),
-    countdown: new FormControl('')
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    subject: new UntypedFormControl(''),
+    countdown: new UntypedFormControl('')
   });
 
   get currentTagLine() {

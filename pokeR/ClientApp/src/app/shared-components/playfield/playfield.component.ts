@@ -12,7 +12,7 @@ import { PlayfieldCardComponent } from '../playfield-card/playfield-card.compone
   styleUrls: ['./playfield.component.scss']
 })
 export class PlayfieldComponent implements OnInit, OnDestroy {
-  @ViewChild('overlayCardHolder', { read: ViewContainerRef }) notificationHolder: ViewContainerRef;
+  @ViewChild('overlayCardHolder', { read: ViewContainerRef, static: true }) notificationHolder: ViewContainerRef;
   lastState: Array<User> = new Array<User>();
   isRevealed = false;
   cardComponents: Array<ComponentRef<PlayfieldCardComponent>> = [];

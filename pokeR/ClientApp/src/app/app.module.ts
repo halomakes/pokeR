@@ -7,24 +7,22 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
-
-import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    PagesModule,
-    FormsModule,
-    TooltipModule,
-    SharedComponentsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: []
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        PagesModule,
+        FormsModule,
+        TooltipModule,
+        SharedComponentsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
