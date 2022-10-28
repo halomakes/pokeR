@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 
-import { TooltipModule } from 'ng2-tooltip-directive';
+//import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     HttpClientModule,
     PagesModule,
     FormsModule,
-    TooltipModule,
+    //TooltipModule,
     SharedComponentsModule
   ],
   providers: [],

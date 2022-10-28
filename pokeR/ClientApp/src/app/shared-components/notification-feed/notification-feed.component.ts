@@ -16,7 +16,7 @@ const padCharacter = 10;
   styleUrls: ['./notification-feed.component.scss']
 })
 export class NotificationFeedComponent implements OnInit {
-  @ViewChild('notificationHolder', { read: ViewContainerRef }) notificationHolder: ViewContainerRef;
+  @ViewChild('notificationHolder', { read: ViewContainerRef, static: true }) notificationHolder: ViewContainerRef;
 
   private tickerTime: number;
   private lastTickerIndex = 0;

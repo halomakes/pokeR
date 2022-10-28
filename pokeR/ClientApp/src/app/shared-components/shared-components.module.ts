@@ -17,7 +17,7 @@ import { BackgroundCardsComponent } from './background-cards/background-cards.co
 import { RosterComponent } from './roster/roster.component';
 import { PaneDrawerComponent } from './pane-drawer/pane-drawer.component';
 import { HostControlsComponent } from './host-controls/host-controls.component';
-import { TooltipModule } from 'ng2-tooltip-directive';
+//import { TooltipModule } from 'ng2-tooltip-directive';
 import { PlayfieldCardComponent } from './playfield-card/playfield-card.component';
 import { PlayerSettingsComponent } from './player-settings/player-settings.component';
 
@@ -43,7 +43,7 @@ import { PlayerSettingsComponent } from './player-settings/player-settings.compo
   ], imports: [
     CommonModule,
     FormsModule,
-    TooltipModule,
+    //TooltipModule,
     AppRoutingModule,
     ReactiveFormsModule
   ], exports: [
