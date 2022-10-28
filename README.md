@@ -42,11 +42,11 @@ The app will respect your OS dark mode preference by default.  If you hover over
 
 ## Requirements
 **To build**
-* .NET Core 3.1 SDK
+* .NET 6 SDK
 * Node.js
 
 **To run**
-* .NET Core 3.1 Runtime
+* .NET 6 Runtime
 
 ## Building
 ```powershell
