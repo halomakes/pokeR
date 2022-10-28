@@ -22,49 +22,45 @@ import { PlayfieldCardComponent } from './playfield-card/playfield-card.componen
 import { PlayerSettingsComponent } from './player-settings/player-settings.component';
 
 @NgModule({
-  declarations: [
-    CreateRoomComponent,
-    NotificationFeedComponent,
-    NotificationComponent,
-    RoomInfoComponent,
-    JoinRoomComponent,
-    CardListComponent,
-    PlayfieldComponent,
-    RosterComponent,
-    ConfettiComponent,
-    EntrywayComponent,
-    ThemeSwitcherComponent,
-    FindRoomComponent,
-    BackgroundCardsComponent,
-    PaneDrawerComponent,
-    HostControlsComponent,
-    PlayfieldCardComponent,
-    PlayerSettingsComponent
-  ], imports: [
-    CommonModule,
-    FormsModule,
-    //TooltipModule,
-    AppRoutingModule,
-    ReactiveFormsModule
-  ], exports: [
-    NotificationFeedComponent,
-    CreateRoomComponent,
-    RoomInfoComponent,
-    JoinRoomComponent,
-    CardListComponent,
-    PlayfieldComponent,
-    RosterComponent,
-    ConfettiComponent,
-    EntrywayComponent,
-    ThemeSwitcherComponent,
-    BackgroundCardsComponent,
-    PaneDrawerComponent,
-    HostControlsComponent,
-    PlayerSettingsComponent
-  ],
-  entryComponents: [
-    NotificationComponent,
-    PlayfieldCardComponent
-  ]
+    declarations: [
+        CreateRoomComponent,
+        NotificationFeedComponent,
+        NotificationComponent,
+        RoomInfoComponent,
+        JoinRoomComponent,
+        CardListComponent,
+        PlayfieldComponent,
+        RosterComponent,
+        ConfettiComponent,
+        EntrywayComponent,
+        ThemeSwitcherComponent,
+        FindRoomComponent,
+        BackgroundCardsComponent,
+        PaneDrawerComponent,
+        HostControlsComponent,
+        PlayfieldCardComponent,
+        PlayerSettingsComponent
+    ], imports: [
+        CommonModule,
+        FormsModule,
+        //TooltipModule,
+        AppRoutingModule,
+        ReactiveFormsModule
+    ], exports: [
+        NotificationFeedComponent,
+        CreateRoomComponent,
+        RoomInfoComponent,
+        JoinRoomComponent,
+        CardListComponent,
+        PlayfieldComponent,
+        RosterComponent,
+        ConfettiComponent,
+        EntrywayComponent,
+        ThemeSwitcherComponent,
+        BackgroundCardsComponent,
+        PaneDrawerComponent,
+        HostControlsComponent,
+        PlayerSettingsComponent
+    ]
 })
 export class SharedComponentsModule { }

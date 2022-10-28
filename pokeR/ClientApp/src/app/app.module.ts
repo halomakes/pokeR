@@ -11,20 +11,19 @@ import { SharedComponentsModule } from './shared-components/shared-components.mo
 //import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    PagesModule,
-    FormsModule,
-    //TooltipModule,
-    SharedComponentsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: []
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        PagesModule,
+        FormsModule,
+        //TooltipModule,
+        SharedComponentsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
